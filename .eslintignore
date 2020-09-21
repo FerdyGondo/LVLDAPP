@@ -1,0 +1,13 @@
+ios/
+android/
+*.json
+*.lock
+*.md
+*.sh
+*.rb
+*.png
+*.jpg
+*.opts
+*.py
+*.ttf
+*.png
