@@ -14,4 +14,4 @@ Follow git flow branching strategy: https://www.atlassian.com/git/tutorials/comp
 
 develop > feature/LA-2/bottom-navigation
 
-PR from feature/LA-2/bottom-navigation and make develop the origin
+PR feature/LA-2/bottom-navigation and make develop the origin
