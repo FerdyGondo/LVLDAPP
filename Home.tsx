@@ -34,12 +34,12 @@ const options = ({ route }) => ({
 });
 
 export default () => (
-  <View style = {{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+  <View style = {{alignItems: 'center', justifyContent: 'center', flex: 1, paddingBottom:45}}>
     <Image
                           source={ require('./assets/icons/HomeScreen.jpg') }
                           style={{
                             width: window.width,
-                            height: window.height+90,
+                            height: window.height+40,
                           }}
                     />
   </View>
