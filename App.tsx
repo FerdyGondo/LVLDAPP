@@ -12,10 +12,10 @@ import theme from './theme';
 import reducers from './reducers';
 import sagas from './sagas';
 import LvldLogo from './assets/svg/LvldLogo';
-import Home     from './Home';
-import Content  from './Content';
-import Entries  from './Entries';
-import Feed     from './Feed';
+import Home     from './src/home/';
+import Content  from './src/content';
+import Entries  from './src/entries';
+import Feed     from './src/feed';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
