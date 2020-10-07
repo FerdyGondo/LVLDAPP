@@ -15,7 +15,6 @@ import LvldLogo from './assets/svg/LvldLogo';
 import Home     from './src/home/';
 import Content  from './src/content';
 import Entries  from './src/entries';
-import Feed     from './src/feed';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -60,7 +59,6 @@ export default function App() {
                           case 'home'     : iconName = require('./assets/icons/home.png');     break;
                           case "content"  : iconName = require('./assets/icons/content.png');  break;
                           case "entries"  : iconName = require('./assets/icons/entries.png');  break;
-                          case "feed"     : iconName = require('./assets/icons/feed.png');     break;
                         }
                         // console.log("App route.name: ", route.name, " iconName: ", iconName);
                         // You can return any component that you like here!
@@ -83,7 +81,6 @@ export default function App() {
                           case 'home'     : tabLabel = 'Home';     break;
                           case "content"  : tabLabel = 'Content';  break;
                           case "entries"  : tabLabel = 'Entries';  break;
-                          case "feed"     : tabLabel = 'Feed';     break;
                         }
                         return (
                             <Text style= {{ fontSize : 10 }}>{tabLabel}</Text>     
@@ -102,7 +99,6 @@ export default function App() {
             <BottomTab.Screen name="home"     component={Home} />
             <BottomTab.Screen name="content"  component={Content} />
             <BottomTab.Screen name="entries"  component={Entries} />
-            <BottomTab.Screen name="feed"     component={Feed} />
           </BottomTab.Navigator>
         </NavigationContainer>
       </ThemeProvider>
