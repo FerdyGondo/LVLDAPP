@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 
 import styled from 'styled-components/native'
 import { Icon } from 'react-native-elements';
+import ProfileIcon from '../../assets/svg/ProfileIcon'
 
 type Props = {
   navigation: () => {}
@@ -10,11 +11,12 @@ type Props = {
 const Home = React.memo(({ navigation }: Props): ReactElement => {
   return (
     <Container>
-      
       <ShadowContainer>
         <MainContainer>
           <ProfileContainer onPress={() => navigation.navigate("Account")}>
-            <Profile source={require('../../assets/icons/profile.png')} />
+            <Profile>
+              <ProfileIcon width={30} />
+            </Profile>
             <MainText>Peter{" "}</MainText><SubText>Cho</SubText>
           </ProfileContainer>
           <MoneyContainer>
@@ -61,10 +63,8 @@ const ProfileContainer = styled.TouchableOpacity`
   align-items: center;
 `
 
-const Profile = styled.Image`
+const Profile = styled.View`
   margin-right: 10px;
-  width: 30px;
-  height: 30px;
 `
 
 const MoneyContainer = styled.View`

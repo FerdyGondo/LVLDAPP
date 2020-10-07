@@ -3,10 +3,11 @@ import React, { ReactElement } from 'react';
 import styled from 'styled-components/native'
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={30} color={"#000"} />;
+import ProfileIcon from '../../assets/svg/ProfileIcon'
 
 const data = [{ id: 0, name: "Add Funds"}, { id: 1, name: "Transaction History"}, { id: 2, name: "Invite Friends: Get Rewards"}, { id: 3, name: "Account Settings"}, { id: 4, name: "Notification Settings"}, { id: 5, name: "Sign Out"},{id: 6, name: "Cash Out"}]
 import { Icon } from 'react-native-elements';
-const first = <Icon name="plus" type={"antdesign"} size={10} />;
+
 type FlatProps = {
   item: any;
 }
@@ -38,7 +39,7 @@ const Account = React.memo((): ReactElement => {
             <Bottom>LVLD POINTS</Bottom>
           </TopContainer>
           <ProfileContainer>
-            <Profile source={require('../../assets/profile/profile.png')} />
+            <ProfileIcon width={70} />
             <MainText>Peter{" "}<SubText>Cho</SubText></MainText>
           </ProfileContainer>
           <BottomContainer>
@@ -102,11 +103,6 @@ const Bottom = styled.Text`
 const ProfileContainer = styled.View`
 `
 
-const Profile = styled.Image`
-  width: 70px;
-  height: 70px;
-  margin-bottom: 3px;
-`
 
 const MainText = styled.Text`
   font-weight: bold;
