@@ -1,58 +1,35 @@
-import React from 'react';
-import { 
-  View, 
- 
-  Dimensions,
-} from 'react-native';
+import React, { ReactElement } from 'react';
 
 import styled from 'styled-components/native'
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { Ionicons } from '@expo/vector-icons';
-// import { Ionicons } from 'react-native-vector-icons';
-
 import { Icon } from 'react-native-elements';
-import Home from './Home';
 
-const Tab = createBottomTabNavigator();
-const window = Dimensions.get('window');
+type Props = {
+  navigation: () => {}
+}
 
-const options = ({ route }) => ({
-  tabBarIcon: ({ focused, color, size }) => {
-    let iconName;
+const Home = React.memo(({ navigation }: Props): ReactElement => {
+  return (
+    <Container>
+      
+      <ShadowContainer>
+        <MainContainer>
+          <ProfileContainer onPress={() => navigation.navigate("Account")}>
+            <Profile source={require('../../assets/icons/profile.png')} />
+            <MainText>Peter{" "}</MainText><SubText>Cho</SubText>
+          </ProfileContainer>
+          <MoneyContainer>
+            <MoneyText>$1000</MoneyText>
+            <IconContainer>
+              <Icon name="plus" type={"antdesign"} size={10} />
+            </IconContainer>
+          </MoneyContainer>
+        </MainContainer>
+        </ShadowContainer>
+    </Container>
+  )
+})
 
-    if (route.name === 'Main') {
-      iconName = focused
-        ? 'ios-information-circle'
-        : 'ios-information-circle-outline';
-    } else if (route.name === 'Settings') {
-      iconName = focused ? 'ios-list-box' : 'ios-list';
-    }
-
-    // You can return any component that you like here!
-    return <Icon name={iconName} size={size} color={color} />;
-  },
-});
-
-export default () => (
-  <Container>
-    
-    <ShadowContainer>
-      <MainContainer>
-        <ProfileContainer>
-          <Profile source={require('../../assets/icons/profile.png')} />
-          <MainText>Peter{" "}</MainText><SubText>Cho</SubText>
-        </ProfileContainer>
-        <MoneyContainer>
-          <MoneyText>$1000</MoneyText>
-          <IconContainer>
-            <Icon name="plus" type={"antdesign"} size={10} />
-          </IconContainer>
-        </MoneyContainer>
-      </MainContainer>
-      </ShadowContainer>
-  </Container>
-)
+export default Home
 
 const Text = styled.Text`
 `
@@ -78,7 +55,7 @@ const MainContainer = styled.View`
   margin: 8px 20px;
 `
 
-const ProfileContainer = styled.View`
+const ProfileContainer = styled.TouchableOpacity`
   flex-direction: row;
   flex: 1;
   align-items: center;

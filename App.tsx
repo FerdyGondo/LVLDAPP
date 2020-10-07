@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ThemeProvider } from 'styled-components';
+import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -15,6 +16,7 @@ import LvldLogo from './assets/svg/LvldLogo';
 import Home     from './src/home/';
 import Content  from './src/content';
 import Entries  from './src/entries';
+import Account  from './src/account'
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -22,6 +24,16 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 );
 const BottomTab = createBottomTabNavigator();
+const HomeStack = createStackNavigator()
+
+function HomeComponent () {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+              <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="Account" component={Account} />
+    </HomeStack.Navigator>
+  )
+}
 
 sagaMiddleware.run(sagas);
 
@@ -96,7 +108,7 @@ export default function App() {
                 
           
           >
-            <BottomTab.Screen name="home"     component={Home} />
+            <BottomTab.Screen name="home"     component={HomeComponent} />
             <BottomTab.Screen name="content"  component={Content} />
             <BottomTab.Screen name="entries"  component={Entries} />
           </BottomTab.Navigator>
