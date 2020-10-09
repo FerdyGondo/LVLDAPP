@@ -26,6 +26,8 @@ import Home     from './src/home/index';
 import Account  from './src/account/index';
 import Content  from './src/content/index';
 import Entries  from './src/entries/index';
+import Sneaker  from './src/sneaker';
+import Context  from './src/context';
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -97,6 +99,8 @@ const HomeStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  initialRouteName="home" >
             <Stack.Screen name = "home"    component = {Home}/>
             <Stack.Screen name = "Account" component = {Account}/>
+            <Stack.Screen name="Sneaker" component={Sneaker} />
+            <Stack.Screen name="Context" component={Context} />
           </Stack.Navigator> )
 }
 

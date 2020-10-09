@@ -34,8 +34,8 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
       <BodyContainer>
         <LiveText os={Platform.OS}>Live contests</LiveText>
         <Scroll>
-          <RenderItemContainer>
-            <SneakerContainer os={Platform.OS}>
+          <RenderItemContainer onPress={() => navigation.navigate("Sneaker")}>
+            <SneakerContainer os={Platform.OS} onPress={() => navigation.navigate("Sneaker")}>
               <HeroText>{"Sneaker Contests"}</HeroText>
               <HeroSmallerText>{"Entry Fee $1.00-$5.00"}</HeroSmallerText>
               <SneakerMainText>
@@ -165,7 +165,7 @@ const PlayText = styled.Text`
 const PlayBlackText = styled(PlayText)`
   color: #000;
 `
-const RenderItemContainer = styled.View`
+const RenderItemContainer = styled.TouchableOpacity`
   padding: 0 27px 0px 7px;
   margin: 0px 15px 0px 30px;
 `
@@ -179,7 +179,7 @@ const Rockus = styled.View`
 const RokusWatch = styled(Rockus)`
   background-color: #262626
 `
-const CardContainer = styled.View`
+const CardContainer = styled.TouchableOpacity`
   padding: 10px 15px 0px;
   border-radius: 30px;
   margin-top: 7px;

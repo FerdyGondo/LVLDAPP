@@ -20,5 +20,8 @@ const defaultRoutine = (type: string): Routine => {
 export default {
   users: {
     fetchUsers: defaultRoutine('fetch_users')
+  },
+  sneakers: {
+    fetchSneakers: defaultRoutine('fetch_sneakers')
   }
 };

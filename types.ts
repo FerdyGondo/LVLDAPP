@@ -23,11 +23,26 @@ export type User = {
   website: string;
 };
 
+export type Sneaker = {
+  id: string;
+  name: string;
+  nickname: string;
+  image: string;
+  sizes: [];
+};
+
 export type UserState = {
   list: User[];
   error?: any;
 };
 
+export type SneakerState = {
+  sneaker: Sneaker[];
+  error?: any;
+};
+
 export type State = {
   users: UserState;
+  sneakers: SneakerState;
 };
+
