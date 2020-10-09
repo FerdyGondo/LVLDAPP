@@ -29,6 +29,6 @@ const options = ({ route }) => ({
 
 export default () => (
   <View style = {{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-    <Text>Content</Text>
+    <Text>Feed</Text>
   </View>
 )
