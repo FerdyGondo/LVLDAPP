@@ -26,16 +26,27 @@ import Home     from './src/home/index';
 import Account  from './src/account/index';
 import Content  from './src/content/index';
 import Entries  from './src/entries/index';
-import Sneaker  from './src/sneaker';
-import Context  from './src/context';
+import Sneaker  from './src/sneaker/index';
+import Context  from './src/context/index';
+import MenuIcon from './assets/svg/MenuIcon';
+import NotificationIcon from './assets/svg/NotificationIcon';
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
 const PreStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator  initialRouteName="drawer" 
-                            screenOptions={{ header: (navigation) => <LVLD_Header props={navigation} leftProps={<HeaderImage source={ require('./assets/icons/notification.png') } />} centerProps={<LvldLogo />}/> }} >
+  return( <Stack.Navigator  
+            initialRouteName="drawer" 
+            screenOptions={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<NotificationIcon  width={20} />} 
+                    centerProps={<LvldLogo />}
+                />
+              }}
+          >
             <Stack.Screen name = "drawer"    component = {DrawerNavigator}/>
           </Stack.Navigator> )
 }
@@ -99,8 +110,8 @@ const HomeStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  initialRouteName="home" >
             <Stack.Screen name = "home"    component = {Home}/>
             <Stack.Screen name = "Account" component = {Account}/>
-            <Stack.Screen name="Sneaker" component={Sneaker} />
-            <Stack.Screen name="Context" component={Context} />
+            <Stack.Screen name = "Sneaker" component = {Sneaker} />
+            <Stack.Screen name = "Context" component = {Context} />
           </Stack.Navigator> )
 }
 
@@ -119,7 +130,7 @@ const OpenCLoseDrawer = (props) => {
             props.navigation.dispatch(DrawerActions.toggleDrawer());
           }}
         >
-          <MenuImage source={ require('./assets/icons/menu.png') } />
+          <MenuIcon width={25} />
         </TouchableOpacity>
       );
     }
@@ -171,7 +182,7 @@ const OpenCLoseDrawer = (props) => {
                 <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>App Version 1.00.11</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>App Version 1.00.22</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
             </SafeAreaViewDrawer>
         </DrawerContentScrollView>
@@ -187,16 +198,8 @@ const TabText = styled.Text`
 font-family: Montserrat;
 font-size: 10px;
 `
-const MenuImage = styled.Image`
-width: 30px;
-height: 30px;
-`
 const SafeAreaViewStyled = styled.SafeAreaView`
 background-color: #262626;
-`
-const HeaderImage = styled.Image`
-width: 30px;
-height: 30px;
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
 margin-top:-38px;
