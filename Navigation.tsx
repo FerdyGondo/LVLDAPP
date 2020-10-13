@@ -30,24 +30,34 @@ import Sneaker  from './src/sneaker/index';
 import Context  from './src/context/index';
 import MenuIcon from './assets/svg/MenuIcon';
 import NotificationIcon from './assets/svg/NotificationIcon';
+import BackButton from './src/shared/components/BackButton';
+import CenterButton from './src/shared/components/CenterButton';
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
+
 const PreStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  
             initialRouteName="drawer" 
-            screenOptions={{ 
+          >
+            <Stack.Screen name = "drawer"    component = {DrawerNavigator} options={{ 
               header: (navigation) => 
                 <LVLD_Header 
                     props={navigation} 
                     leftProps={<NotificationIcon  width={20} />} 
                     centerProps={<LvldLogo />}
                 />
-              }}
-          >
-            <Stack.Screen name = "drawer"    component = {DrawerNavigator}/>
+              }}/>
+            <Stack.Screen name="other" component={OtherNavigator} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={<CenterButton text={'select size'} />}
+                />
+              }}/>
           </Stack.Navigator> )
 }
 
@@ -64,6 +74,23 @@ const DrawerNavigator = ({navigation}) => {
           }}
       >
       <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator}/>
+      </Drawer.Navigator>
+    )
+}
+
+const OtherNavigator = ({navigation}) => {
+  const window = useWindowDimensions();
+  return (      
+      <Drawer.Navigator 
+          drawerContent={props => <CustomDrawerContent {...props} />}
+          drawerPosition={"right"}
+          drawerType={'front'}
+          drawerStyle={{
+            backgroundColor: '#fff',
+            width: window.width,
+          }}
+      >
+      <Drawer.Screen name="othernavigator"    component={OtherStackNavigator}/>
       </Drawer.Navigator>
     )
 }
@@ -110,6 +137,11 @@ const HomeStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  initialRouteName="home" >
             <Stack.Screen name = "home"    component = {Home}/>
             <Stack.Screen name = "Account" component = {Account}/>
+          </Stack.Navigator> )
+}
+
+const OtherStackNavigator = ({navigation}) => {
+  return( <Stack.Navigator>
             <Stack.Screen name = "Sneaker" component = {Sneaker} />
             <Stack.Screen name = "Context" component = {Context} />
           </Stack.Navigator> )
