@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Dimensions,
-  useWindowDimensions
+  useWindowDimensions,
+  StatusBar,
+  Platform
 } from 'react-native';
 import styled from 'styled-components';
 import { 
@@ -166,10 +168,9 @@ const OpenCLoseDrawer = (props) => {
         </TouchableOpacity>
       );
     }
-
     const LVLD_Header = ({props, leftProps, centerProps}) => { 
       return(
-      <SafeAreaViewStyled>
+      <SafeAreaViewStyled statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >
         <Header 
             statusBarProps={{ barStyle: 'light-content' }}
               leftComponent={leftProps}
@@ -232,6 +233,7 @@ font-size: 10px;
 `
 const SafeAreaViewStyled = styled.SafeAreaView`
 background-color: #262626;
+padding-top: ${props => props.statusBarProps};
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
 margin-top:-38px;
