@@ -1,10 +1,9 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 import {Dimensions, FlatList, View, ActivityIndicator} from 'react-native'
-import { Icon } from 'react-native-elements';
-import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { useSelector, useDispatch } from 'react-redux'
 import Actions from '../../actions'
+import ProfileComponent from '../shared/components/Profile'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-left" size={30} color="#fff" />;
@@ -60,20 +59,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
 
     return (
         <Container>
-            <MainContainer>
-                <ProfileContainer onPress={() => navigation.navigate("Account")}>
-                    <Profile>
-                        <ProfileIcon width={30} />
-                    </Profile>
-                    <ProfileText>Peter{" "}</ProfileText><SubText>Cho</SubText>
-                </ProfileContainer>
-                <MoneyContainer>
-                    <MoneyText>$1000</MoneyText>
-                        <IconContainer>
-                            <Icon name="plus" type={"antdesign"} size={10} />
-                        </IconContainer>
-                </MoneyContainer>
-            </MainContainer>
+            <ProfileComponent />
             <GenderContainer>
                 <GenderMaleContainer onPress={() => genderSwitch("male")} gender={gender}>
                     <FirstText gender={gender}>{`Men's`}</FirstText>
@@ -101,47 +87,6 @@ const Container = styled.View`
   background-color: #fff;
   height: ${height}px;
 `
-const MainContainer = styled.View`
-  flex-direction: row;
-  margin: 8px 20px;
-`
-const ProfileText = styled.Text`
-  font-size: 13px;
-  font-family: "Montserrat-Bold";
-`
-const SubText = styled.Text`
-  font-family: "Montserrat"
-`
-const ProfileContainer = styled.TouchableOpacity`
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
-`
-const Profile = styled.View`
-  margin-right: 7px;
-`
-const MoneyContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  background-color: #000;
-  padding: 8px;
-  border-radius: 20px;
-`
-const MoneyText = styled.Text`
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-`
-const IconContainer = styled.View`
-  background-color: #d2a747;
-  margin-left: 7px;
-  width: 15px;
-  height: 15px;
-  border-radius: 7px;
-  align-items: center;
-  justify-content: center;
-`
-
 const GenderContainer = styled.View`
   background-color: #fff;
   padding: 18px 20px;

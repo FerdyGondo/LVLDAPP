@@ -23,5 +23,8 @@ export default {
   },
   sneakers: {
     fetchSneakers: defaultRoutine('fetch_sneakers')
+  },
+  contests: {
+    fetchContests: defaultRoutine('fetch_contests')
   }
 };

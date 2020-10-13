@@ -31,6 +31,15 @@ export type Sneaker = {
   sizes: [];
 };
 
+export type Contest = {
+  id: string;
+  name: string;
+  people: string;
+  image: string;
+  entry: string;
+  start: string;
+};
+
 export type UserState = {
   list: User[];
   error?: any;
@@ -41,8 +50,14 @@ export type SneakerState = {
   error?: any;
 };
 
+export type ContestState = {
+  contest: ContestState[];
+  error?: any;
+};
+
 export type State = {
   users: UserState;
   sneakers: SneakerState;
+  contests: ContestState;
 };
 
