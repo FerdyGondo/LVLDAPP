@@ -38,7 +38,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
 
     const selectTile = (index: number): void => {
         setSelected(selected => selected = index);
-        setTimeout(() => navigation.navigate("Context"), 2000)
+        setTimeout(() => navigation.navigate("Context", { index: index }), 2000)
     }
 
     const genderSwitch = (data: string): void => {

@@ -34,6 +34,7 @@ import MenuIcon from './assets/svg/MenuIcon';
 import NotificationIcon from './assets/svg/NotificationIcon';
 import BackButton from './src/shared/components/BackButton';
 import CenterButton from './src/shared/components/CenterButton';
+import Confirmation from './src/confirmation'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -146,6 +147,7 @@ const OtherStackNavigator = ({navigation}) => {
   return( <Stack.Navigator>
             <Stack.Screen name = "Sneaker" component = {Sneaker} />
             <Stack.Screen name = "Context" component = {Context} />
+            <Stack.Screen name= "Confirmation" component={Confirmation} />
           </Stack.Navigator> )
 }
 

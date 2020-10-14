@@ -13,23 +13,26 @@ const {width,height} = Dimensions.get("window");
 
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 
+type Props = {
+    navigation: () => {};
+    route: () => {}
+}
 
-export default function index() {
+
+export default function index({ route, navigation }: Props) {
     const dispatch = useDispatch()
     const contests = useSelector(state => state.contests.contest)
+    const { index } = route?.params
     
-
     useEffect(() => {
         dispatch(Actions.contests.fetchContests.trigger())
     },[])
 
     if (!contests) return <Loading />
     
-
-
     const renderItem = ({ item }) => {
         return (
-            <MainContainer>
+            <MainContainer onPress={() => navigation.navigate("Confirmation", { item: item })}>
                 <ImageContainer>
                     <Image source={{ uri: item.image }} />
                 </ImageContainer>
@@ -57,7 +60,7 @@ export default function index() {
         <Container>
             <ProfileComponent />
             <List 
-                data={contests}
+                data={contests.filter((data) => data.size === index.toString())}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
             />
@@ -72,7 +75,7 @@ const Container = styled.View`
 
 const List = styled.FlatList``
 
-const MainContainer = styled.View`
+const MainContainer = styled.TouchableOpacity`
     background-color: #fff;
     flex-direction: row;
     justify-content: space-between;
