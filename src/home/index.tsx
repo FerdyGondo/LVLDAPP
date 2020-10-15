@@ -34,8 +34,8 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
       <BodyContainer>
         <LiveText os={Platform.OS}>Live contests</LiveText>
         <Scroll>
-          <RenderItemContainer onPress={() => navigation.navigate("other", { screen: "Sneaker" })}>
-            <SneakerContainer os={Platform.OS} onPress={() => navigation.navigate("other", { screen: "Sneaker" })}>
+          <RenderItemContainer onPress={() => navigation.navigate("Sneaker")}>
+            <SneakerContainer os={Platform.OS} onPress={() => navigation.navigate("Sneaker")}>
               <HeroText>{"Sneaker Contests"}</HeroText>
               <HeroSmallerText>{"Entry Fee $1.00-$5.00"}</HeroSmallerText>
               <SneakerMainText>

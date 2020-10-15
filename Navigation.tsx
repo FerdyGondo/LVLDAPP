@@ -43,24 +43,8 @@ const BottomTab = createBottomTabNavigator();
 
 const PreStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  
-            initialRouteName="drawer" 
           >
-            <Stack.Screen name = "drawer"    component = {DrawerNavigator} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={<LvldLogo />}
-                />
-              }}/>
-            <Stack.Screen name="other" component={OtherNavigator} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                    centerProps={<CenterButton text={'select size'} />}
-                />
-              }}/>
+            <Stack.Screen name = "drawer"    component = {DrawerNavigator} options={{ headerShown: false }} />
           </Stack.Navigator> )
 }
 
@@ -74,7 +58,9 @@ const DrawerNavigator = ({navigation}) => {
           drawerStyle={{
             backgroundColor: '#fff',
             width: window.width,
+            marginTop: 127,
           }}
+          overlayColor={0}
       >
       <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator}/>
       </Drawer.Navigator>
@@ -129,7 +115,7 @@ const BottomTabNavigator = ({navigation}) => {
                 inactiveBackgroundColor: '#fff',
               }}
       >
-        <BottomTab.Screen name="home"     component={HomeStackNavigator} />
+        <BottomTab.Screen name="home"     component={HomeStackNavigator}  />
         <BottomTab.Screen name="content"  component={Content} />
         <BottomTab.Screen name="entries"  component={Entries} />
       </BottomTab.Navigator>
@@ -138,8 +124,46 @@ const BottomTabNavigator = ({navigation}) => {
 
 const HomeStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  initialRouteName="home" >
-            <Stack.Screen name = "home"    component = {Home}/>
-            <Stack.Screen name = "Account" component = {Account}/>
+            <Stack.Screen name = "home"    component = {Home}  options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<NotificationIcon  width={20} />} 
+                    centerProps={<LvldLogo />}
+                />
+              }}/>
+            <Stack.Screen name = "Account" component = {Account} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<NotificationIcon  width={20} />} 
+                    centerProps={<LvldLogo />}
+                />
+              }} />
+            <Stack.Screen name = "Sneaker" component = {Sneaker} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                  props={navigation} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                  centerProps={<CenterButton text={'select size'} />}
+                />
+              }}/>
+            <Stack.Screen name = "Context" component = {Context} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'live contests'} />}
+                />
+              }}/>
+            <Stack.Screen name= "Confirmation" component={Confirmation} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'enter contest'} />}
+                />
+              }}/>
           </Stack.Navigator> )
 }
 
