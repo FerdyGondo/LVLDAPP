@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dimensions } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import ProfileComponent from '../shared/components/Profile'
+import PickerModal from '../shared/components/PickerModal'
 
 const {width,height} = Dimensions.get("window")
 
@@ -14,10 +15,32 @@ type Props = {
     navigation: () => {};
 }
 
+
 export default function index({ route, navigation }: Props) {
-    const { item, key } = route?.params
+    const [entry, setEntry] = useState(1)
+    const { key, item } = route?.params
+    let popupRef = React.createRef()
+
+    const onShowPopup = () => {
+        popupRef.show()
+    }
+
+    const onClosePopup = () => {
+        popupRef.close()
+    }
+
+    const finishEntry = (item) => {
+        setEntry(item)
+    }
+
     return (
         <Container>
+            <PickerModal 
+                title="Select Quantity"
+                ref={(target) => popupRef = target}
+                onTouchOutside={onClosePopup}
+                finishEntry={finishEntry}
+            />
             <ProfileHeader>
                 <ProfileComponent />
             </ProfileHeader>
@@ -64,18 +87,19 @@ export default function index({ route, navigation }: Props) {
                     </BigSizeContainer>
                 </LowerContainer>
                 <BottomContainer>
-                    <QuantityContainer>
-                        <BottomText>Qty: 1</BottomText>
+                    <QuantityContainer onPress={onShowPopup}>
+                        <BottomText>{`Qty: ${entry}`}</BottomText>
                         {myIcon}
                     </QuantityContainer>
                     <ConfirmContainer onPress={() => navigation.navigate("Lobby")}>
-                        <BottomText>{`Confirm Entry: $${item.entry}`}</BottomText>
+                        <BottomText>{`Confirm Entry: $${entry}.00`}</BottomText>
                     </ConfirmContainer>
                 </BottomContainer>
             </Scroll>
         </Container>
     )
 }
+
 
 const Container = styled.View`
     flex: 1;
@@ -176,7 +200,7 @@ const BottomContainer = styled.View`
     padding-top: 35px;
 `
 const QuantityContainer = styled.TouchableOpacity`
-    background-color: #000;
+    background-color: #979797;
     border-radius: 20px;
     flex-direction: row;
     padding: 15px;
