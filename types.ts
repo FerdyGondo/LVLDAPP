@@ -50,14 +50,8 @@ export type SneakerState = {
   error?: any;
 };
 
-export type ContestState = {
-  contest: ContestState[];
-  error?: any;
-};
-
 export type State = {
   users: UserState;
   sneakers: SneakerState;
-  contests: ContestState;
 };
 

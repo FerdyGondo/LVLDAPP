@@ -15,7 +15,7 @@ type Props = {
 }
 
 export default function index({ route, navigation }: Props) {
-    const { item } = route?.params
+    const { item, key } = route?.params
     return (
         <Container>
             <ProfileHeader>
@@ -29,7 +29,7 @@ export default function index({ route, navigation }: Props) {
                     </MainTextContainer>
                     <SizeContainer>
                         <SizeTextUpper>Size</SizeTextUpper>
-                        <SizeTextLower>{item.size}</SizeTextLower>
+                        <SizeTextLower>{key}</SizeTextLower>
                     </SizeContainer>
                 </MainContainer>
                 <ImageContainer>
@@ -43,10 +43,10 @@ export default function index({ route, navigation }: Props) {
                         <ProfileContainer>
                             <ProfileIcon width={14}/>
                         </ProfileContainer>
-                        <ListText>{item.people}</ListText>
+                        <ListText>{item.requiredParticipants}</ListText>
                     </SubListContainer>
                     <SubListContainer>
-                        <ListText>{`Start: ${item.start}`}</ListText>
+                        <ListText>{`Start: ${item.startTime[0]}`}</ListText>
                     </SubListContainer>
                 </ListContainer>
                 <LowerContainer>

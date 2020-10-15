@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import { Dimensions } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import Actions from '../../actions'
-import Loading from '../shared/components/Loading';
 import ProfileComponent from '../shared/components/Profile';
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-right" size={16} color="#A9A9A9" />;
-
-const {width,height} = Dimensions.get("window");
 
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 
@@ -20,19 +15,11 @@ type Props = {
 
 
 export default function index({ route, navigation }: Props) {
-    const dispatch = useDispatch()
-    const contests = useSelector(state => state.contests.contest)
-    const { index } = route?.params
-    
-    useEffect(() => {
-        dispatch(Actions.contests.fetchContests.trigger())
-    },[])
-
-    if (!contests) return <Loading />
+    const { items } = route?.params
     
     const renderItem = ({ item }) => {
         return (
-            <MainContainer onPress={() => navigation.navigate("Confirmation", { item: item })}>
+            <MainContainer onPress={() => navigation.navigate("Confirmation", { item: item, key: items.key })}>
                 <ImageContainer>
                     <Image source={{ uri: item.image }} />
                 </ImageContainer>
@@ -41,12 +28,12 @@ export default function index({ route, navigation }: Props) {
                         <NameText>{item.name}</NameText>
                         <SvgContainer>
                             <ProfileIcon width={13} />
-                            <SizeText>{item.people}</SizeText>
+                            <SizeText>{item.requiredParticipants}</SizeText>
                         </SvgContainer>
                     </Text2Container>
                     <BottomContainer>
                         <BottomText>{`Entry: $${item.entry}`}</BottomText>
-                        <BottomText>{`Start: ${item.start}`}</BottomText>
+                        <BottomText>{`Start: ${item.startTime[0]}`}</BottomText>
                     </BottomContainer>
                 </TextContainer>
                 <ChevronContainer>
@@ -60,7 +47,7 @@ export default function index({ route, navigation }: Props) {
         <Container>
             <ProfileComponent />
             <List 
-                data={contests.filter((data) => data.size === index.toString())}
+                data={items.data}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
             />

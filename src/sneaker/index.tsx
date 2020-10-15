@@ -4,6 +4,7 @@ import {Dimensions, FlatList, View, ActivityIndicator} from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import Actions from '../../actions'
 import ProfileComponent from '../shared/components/Profile'
+import Loading from '../shared/components/Loading'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-left" size={30} color="#fff" />;
@@ -27,7 +28,6 @@ const numColumns: number = 4;
 const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const dispatch = useDispatch()
     const sneakers = useSelector(state => state.sneakers.sneaker)
-    const sneaker = sneakers[0]
 
     useEffect(() => {
         dispatch(Actions.sneakers.fetchSneakers.trigger())
@@ -36,18 +36,41 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const [selected, setSelected] = useState<number>()
     const [gender, setGender] = useState<string>('male')
 
-    const selectTile = (index: number): void => {
-        setSelected(selected => selected = index);
-        setTimeout(() => navigation.navigate("Context", { index: index }), 2000)
+    const selectTile = (item: object): void => {
+        setSelected(selected => selected = item.key);
+        setTimeout(() => navigation.navigate("Context", { items: item }), 2000)
     }
 
     const genderSwitch = (data: string): void => {
         setGender(data)
     }
 
+    const generateId = () => {
+      return Math.floor(Math.random() * 1000) + 1
+    }
+
+    const mappedData = sneakers.map(({id, sizes, name, image, nickname}) => {
+      return sizes.map(({key, data}) => {
+        return {key, data: data.map(sizeEntry => ({...sizeEntry, id: generateId(), name, image, nickname}))}
+      })
+    })
+    .reduce((acc, curr)=>{
+      return acc.concat(curr)
+    }, [])
+    .reduce((acc, curr) => {
+      const index = acc.findIndex(item => item.key === curr.key)
+      if (index > -1) {
+        const data = acc[index].data.concat(curr.data)
+        acc[index].data = data
+        return acc
+      }
+      return acc.concat(curr)
+    },[])
+
+
     const renderList = ({ item, index }: List) => {
         return (
-            <TileContainer key={index} tile={item.key} onPress={() => selectTile(item.key)} selected={selected} available={item.data.length !== 0} disabled={item.data.length === 0}>
+            <TileContainer key={index} tile={item.key} onPress={() => selectTile(item)} selected={selected} available={item.data.length !== 0} disabled={item.data.length === 0}>
                 <Tile tile={item.key} selected={selected}>
                     {item.key}
                 </Tile>
@@ -55,7 +78,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
            )
     }
 
-    if (!sneaker) return <ActivityIndicator size={30} color={'#000'} />
+    if (sneakers.length === 0) return <Loading />
 
     return (
         <Container>
@@ -70,7 +93,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
             </GenderContainer>
             <SizeContainer>
                 <FlatList 
-                    data={sneaker.sizes}
+                    data={mappedData}
                     keyExtractor={(item) => item.key.toString()}
                     numColumns={numColumns}
                     renderItem={renderList}

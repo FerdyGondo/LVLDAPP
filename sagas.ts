@@ -30,19 +30,6 @@ function* fetchSneakers({ payload }) {
   }
 }
 
-function* fetchContests({ payload }) {
-  try {
-    const resp = yield call(
-      fetch,
-      'https://5f7f7428d6aabe00166f051c.mockapi.io/api/v1/contest'
-    );
-    const contests = yield resp.json();
-    yield put(Actions.contests.fetchContests.success(contests));
-  } catch (e) {
-    yield put(Actions.contests.fetchContests.error(e));
-    console.error(e);
-  }
-}
 
 function* userSagas() {
   yield takeEvery(Actions.users.fetchUsers.trigger, fetchUsers);
@@ -52,12 +39,8 @@ function* sneakerSagas() {
   yield takeEvery(Actions.sneakers.fetchSneakers.trigger, fetchSneakers);
 }
 
-function* contestsSaga() {
-  yield takeEvery(Actions.contests.fetchContests.trigger, fetchContests);
-}
 
 export default function* sagas() {
   yield all([fork(userSagas)]);
   yield all([fork(sneakerSagas)]);
-  yield all([fork(contestsSaga)])
 }
