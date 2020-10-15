@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import styled from 'styled-components/native'
-import { Icon } from 'react-native-elements';
-import ProfileIcon from '../../assets/svg/ProfileIcon'
+import ProfileComponent from '../shared/components/Profile'
 
 import { Dimensions, Platform } from 'react-native'
 
@@ -16,20 +15,7 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
   return (
     <Container>
       <ShadowContainer elevation={5}>
-        <MainContainer>
-          <ProfileContainer onPress={() => navigation.navigate("Account")}>
-            <Profile>
-              <ProfileIcon width={30} />
-            </Profile>
-            <ProfileText>Peter{" "}</ProfileText><SubText>Cho</SubText>
-          </ProfileContainer>
-          <MoneyContainer>
-            <MoneyText>$1000</MoneyText>
-              <IconContainer>
-                <Icon name="plus" type={"antdesign"} size={10} />
-              </IconContainer>
-            </MoneyContainer>
-        </MainContainer>
+        <ProfileComponent />
       </ShadowContainer>
       <BodyContainer>
         <LiveText os={Platform.OS}>Live contests</LiveText>
