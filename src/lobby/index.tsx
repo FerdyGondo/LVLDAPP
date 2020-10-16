@@ -15,7 +15,7 @@ type Props = {
 
 export default function index({ route, navigation }: Props) {
     const [lobby, setLobby] = useState("lobby")
-    const { entry, item } = route?.params
+    const { entry, lobbyItem } = route?.params
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.list)
 
@@ -34,7 +34,7 @@ export default function index({ route, navigation }: Props) {
                 <LvdContainer>
                     <NameText>{item.userName}</NameText>
                 </LvdContainer>
-                <Play onPress={() => navigation.navigate("Placeholder")}>
+                <Play onPress={() => navigation.navigate("Placeholder", { lobbyItem: lobbyItem, entry: entry, users: mappedData()})}>
                     <NameText>Play</NameText>
                 </Play>
             </RenderContainer>
@@ -57,12 +57,12 @@ export default function index({ route, navigation }: Props) {
                         <Image source={require('../../assets/images/shoes/sneakers.png')} />
                     </ImageContainer>
                     <NameContainer>
-                        <NameText>{item.name}</NameText>
+                        <NameText>{lobbyItem.name}</NameText>
                         <SubListContainer>
                             <ProfileContainer>
                                 <ProfileIcon width={14}/>
                             </ProfileContainer>
-                            <ListText>{item.requiredParticipants}</ListText>
+                            <ListText>{lobbyItem.requiredParticipants}</ListText>
                         </SubListContainer>
                     </NameContainer>
                 </ProfileContainer>
@@ -74,7 +74,7 @@ export default function index({ route, navigation }: Props) {
                         </EntryRow>
                         <EntryRow>
                             <StartText>{`Start:`}</StartText>
-                            <StartText>{item.startTime[0]}</StartText>
+                            <StartText>{lobbyItem.startTime[0]}</StartText>
                         </EntryRow>
                     </EntryContainer>
                 </ProfileContainer>
