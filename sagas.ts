@@ -6,7 +6,7 @@ function* fetchUsers({ payload }) {
   try {
     const resp = yield call(
       fetch,
-      'https://jsonplaceholder.typicode.com/users'
+      'https://5f7f7428d6aabe00166f051c.mockapi.io/api/v1/users'
     );
     const users = yield resp.json();
     yield put(Actions.users.fetchUsers.success(users));

@@ -91,7 +91,7 @@ export default function index({ route, navigation }: Props) {
                         <BottomText>{`Qty: ${entry}`}</BottomText>
                         {myIcon}
                     </QuantityContainer>
-                    <ConfirmContainer onPress={() => navigation.navigate("Lobby")}>
+                    <ConfirmContainer onPress={() => navigation.navigate("Lobby", { item: item, entry: entry })}>
                         <BottomText>{`Confirm Entry: $${entry}.00`}</BottomText>
                     </ConfirmContainer>
                 </BottomContainer>

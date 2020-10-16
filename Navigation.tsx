@@ -35,6 +35,7 @@ import NotificationIcon from './assets/svg/NotificationIcon';
 import BackButton from './src/shared/components/BackButton';
 import CenterButton from './src/shared/components/CenterButton';
 import Confirmation from './src/confirmation'
+import Lobby from './src/lobby'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -162,6 +163,14 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'enter contest'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Lobby" component={Lobby} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'lobby'} />}
                 />
               }}/>
           </Stack.Navigator> )
