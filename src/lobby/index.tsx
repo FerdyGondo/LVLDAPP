@@ -13,7 +13,7 @@ type Props = {
     route: () => {};
 }
 
-export default function index({ route }: Props) {
+export default function index({ route, navigation }: Props) {
     const [lobby, setLobby] = useState("lobby")
     const { entry, item } = route?.params
     const dispatch = useDispatch()
@@ -34,6 +34,9 @@ export default function index({ route }: Props) {
                 <LvdContainer>
                     <NameText>{item.userName}</NameText>
                 </LvdContainer>
+                <Play onPress={() => navigation.navigate("Placeholder")}>
+                    <NameText>Play</NameText>
+                </Play>
             </RenderContainer>
         )
     }
@@ -238,4 +241,11 @@ const RenderContainer = styled.View`
 `
 const LvdContainer = styled.View`
     margin-left: 10px;
+`
+const Play = styled.TouchableOpacity`
+    margin-left: 20px;
+    background-color: #fff;
+    border-color: #000;
+    border-width: 0.5px;
+    padding: 5px;
 `

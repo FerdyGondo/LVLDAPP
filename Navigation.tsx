@@ -36,6 +36,8 @@ import BackButton from './src/shared/components/BackButton';
 import CenterButton from './src/shared/components/CenterButton';
 import Confirmation from './src/confirmation'
 import Lobby from './src/lobby'
+import Placeholder from './src/placeholder'
+import LeaderBoard from './src/leaderboard'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -171,6 +173,22 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'lobby'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Placeholder" component={Placeholder} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Placeholder'} />}
+                />
+              }}/>
+              <Stack.Screen name= "LeaderBoard" component={LeaderBoard} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'LeaderBoard'} />}
                 />
               }}/>
           </Stack.Navigator> )
