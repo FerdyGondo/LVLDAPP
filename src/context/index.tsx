@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components';
-import { Dimensions } from 'react-native'
 import ProfileComponent from '../shared/components/Profile';
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -59,7 +58,6 @@ const Container = styled.View`
     flex: 1;
     background-color: #fff;
 `
-
 const List = styled.FlatList``
 
 const MainContainer = styled.TouchableOpacity`
@@ -71,23 +69,19 @@ const MainContainer = styled.TouchableOpacity`
     align-items: center;
     padding: 15px 20px;
 `
-
 const NameText = styled.Text`
     font-family: "Montserrat-ExtraBold";
     font-size: 13px;
 `
-
 const SvgContainer = styled.View`
     flex-direction: row;
     align-items: center;
 `
-
 const SizeText = styled.Text`
     left: 7px;
     font-family: "Montserrat-Medium";
     font-size: 13px;
 `
-
 const BottomContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
@@ -98,10 +92,9 @@ const BottomText = styled.Text`
     font-family: "Montserrat-Bold";
     font-size: 13px;
 `
-
 const ImageContainer = styled.View`
     width: 100px;
-    height: 50px;
+    height: 55px;
 `
 const Image = styled.Image`
     width: 100%;
@@ -115,7 +108,6 @@ const TextContainer = styled.View`
 const Text2Container = styled.View`
     
 `
-
 const ChevronContainer = styled.View`
     width: 20px;
     height: 20px;
