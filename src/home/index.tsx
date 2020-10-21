@@ -29,7 +29,7 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
               </SneakerMainText>
             </SneakerContainer>
             <SneakerImageContainer os={Platform.OS}>
-              <SneakerImage source={require('../../assets/images/shoes/shoes.png')} />
+              <SneakerImage source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/home-screen/shoes.png" }} />
             </SneakerImageContainer>
           </RenderItemContainer>
           <Rockus>
@@ -41,7 +41,7 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
               </ApparelMainText>
             </ApparelContainer>
             <ApparelImageContainer os={Platform.OS}>
-              <ApparelImage source={require('../../assets/images/Apparel/Apparel.png')} resizeMode={"contain"} />
+              <ApparelImage source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/home-screen/Apparel.png" }} resizeMode={"contain"} />
             </ApparelImageContainer>
           </Rockus>
           <RokusWatch>
@@ -52,7 +52,7 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
               </WatchMainText>
             </WatchContainer>
             <WatchImageContainer os={Platform.OS}>
-              <WatchImage source={require('../../assets/images/watch/watch.png')} resizeMode={"contain"} />
+              <WatchImage source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/home-screen/Watches.png" }} resizeMode={"contain"} />
             </WatchImageContainer>
           </RokusWatch>
         </Scroll>
