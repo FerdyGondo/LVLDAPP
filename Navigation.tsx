@@ -38,6 +38,7 @@ import Confirmation from './src/confirmation'
 import Lobby from './src/lobby'
 import Placeholder from './src/placeholder'
 import LeaderBoard from './src/leaderboard'
+import Video from './src/video'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -66,23 +67,6 @@ const DrawerNavigator = ({navigation}) => {
           overlayColor={0}
       >
       <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator}/>
-      </Drawer.Navigator>
-    )
-}
-
-const OtherNavigator = ({navigation}) => {
-  const window = useWindowDimensions();
-  return (      
-      <Drawer.Navigator 
-          drawerContent={props => <CustomDrawerContent {...props} />}
-          drawerPosition={"right"}
-          drawerType={'front'}
-          drawerStyle={{
-            backgroundColor: '#fff',
-            width: window.width,
-          }}
-      >
-      <Drawer.Screen name="othernavigator"    component={OtherStackNavigator}/>
       </Drawer.Navigator>
     )
 }
@@ -119,7 +103,7 @@ const BottomTabNavigator = ({navigation}) => {
               }}
       >
         <BottomTab.Screen name="home"     component={HomeStackNavigator}  />
-        <BottomTab.Screen name="content"  component={Content} />
+        <BottomTab.Screen name="content"  component={ContentStackNavigator} />
         <BottomTab.Screen name="entries"  component={Entries} />
       </BottomTab.Navigator>
   )
@@ -194,13 +178,27 @@ const HomeStackNavigator = ({navigation}) => {
           </Stack.Navigator> )
 }
 
-const OtherStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator>
-            <Stack.Screen name = "Sneaker" component = {Sneaker} />
-            <Stack.Screen name = "Context" component = {Context} />
-            <Stack.Screen name= "Confirmation" component={Confirmation} />
+const ContentStackNavigator = ({navigation}) => {
+  return( <Stack.Navigator  initialRouteName="content" >
+            <Stack.Screen name = "content"    component = {Content}  options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<NotificationIcon  width={20} />} 
+                    centerProps={<CenterButton text={'Content'} />}
+                />
+              }}/>
+              <Stack.Screen name = "Video"    component = {Video}  options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={<CenterButton text={'Video'} />}
+                />
+              }}/>
           </Stack.Navigator> )
 }
+
 
 export const LVLD_Navigation = ({navigation}) => {
   return(
