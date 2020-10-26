@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import ProfileComponent from '../shared/components/Profile'
 import PickerModal from '../shared/components/PickerModal'
+import { useTimer } from '../shared/utils'
 
 const {width,height} = Dimensions.get("window")
 
@@ -20,6 +21,9 @@ export default function index({ route, navigation }: Props) {
     const [entry, setEntry] = useState(1)
     const { key, item } = route?.params
     let popupRef = React.createRef()
+    
+    const data = item
+    const result = useTimer(data)
 
     const onShowPopup = () => {
         popupRef.show()
@@ -31,6 +35,18 @@ export default function index({ route, navigation }: Props) {
 
     const finishEntry = (item) => {
         setEntry(item)
+    }
+
+    const formatSeconds = (data) => {
+        let result 
+        if (!data[3]) {
+            return result = "00"
+        } else if(data[3].timeLeft  < 10) {
+            result = `0${data[3].timeLeft }`
+        } else {
+            result = data[3].timeLeft 
+        }
+        return result
     }
 
     return (
@@ -69,20 +85,20 @@ export default function index({ route, navigation }: Props) {
                         <ListText>{item.requiredParticipants}</ListText>
                     </SubListContainer>
                     <SubListContainer>
-                        <ListText>{`Start: ${item.startTime[0]}`}</ListText>
+                        <ListText>{`End: ${item.endTime[0]}`}</ListText>
                     </SubListContainer>
                 </ListContainer>
                 <LowerContainer>
                     <BigSizeContainer>
-                        <BigUpperText>01</BigUpperText>
+                        <BigUpperText>{result[1].timeLeft || "00"}</BigUpperText>
                         <BigLowerText>HOURS</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>40</BigUpperText>
+                        <BigUpperText>{result[2].timeLeft || "00"}</BigUpperText>
                         <BigLowerText>MINUTES</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>32</BigUpperText>
+                        <BigUpperText>{formatSeconds(result)}</BigUpperText>
                         <BigLowerText>SECONDS</BigLowerText>
                     </BigSizeContainer>
                 </LowerContainer>
