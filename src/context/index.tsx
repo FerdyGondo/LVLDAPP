@@ -12,9 +12,15 @@ type Props = {
     route: () => {}
 }
 
+import { useTimer } from '../shared/utils'
+
+
 
 export default function index({ route, navigation }: Props) {
     const { items } = route?.params
+
+    const data = items.data[0]
+    const result = useTimer(data)
     
     const renderItem = ({ item }) => {
         return (
@@ -32,7 +38,7 @@ export default function index({ route, navigation }: Props) {
                     </Text2Container>
                     <BottomContainer>
                         <BottomText>{`Entry: $${item.entry}`}</BottomText>
-                        <BottomText>{`Start: ${item.startTime[0]}`}</BottomText>
+                        <BottomText>{`End: ${item.endTime[0]}`}</BottomText>
                     </BottomContainer>
                 </TextContainer>
                 <ChevronContainer>

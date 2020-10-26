@@ -144,8 +144,8 @@ export default function index({ route, navigation }: Props) {
                             <EntryText>{`$${entry}.00`}</EntryText>
                         </EntryRow>
                         <EntryRow>
-                            <StartText>{`Start:`}</StartText>
-                            <StartText>{lobbyItem.startTime[0]}</StartText>
+                            <StartText>{`End:`}</StartText>
+                            <StartText>{lobbyItem.endTime[0]}</StartText>
                         </EntryRow>
                     </EntryContainer>
                 </ProfileContainer>
