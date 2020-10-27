@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const SIZE = '@saved_size';
+const SHOWSIZE = '@show_size';
 
 
 export function useTimer(data) {
@@ -68,6 +72,40 @@ export function useTimer(data) {
 
 
 }
+
+export const storeSize = async (value) => {
+    try {
+      await AsyncStorage.setItem(SIZE, JSON.stringify(value))
+    } catch (e) {
+      // saving error
+    }
+  }
+
+export const storeSizeShown = async (value) => {
+    try {
+      await AsyncStorage.setItem(SHOWSIZE, JSON.stringify(value))
+    } catch (e) {
+      // saving error
+    }
+  }
+
+export  const getData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      return value ? JSON.parse(value) : null;
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+  export  const resetData = async () => {
+    try {
+      await AsyncStorage.removeItem(SIZE)
+    } catch(e) {
+      // error reading value
+    }
+  }
+  
 
 
 export default function index() {
