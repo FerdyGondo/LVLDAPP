@@ -5,6 +5,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import ProfileComponent from '../shared/components/Profile'
 import PickerModal from '../shared/components/PickerModal'
 import { useTimer } from '../shared/utils'
+import SecondChance from './components/SecondChance'
 
 const {width,height} = Dimensions.get("window")
 
@@ -21,6 +22,7 @@ export default function index({ route, navigation }: Props) {
     const [entry, setEntry] = useState(1)
     const { key, item } = route?.params
     let popupRef = React.createRef()
+    const [showSecond, setShowSecond] = useState(false)
     
     const data = item
     const result = useTimer(data)
@@ -49,17 +51,9 @@ export default function index({ route, navigation }: Props) {
         return result
     }
 
-    return (
-        <Container>
-            <PickerModal 
-                title="Select Quantity"
-                ref={(target) => popupRef = target}
-                onTouchOutside={onClosePopup}
-                finishEntry={finishEntry}
-            />
-            <ProfileHeader>
-                <ProfileComponent />
-            </ProfileHeader>
+    const renderItem = () => {
+        if (showSecond) return <Scroll><SecondChance /></Scroll>
+        return (
             <Scroll>
                 <MainContainer>
                     <MainTextContainer>
@@ -112,6 +106,21 @@ export default function index({ route, navigation }: Props) {
                     </ConfirmContainer>
                 </BottomContainer>
             </Scroll>
+        )
+    }
+
+    return (
+        <Container>
+            <PickerModal 
+                title="Select Quantity"
+                ref={(target) => popupRef = target}
+                onTouchOutside={onClosePopup}
+                finishEntry={finishEntry}
+            />
+            <ProfileHeader>
+                <ProfileComponent />
+            </ProfileHeader>
+            {renderItem()}
         </Container>
     )
 }
