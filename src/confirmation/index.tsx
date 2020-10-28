@@ -59,17 +59,20 @@ export default function index({ route, navigation }: Props) {
         setEntry(item)
     }
 
-    const formatSeconds = (data) => {
+    const formatTime = (data, apendder) => {
         let result 
-        if (!data[3]) {
+        const newData = data.find((item, index) => item.interval === apendder);
+        if (!newData) {
             return result = "00"
-        } else if(data[3].timeLeft  < 10) {
-            result = `0${data[3].timeLeft }`
+        } else if(newData.timeLeft  < 10) {
+            result = `0${newData.timeLeft }`
         } else {
-            result = data[3].timeLeft 
+            result = newData.timeLeft 
         }
         return result
     }
+
+
 
     const renderItem = () => {
         if (showSecond) return <Scroll><SecondChance /></Scroll>
@@ -104,15 +107,15 @@ export default function index({ route, navigation }: Props) {
                 </ListContainer>
                 <LowerContainer>
                     <BigSizeContainer>
-                        <BigUpperText>{result[1].timeLeft || "00"}</BigUpperText>
+                        <BigUpperText>{formatTime(result, "hours")}</BigUpperText>
                         <BigLowerText>HOURS</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>{result[2].timeLeft || "00"}</BigUpperText>
+                        <BigUpperText>{formatTime(result, "minutes")}</BigUpperText>
                         <BigLowerText>MINUTES</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>{formatSeconds(result)}</BigUpperText>
+                        <BigUpperText>{formatTime(result, "seconds")}</BigUpperText>
                         <BigLowerText>SECONDS</BigLowerText>
                     </BigSizeContainer>
                 </LowerContainer>

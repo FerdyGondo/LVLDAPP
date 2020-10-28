@@ -30,9 +30,28 @@ export function useTimer(data) {
             year: year
         }
     }
+
+    const tommorrowDate = () => {
+      var ms = new Date().getTime() + 106400000;
+      var tomorrow = new Date(ms);
+      var year = tomorrow.getFullYear();
+      var day = tomorrow.getDate();
+      var month = tomorrow.getMonth() + 1;
+      var hour = tomorrow.getHours();
+      var minute = tomorrow.getMinutes();
+
+      return {
+        year: year,
+        day: day,
+        month: month,
+        hour: hour,
+        minute: minute < 10 ? `0${minute}` : minute
+      }
+    }
+
     const calculateTime = () => {
-        const result = formatData()
-        const difference = +new Date(`${result.year}-${result.date[0]}-${result.date[1]}T${result.hour}:${result.minute}`) - +new Date();
+        const result = tommorrowDate();
+        const difference = +new Date(`${result.year}-${result.month}-${result.day}T${result.hour}:${result.minute}`) - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
