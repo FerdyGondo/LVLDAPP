@@ -4,6 +4,7 @@ import styled from 'styled-components/native'
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={30} color={"#000"} />;
 import ProfileIcon from '../../assets/svg/ProfileIcon'
+import { useNavigation } from '@react-navigation/native'
 
 const data = [{ id: 0, name: "Add Funds"}, { id: 1, name: "Transaction History"}, { id: 2, name: "Invite Friends: Get Rewards"}, { id: 3, name: "Account Settings"}, { id: 4, name: "Notification Settings"}, { id: 5, name: "Sign Out"},{id: 6, name: "Cash Out"}]
 import { Icon } from 'react-native-elements';
@@ -13,9 +14,10 @@ type FlatProps = {
 }
 
 const Account = React.memo((): ReactElement => {
+  const navigation = useNavigation()
   const renderCardItem = ({ item, index }: FlatProps) => {
     return (
-      <CardContainer>
+      <CardContainer onPress={() => navigation.navigate("AddFund")}>
         <CardText>
           <LeftText>{item.name}</LeftText>
           {index === 0 ? (
@@ -58,11 +60,6 @@ const Account = React.memo((): ReactElement => {
 })
 
 export default Account
-
-const Text = styled.Text`
-`
-
-const Image = styled.Image``
 
 const Container = styled.View`
   flex: 1;
@@ -115,7 +112,7 @@ const SubText = styled.Text`
 
 const FlatList = styled.FlatList``
 
-const CardContainer = styled.View`
+const CardContainer = styled.TouchableOpacity`
   margin: 0px 10px;
 `
 

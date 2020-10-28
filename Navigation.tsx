@@ -39,6 +39,7 @@ import Lobby from './src/lobby'
 import Placeholder from './src/placeholder'
 import LeaderBoard from './src/leaderboard'
 import Video from './src/video'
+import Fund from './src/fund'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -173,6 +174,14 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'LeaderBoard'} />}
+                />
+              }}/>
+              <Stack.Screen name= "AddFund" component={Fund} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Add Fund'} />}
                 />
               }}/>
           </Stack.Navigator> )

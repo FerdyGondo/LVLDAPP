@@ -14,7 +14,7 @@ export default function ProfileComponent() {
                 </Profile>
                 <ProfileText>Peter{" "}</ProfileText><SubText>Cho</SubText>
             </ProfileContainer>
-            <MoneyContainer>
+            <MoneyContainer onPress={() => navigation.navigate("AddFund")}>
                 <MoneyText>$1000</MoneyText>
                     <IconContainer>
                         <Icon name="plus" type={"antdesign"} size={10} />
@@ -44,7 +44,7 @@ const ProfileContainer = styled.TouchableOpacity`
 const Profile = styled.View`
   margin-right: 7px;
 `
-const MoneyContainer = styled.View`
+const MoneyContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   background-color: #000;
