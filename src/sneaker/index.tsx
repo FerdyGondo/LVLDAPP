@@ -33,6 +33,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const sneakers = useSelector(state => state.sneakers.sneaker)
     const [modalVisible, setModalVisible] = useState(false)
     const [sizeText, setSizeText] = useState()
+    const [item, setItem] = useState()
 
     useEffect(() => {
         dispatch(Actions.sneakers.fetchSneakers.trigger())
@@ -52,11 +53,20 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const [selected, setSelected] = useState<number>()
     const [gender, setGender] = useState<string>('male')
 
+    const sizeModal = () => {
+
+        setTimeout(() => navigation.navigate("Context", { items: item }), 2000)
+    }
+
     const selectTile = async (item: object): void => {
         setSelected(selected => selected = item.key);
+        setItem(item)
         const result = await getData(SHOWSIZE)
-        if(!result) setModalVisible(true)
-        setTimeout(() => navigation.navigate("Context", { items: item }), 2000)
+        if(result) {
+          setTimeout(() => navigation.navigate("Context", { items: item}), 2000)
+        } else {
+          setModalVisible(true)
+        }
     }
 
     const genderSwitch = (data: string): void => {
@@ -100,7 +110,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
 
     return (
         <Container>
-            <SizeModal modalVisible={modalVisible} setModalVisible={setModalVisible} selected={selected} />
+            <SizeModal modalVisible={modalVisible} setModalVisible={setModalVisible} selected={selected} sizeModal={sizeModal} />
             <ProfileComponent />
             <GenderContainer>
                 <GenderMaleContainer onPress={() => genderSwitch("male")} gender={gender}>

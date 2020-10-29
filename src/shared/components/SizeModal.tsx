@@ -4,17 +4,19 @@ import styled from 'styled-components'
 import CheckBox from '@react-native-community/checkbox';
 import { storeSize, storeSizeShown } from '../utils'
 
-export default function index({ modalVisible, setModalVisible, selected }) {
+export default function index({ modalVisible, setModalVisible, selected, sizeModal }) {
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
     console.log('toggleCheckBox', toggleCheckBox)
     const askAgain = (value) => {
         setToggleCheckBox(value)
         storeSizeShown(value)
         setModalVisible(false)
+        sizeModal()
     }
     const storeSizeFunction = () => {
         storeSize(selected)
         setModalVisible(!modalVisible)
+        sizeModal()
     }
     return (
             <Modal
