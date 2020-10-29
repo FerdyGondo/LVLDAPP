@@ -181,7 +181,7 @@ const HomeStackNavigator = ({navigation}) => {
                 <LVLD_Header 
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Add Fund'} />}
+                centerProps={<CenterButton text={'Add Funds'} />}
                 />
               }}/>
           </Stack.Navigator> )
