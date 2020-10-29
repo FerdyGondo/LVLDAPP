@@ -13,9 +13,9 @@ type List = {
     amount: number;
 }
 
-const bankData = [{name: "Online Banking", color: "#979797"},{name: "Credit Card", color: "#C29A41"},{image: require('../../assets/images/applepay.png'), color: "#000000"},{image: require('../../assets/images/paypal.png'), color: "#FFC43A"},{image: require('../../assets/images/venmo.png'), color: "#029CDD"}]
+const bankData = [{name: "Online Banking", color: "#979797", screen: "Bank"},{name: "Credit Card", color: "#C29A41", screen: ""},{image: require('../../assets/images/applepay.png'), color: "#000000", screen: ""},{image: require('../../assets/images/paypal.png'), color: "#FFC43A", screen: ""},{image: require('../../assets/images/venmo.png'), color: "#029CDD", screen: ""}]
 
-export default function index() {
+export default function index({ navigation }) {
 
     const renderList = ({ item, index }: List) => {
         return (
@@ -30,7 +30,7 @@ export default function index() {
     const renderCard = ({ item, index }) => {
         if (item.image) return <ImageContainer key={index} index={index}><Image source={item.image} /></ImageContainer>
         return (
-            <CardContainer key={index} color={item.color}>
+            <CardContainer key={index} color={item.color} onPress={() => navigation.navigate(item.screen)}>
               <CardText>{item.name}</CardText>
             </CardContainer>
         )
@@ -133,7 +133,7 @@ const BankContainer = styled.View`
     flex: 1;
     padding-bottom: 5px;
 `
-const CardContainer = styled.View`
+const CardContainer = styled.TouchableOpacity`
     background-color: ${props => props.color};
     justify-content: center;
     align-items: center;
