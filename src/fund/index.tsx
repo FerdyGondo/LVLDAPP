@@ -13,7 +13,7 @@ type List = {
     amount: number;
 }
 
-const bankData = [{name: "Online Banking", color: "#979797", screen: "Bank"},{name: "Credit Card", color: "#C29A41", screen: ""},{image: require('../../assets/images/applepay.png'), color: "#000000", screen: ""},{image: require('../../assets/images/paypal.png'), color: "#FFC43A", screen: ""},{image: require('../../assets/images/venmo.png'), color: "#029CDD", screen: ""}]
+const bankData = [{name: "Online Banking", color: "#979797", screen: "Bank"},{name: "Credit Card", color: "#C29A41", screen: "Credit"},{image: require('../../assets/images/applepay.png'), color: "#000000", screen: ""},{image: require('../../assets/images/paypal.png'), color: "#FFC43A", screen: ""},{image: require('../../assets/images/venmo.png'), color: "#029CDD", screen: ""}]
 
 export default function index({ navigation }) {
 
