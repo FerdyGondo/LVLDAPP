@@ -15,6 +15,13 @@ export default function index() {
         setBank(item)
         setModalVisible(true)
     }
+    const [filteredBanks, setFilteredBanks] = useState(data)
+    const newSearch = (item) => {
+        let filtered = data.filter((bank, index) => bank.name.toLowerCase().indexOf(item.toLowerCase()) !== -1)
+        setFilteredBanks(filtered)
+    }
+
+
     const renderList = ({ item }) => {
         return (
             <BankingContainer onPress={() => openModal(item.name)}>
@@ -32,9 +39,9 @@ export default function index() {
     return (
         <Container>
             <BankModal modalVisible={modalVisible} setModalVisible={setModalVisible} text={bank} />
-            <Search />
+            <Search newSearch={newSearch} />
             <List 
-                data={data}
+                data={filteredBanks}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderList}
             />

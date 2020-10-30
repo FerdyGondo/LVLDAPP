@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const myIcon = <AntDesign name="search1" size={17} color="#fff" />;
 
-export default function Search() {
+export default function Search({ newSearch }) {
+    const [search, setSearch] = useState()
+
+    const onChanging = (text) => {
+        setSearch(text)
+        newSearch(text)
+    }
+    
     return (
         <Container>
             <SearchContainer>
-                <SearchInput placeholder={"Search"} placeholderTextColor={"#000"} />
+                <SearchInput placeholder={"Search"} placeholderTextColor={"#000"} onChangeText={(text) => onChanging(text)} />
                 <IconContainer>
                     {myIcon}
                 </IconContainer>
