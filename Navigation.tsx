@@ -42,6 +42,7 @@ import Video from './src/video'
 import Fund from './src/fund'
 import Bank from './src/bank'
 import Credit from './src/credit'
+import Settings from './src/settings'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -200,6 +201,14 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'Credit Card'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Settings" component={Settings} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Account Settings'} />}
                 />
               }}/>
           </Stack.Navigator> )
