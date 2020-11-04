@@ -55,7 +55,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
 
     const sizeModal = () => {
 
-        setTimeout(() => navigation.navigate("Context", { items: item }), 2000)
+      navigation.navigate("Context", { items: item })
     }
 
     const selectTile = async (item: object): void => {
@@ -63,7 +63,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
         setItem(item)
         const result = await getData(SHOWSIZE)
         if(result) {
-          setTimeout(() => navigation.navigate("Context", { items: item}), 2000)
+          navigation.navigate("Context", { items: item})
         } else {
           setModalVisible(true)
         }

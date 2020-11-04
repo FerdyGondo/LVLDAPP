@@ -51,6 +51,7 @@ export default function index({ modalVisible, setModalVisible, selected, sizeMod
                         <ModalButton
                             onPress={() => {
                             setModalVisible(!modalVisible);
+                            sizeModal();
                             }}
                             grey
                         >
