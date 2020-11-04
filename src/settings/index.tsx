@@ -5,15 +5,15 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={22} color={"#000"} />;
 import { Switch } from 'react-native'
 
-const data = [{name: "Two Step Verification", screen: ""},{name: "Personal Info", screen: ""},{name: "Update Password", screen: ""},{name: "Update Email", screen: ""}]
+const data = [{name: "Two Step Verification", screen: "Verification"},{name: "Personal Info", screen: ""},{name: "Update Password", screen: ""},{name: "Update Email", screen: ""}]
 
-export default function index() {
+export default function index({ navigation }) {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     const renderItem = ({ item }) => {
         return (
-            <RenderContainer>
+            <RenderContainer onPress={() => navigation.navigate(item.screen)}>
                 <LeftText>{item.name}</LeftText>
                 <IconContainer>
                     {myIcon}
@@ -60,7 +60,7 @@ const List = styled.FlatList`
 `
 const ListContainer = styled.View`
 `
-const RenderContainer = styled.View`
+const RenderContainer = styled.TouchableOpacity`
     border-bottom-width: 1px;
     border-color: #979797;
     flex-direction: row;

@@ -3,11 +3,12 @@ import styled from 'styled-components'
 
 type Props = {
     text: string;
+    size: number;
 }
 
-export default function CenterButton({ text }: Props) {
+export default function CenterButton({ text, size=16 }: Props) {
     return (
-        <CenterContainer><CenterText>{text}</CenterText></CenterContainer>
+        <CenterContainer><CenterText size={`${size}px`}>{text}</CenterText></CenterContainer>
     )
 }
 
@@ -19,5 +20,5 @@ const CenterText = styled.Text`
     font-family: "Montserrat-Bold";
     color: #fff;
     letter-spacing: 3px;
-    font-size: 16px;
+    font-size: ${props => props.size};
 `

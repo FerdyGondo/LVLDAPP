@@ -43,6 +43,7 @@ import Fund from './src/fund'
 import Bank from './src/bank'
 import Credit from './src/credit'
 import Settings from './src/settings'
+import Verification from './src/verification'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -209,6 +210,14 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'Account Settings'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Verification" component={Verification} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Two-Step Verification'} size={13} />}
                 />
               }}/>
           </Stack.Navigator> )
