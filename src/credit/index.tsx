@@ -38,31 +38,31 @@ export default function index() {
                 <MainContainer>
                     <PlaceHolderContainer>
                         <PlaceHolderText>Cardholder Name</PlaceHolderText>
-                        <PlaceHolderInput placeholder={"Full Name"} value={name} focus={focus1} onFocus={() => setFocus1(true)} onBlur={() => setFocus1(false)} onChaneText={(text) => setName(text)} color={focus1} />
+                        <PlaceHolderInput placeholder={"Full Name"} value={name} focus={focus1} onFocus={() => setFocus1(true)} onBlur={() => setFocus1(false)} onChangeText={(text) => setName(text)} color={focus1} />
                         <FontLine>As it appears on the front of your card</FontLine>
                     </PlaceHolderContainer>
                     <PlaceHolderContainer>
                         <PlaceHolderText>Credit Card Number</PlaceHolderText>
-                        <PlaceHolderInput placeholder={"XXXX XXXX XXXX XXXX"} value={card} focus={focus2} onFocus={() => setFocus2(true)} onBlur={() => setFocus2(false)} onChaneText={(text) => setCard(text)} color={focus2} />
+                        <PlaceHolderInput placeholder={"XXXX XXXX XXXX XXXX"} value={card} focus={focus2} onFocus={() => setFocus2(true)} onBlur={() => setFocus2(false)} onChangeText={(text) => setCard(text)} color={focus2} keyboardType="numeric" />
                     </PlaceHolderContainer>
                     <IncomeContainer>
                         <PlaceHolderHalfContainer>
                             <PlaceHolderText>Expiry Date</PlaceHolderText>
-                            <PlaceHolderInput placeholder={"MM/YY"} value={date} focus={focus3} onFocus={() => setFocus3(true)} onBlur={() => setFocus3(false)} onChaneText={(text) => setDate(text)} color={focus3} />
+                            <PlaceHolderInput placeholder={"MM/YY"} value={date} focus={focus3} onFocus={() => setFocus3(true)} onBlur={() => setFocus3(false)} onChangeText={(text) => setDate(text)} color={focus3} keyboardType="numeric" />
                         </PlaceHolderHalfContainer>
                         <PlaceHolderHalfContainer>
                             <PlaceHolderText>CVV</PlaceHolderText>
-                            <PlaceHolderInput placeholder={"Security Code"} value={security} focus={focus4} onFocus={() => setFocus4(true)} onBlur={() => setFocus4(false)} onChaneText={(text) => setSecurity(text)} color={focus4} />
+                            <PlaceHolderInput placeholder={"Security Code"} value={security} focus={focus4} onFocus={() => setFocus4(true)} onBlur={() => setFocus4(false)} onChangeText={(text) => setSecurity(text)} color={focus4} keyboardType="numeric" />
                         </PlaceHolderHalfContainer>
                     </IncomeContainer>
                     <IncomeContainer>
                         <PlaceHolderHalfContainer>
                             <PlaceHolderText>State</PlaceHolderText>
-                            <PlaceHolderInput placeholder={"e.g. CA"} value={state} focus={focus5} onFocus={() => setFocus5(true)} onBlur={() => setFocus5(false)} onChaneText={(text) => setState(text)} color={focus5} />
+                            <PlaceHolderInput placeholder={"e.g. CA"} value={state} focus={focus5} onFocus={() => setFocus5(true)} onBlur={() => setFocus5(false)} onChangeText={(text) => setState(text)} color={focus5} />
                         </PlaceHolderHalfContainer>
                         <PlaceHolderHalfContainer>
                             <PlaceHolderText>Zip Code</PlaceHolderText>
-                            <PlaceHolderInput placeholder={""} value={zip} focus={focus6} onFocus={() => setFocus6(true)} onBlur={() => setFocus6(false)} onChaneText={(text) => setZip(text)} color={focus6} />
+                            <PlaceHolderInput placeholder={""} value={zip} focus={focus6} onFocus={() => setFocus6(true)} onBlur={() => setFocus6(false)} onChangeText={(text) => setZip(text)} color={focus6} keyboardType="numeric" />
                         </PlaceHolderHalfContainer>
                     </IncomeContainer>
                     <SaveContainer>
