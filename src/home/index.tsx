@@ -35,9 +35,8 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
           <Rockus>
             <ApparelContainer os={Platform.OS}>
               <HeroText>{"Apparel Contests"}</HeroText>
-              <HeroSmallerText>{"Entry Fee $0.50-$6.00"}</HeroSmallerText>
               <ApparelMainText>
-                <PlayBlackText>{"PLAY NOW"}</PlayBlackText>
+                <PlayBlackText>{"Coming Soon"}</PlayBlackText>
               </ApparelMainText>
             </ApparelContainer>
             <ApparelImageContainer os={Platform.OS}>
@@ -182,7 +181,7 @@ const SneakerMainText = styled(MainText)`
 `
 const ApparelMainText = styled(MainText)`
   background-color: #fff;
-  width: 90px;
+  width: 100px;
 `
 const WatchMainText = styled(MainText)`
   background-color: #fff;
