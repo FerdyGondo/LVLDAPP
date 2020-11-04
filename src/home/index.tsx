@@ -65,6 +65,7 @@ export default Home;
 const Container = styled.View`
   flex: 1;
   background-color: #fff;
+  padding-bottom: 40px;
 `
 const Scroll = styled.ScrollView`
   flex: 1;
