@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 type Props = {
     text: string;
-    size: number;
 }
 
 export default function CenterButton({ text, size=16 }: Props) {

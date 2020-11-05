@@ -58,7 +58,7 @@ const SubText = styled.Text`
 `
 const HighlightText = styled(SubText)`
     text-decoration-line: underline;
-    color: blue;
+    color: #00AADE;
 `
 const AuthContainer = styled.TouchableOpacity`
     border-top-width: 1px;
