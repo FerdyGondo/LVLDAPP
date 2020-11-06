@@ -5,7 +5,7 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={22} color={"#000"} />;
 import { Switch } from 'react-native'
 
-const data = [{name: "Two Step Verification", screen: "Verification"},{name: "Personal Info", screen: "Personal"},{name: "Update Password", screen: "UpdatePassword"},{name: "Update Email", screen: ""}]
+const data = [{name: "Two Step Verification", screen: "Verification"},{name: "Personal Info", screen: "Personal"},{name: "Update Password", screen: "UpdatePassword"}]
 
 export default function index({ navigation }) {
     const [isEnabled, setIsEnabled] = useState(false);
