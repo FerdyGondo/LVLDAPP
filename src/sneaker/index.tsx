@@ -5,11 +5,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import Actions from '../../actions'
 import ProfileComponent from '../shared/components/Profile'
 import Loading from '../shared/components/Loading'
+import SizeModal from '../shared/components/SizeModal'
+import {getData} from '../shared/utils'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-left" size={30} color="#fff" />;
 import { LVLD_Header } from '../../Navigation';
-
+const SIZE = '@saved_size';
+const SHOWSIZE = '@show_size';
 
 const {width,height} = Dimensions.get("window")
 
@@ -28,17 +31,42 @@ const numColumns: number = 4;
 const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const dispatch = useDispatch()
     const sneakers = useSelector(state => state.sneakers.sneaker)
+    const [modalVisible, setModalVisible] = useState(false)
+    const [sizeText, setSizeText] = useState()
+    const [item, setItem] = useState()
 
     useEffect(() => {
         dispatch(Actions.sneakers.fetchSneakers.trigger())
     },[])
 
+    useEffect(() => {
+      (async () => {
+        const showSize = await getData(SIZE)
+        setSizeText(showSize)
+        if (showSize && sneakers.length !== 0) {
+          const newData = mappedData.find((data, index) => data.key === showSize)
+          navigation.navigate("Context", { items: newData})
+        }
+      })()
+    },[sneakers])
+
     const [selected, setSelected] = useState<number>()
     const [gender, setGender] = useState<string>('male')
 
-    const selectTile = (item: object): void => {
+    const sizeModal = () => {
+
+      navigation.navigate("Context", { items: item })
+    }
+
+    const selectTile = async (item: object): void => {
         setSelected(selected => selected = item.key);
-        setTimeout(() => navigation.navigate("Context", { items: item }), 2000)
+        setItem(item)
+        const result = await getData(SHOWSIZE)
+        if(result) {
+          navigation.navigate("Context", { items: item})
+        } else {
+          setModalVisible(true)
+        }
     }
 
     const genderSwitch = (data: string): void => {
@@ -82,6 +110,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
 
     return (
         <Container>
+            <SizeModal modalVisible={modalVisible} setModalVisible={setModalVisible} selected={selected} sizeModal={sizeModal} />
             <ProfileComponent />
             <GenderContainer>
                 <GenderMaleContainer onPress={() => genderSwitch("male")} gender={gender}>

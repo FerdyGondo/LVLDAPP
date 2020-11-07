@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, Alert } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import ProfileComponent from '../shared/components/Profile'
 import PickerModal from '../shared/components/PickerModal'
-import { useTimer } from '../shared/utils'
+import SecondChance from './components/SecondChance'
+import { useTimer, resetData } from '../shared/utils'
 
 const {width,height} = Dimensions.get("window")
 
@@ -21,6 +22,27 @@ export default function index({ route, navigation }: Props) {
     const [entry, setEntry] = useState(1)
     const { key, item } = route?.params
     let popupRef = React.createRef()
+    const [showSecond, setShowSecond] = useState(false)
+
+    const resetButton = async () => {
+        await resetData()
+        navigation.navigate('Sneaker')
+    }
+
+    const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Are you sure you want to reset the size?",
+      "",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => resetButton() }
+      ],
+      { cancelable: false }
+    );
     
     const data = item
     const result = useTimer(data)
@@ -37,36 +59,31 @@ export default function index({ route, navigation }: Props) {
         setEntry(item)
     }
 
-    const formatSeconds = (data) => {
+    const formatTime = (data, apendder) => {
         let result 
-        if (!data[3]) {
+        const newData = data.find((item, index) => item.interval === apendder);
+        if (!newData) {
             return result = "00"
-        } else if(data[3].timeLeft  < 10) {
-            result = `0${data[3].timeLeft }`
+        } else if(newData.timeLeft  < 10) {
+            result = `0${newData.timeLeft }`
         } else {
-            result = data[3].timeLeft 
+            result = newData.timeLeft 
         }
         return result
     }
 
-    return (
-        <Container>
-            <PickerModal 
-                title="Select Quantity"
-                ref={(target) => popupRef = target}
-                onTouchOutside={onClosePopup}
-                finishEntry={finishEntry}
-            />
-            <ProfileHeader>
-                <ProfileComponent />
-            </ProfileHeader>
+
+
+    const renderItem = () => {
+        if (showSecond) return <Scroll><SecondChance /></Scroll>
+        return (
             <Scroll>
                 <MainContainer>
                     <MainTextContainer>
                         <MainText>{item.nickname}</MainText>
                         <SubText>{item.name}</SubText>
                     </MainTextContainer>
-                    <SizeContainer>
+                    <SizeContainer onPress={() => createTwoButtonAlert()}>
                         <SizeTextUpper>Size</SizeTextUpper>
                         <SizeTextLower>{key}</SizeTextLower>
                     </SizeContainer>
@@ -90,15 +107,15 @@ export default function index({ route, navigation }: Props) {
                 </ListContainer>
                 <LowerContainer>
                     <BigSizeContainer>
-                        <BigUpperText>{result[1].timeLeft || "00"}</BigUpperText>
+                        <BigUpperText>{formatTime(result, "hours")}</BigUpperText>
                         <BigLowerText>HOURS</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>{result[2].timeLeft || "00"}</BigUpperText>
+                        <BigUpperText>{formatTime(result, "minutes")}</BigUpperText>
                         <BigLowerText>MINUTES</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>{formatSeconds(result)}</BigUpperText>
+                        <BigUpperText>{formatTime(result, "seconds")}</BigUpperText>
                         <BigLowerText>SECONDS</BigLowerText>
                     </BigSizeContainer>
                 </LowerContainer>
@@ -112,6 +129,21 @@ export default function index({ route, navigation }: Props) {
                     </ConfirmContainer>
                 </BottomContainer>
             </Scroll>
+        )
+    }
+
+    return (
+        <Container>
+            <PickerModal 
+                title="Select Quantity"
+                ref={(target) => popupRef = target}
+                onTouchOutside={onClosePopup}
+                finishEntry={finishEntry}
+            />
+            <ProfileHeader>
+                <ProfileComponent />
+            </ProfileHeader>
+            {renderItem()}
         </Container>
     )
 }
@@ -143,7 +175,7 @@ const SubText = styled.Text`
     font-family: "Montserrat"
 `
 
-const SizeContainer = styled.View`
+const SizeContainer = styled.TouchableOpacity`
     width: 50px;
     height: 50px;
     background-color: #000;

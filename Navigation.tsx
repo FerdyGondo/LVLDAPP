@@ -39,6 +39,13 @@ import Lobby from './src/lobby'
 import Placeholder from './src/placeholder'
 import LeaderBoard from './src/leaderboard'
 import Video from './src/video'
+import Fund from './src/fund'
+import Bank from './src/bank'
+import Credit from './src/credit'
+import Settings from './src/settings'
+import Verification from './src/verification'
+import UpdatePassword from './src/updatepassword'
+import Personal from './src/personal'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -173,6 +180,62 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'LeaderBoard'} />}
+                />
+              }}/>
+              <Stack.Screen name= "AddFund" component={Fund} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Add Funds'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Bank" component={Bank} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Online Banking'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Credit" component={Credit} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Credit Card'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Settings" component={Settings} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Account Settings'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Verification" component={Verification} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Two-Step Verification'} size={13} />}
+                />
+              }}/>
+              <Stack.Screen name= "UpdatePassword" component={UpdatePassword} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Update Password'} />}
+                />
+              }}/>
+              <Stack.Screen name= "Personal" component={Personal} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Personal Info'} />}
                 />
               }}/>
           </Stack.Navigator> )
