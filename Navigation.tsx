@@ -46,6 +46,7 @@ import Settings from './src/settings'
 import Verification from './src/verification'
 import UpdatePassword from './src/updatepassword'
 import Personal from './src/personal'
+import History from './src/history'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -236,6 +237,14 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'Personal Info'} />}
+                />
+              }}/>
+              <Stack.Screen name= "History" component={History} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Transaction History'} size={12} />}
                 />
               }}/>
           </Stack.Navigator> )
