@@ -10,6 +10,12 @@ target 'LVLDAPP' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'appcenter-core', :path => '../node_modules/appcenter/ios'
+
+  pod 'appcenter-analytics', :path => '../node_modules/appcenter-analytics/ios'
+
+  pod 'appcenter-crashes', :path => '../node_modules/appcenter-crashes/ios'
+
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   target 'LVLDAPPTests' do
