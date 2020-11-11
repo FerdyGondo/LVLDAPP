@@ -100,8 +100,9 @@ const ModalSubText = styled.Text`
 const ModalButton = styled.TouchableHighlight`
     background-color: ${props => props.grey ? '#979797' :'#d2a747' };
     border-radius: 5px;
-    padding: 15px 55px;
+    padding: 15px 45px;
     border-radius: 40px;
+    margin: 0px 10px;
 `
 const NameText = styled.Text`
     font-family: "Montserrat-Bold";
@@ -111,7 +112,6 @@ const NameText = styled.Text`
 const ButtonContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
     padding:  0px 20px;
 `
 
