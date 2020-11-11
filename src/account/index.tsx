@@ -6,7 +6,7 @@ const myIcon = <Icons name="angle-right" size={30} color={"#000"} />;
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { useNavigation } from '@react-navigation/native'
 
-const data = [{ id: 0, name: "Add Fund", screen: "AddFund"}, { id: 1, name: "Transaction History", screen: "History"}, { id: 2, name: "Invite Friends: Get Rewards", screen: ""}, { id: 3, name: "Account Settings", screen: "Settings"}, { id: 4, name: "Notification Settings", screen: ""}, { id: 5, name: "Sign Out", screen: ""},{id: 6, name: "Cash Out", screen: ""}]
+const data = [{ id: 0, name: "Add Funds", screen: "AddFund"}, { id: 1, name: "Transaction History", screen: "History"}, { id: 2, name: "Invite Friends: Get Rewards", screen: ""}, { id: 3, name: "Account Settings", screen: "Settings"}, { id: 4, name: "Notification Settings", screen: ""}, { id: 5, name: "Sign Out", screen: ""},{id: 6, name: "Cash Out", screen: ""}]
 import { Icon } from 'react-native-elements';
 
 type FlatProps = {
