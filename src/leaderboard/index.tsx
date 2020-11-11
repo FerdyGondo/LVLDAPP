@@ -82,7 +82,7 @@ export default function index({ route }: Props) {
                         </EntryRow>
                         <EntryRow>
                             <StartText>{`Ends:`}</StartText>
-                            <StartText>{lobbyItem.startTime[0]}</StartText>
+                            <StartText>{lobbyItem.endTime[0]}</StartText>
                         </EntryRow>
                     </EntryContainer>
                 </ProfileContainer>
