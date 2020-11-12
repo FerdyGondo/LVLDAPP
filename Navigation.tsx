@@ -220,7 +220,7 @@ const HomeStackNavigator = ({navigation}) => {
                 <LVLD_Header 
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Two-Step Verification'} size={13} />}
+                centerProps={<CenterButton text={'Two-Step Verification'} size={14} />}
                 />
               }}/>
               <Stack.Screen name= "UpdatePassword" component={UpdatePassword} options={{ 
