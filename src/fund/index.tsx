@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProfileComponent from '../shared/components/Profile'
 import {Dimensions,Platform} from 'react-native'
@@ -16,6 +16,8 @@ type List = {
 const bankData = [{name: "Online Banking", color: "#979797", screen: "Bank"},{name: "Credit Card", color: "#C29A41", screen: "Credit"},{image: require('../../assets/images/applepay.png'), color: "#000000", screen: ""},{image: require('../../assets/images/paypal.png'), color: "#FFC43A", screen: ""},{image: require('../../assets/images/venmo.png'), color: "#029CDD", screen: ""}]
 
 export default function index({ navigation }) {
+    const [amount, setAmount] = useState('')
+    console.log('amount', amount)
 
     const renderList = ({ item, index }: List) => {
         return (
@@ -61,7 +63,7 @@ export default function index({ navigation }) {
             </SizeContainer>
             <AmountContainer>
                 <Amount>Custom Amount (Min. $5)</Amount>
-                <TextInput placeholder={"$"} />
+                <TextInput placeholder={"$"} value={amount} onChangeText={(text) => setAmount(text)} keyboardType={"numeric"} />
             </AmountContainer>
             <BankContainer>
                 <BankFlatList 

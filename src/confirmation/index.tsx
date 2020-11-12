@@ -101,10 +101,14 @@ export default function index({ route, navigation }: Props) {
                         </ProfileContainer>
                         <ListText>{item.requiredParticipants}</ListText>
                     </SubListContainer>
-                    <SubListContainer>
-                        <ListText>{`End: ${item.endTime[0]}`}</ListText>
-                    </SubListContainer>
                 </ListContainer>
+
+                <EndContainer>
+                        <EndText>{`Ends: ${item.endTime[0]} 12/04`}</EndText>
+                </EndContainer>
+                <ContextContainer>
+                    <ContextText>Contest Ends In:</ContextText>
+                </ContextContainer>
                 <LowerContainer>
                     <BigSizeContainer>
                         <BigUpperText>{formatTime(result, "hours")}</BigUpperText>
@@ -200,22 +204,41 @@ const SizeTextLower = styled.Text`
 `
 const ImageContainer = styled.View`
     background-color: #fff;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
 `
 const Image = styled.Image`
     align-self: center;
 `
 const ListContainer = styled.View`
-    padding: 30px;
+    padding: 0px 30px;
     flex-direction: row;
     justify-content: space-between;
+    padding-bottom: 7px;
+`
+const EndContainer = styled.View`
+    padding-left: 30px;
+    border-bottom-width: 1px;
+    border-color: #979797;
     padding-bottom: 20px;
+`
+const ContextContainer = styled.View`
+    align-items: center;
+    margin-top: 10px;
+`
+const ContextText = styled.Text`
+    font-family: "Montserrat";
+    font-size: 20px;
+    color: #000000;
+    font-weight: 500;
 `
 const SubListContainer = styled.View`
     flex-direction: row;
 `
 const ListText = styled.Text`
     font-family: "Montserrat-ExtraBold";
+`
+const EndText = styled(ListText)`
+    color: #FF0B0B;
 `
 const ProfileContainer = styled.View`
     top: 2px;
@@ -225,11 +248,15 @@ const ProfileContainer = styled.View`
 const LowerContainer = styled(MainContainer)`
     flex-direction: row;
     justify-content: space-between;
+    padding-top: 5px;
+    border-bottom-width: 1px;
+    border-color: #979797;
+    padding-bottom: 15px;
 `
 const BigSizeContainer = styled(SizeContainer)`
-    width: 80px;
-    height: 80px;
-    border-radius: 15px;
+    width: 85px;
+    height: 85px;
+    border-radius: 20px;
 `
 const BigUpperText = styled(SizeTextLower)`
     font-size: 50px;
@@ -242,10 +269,9 @@ const BigLowerText = styled(BigUpperText)`
     opacity: 0.8;
 `
 const BottomContainer = styled.View`
-    padding: 30px;
+    padding: 25px 30px;
     flex-direction: row;
     justify-content: space-between;
-    padding-top: 35px;
 `
 const QuantityContainer = styled.TouchableOpacity`
     background-color: #979797;

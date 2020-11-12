@@ -15,6 +15,7 @@ import {
   NavigationContainer, 
   DrawerActions, useNavigation
 }      from '@react-navigation/native';
+const {width,height} = Dimensions.get("window")
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
@@ -68,9 +69,8 @@ const DrawerNavigator = ({navigation}) => {
           drawerPosition={"right"}
           drawerType={'front'}
           drawerStyle={{
-            backgroundColor: '#fff',
             width: window.width,
-            marginTop: 127,
+            marginTop: Platform.OS === 'android' ? height /6.7 : height /6.9,
           }}
           overlayColor={0}
       >
@@ -220,7 +220,7 @@ const HomeStackNavigator = ({navigation}) => {
                 <LVLD_Header 
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Two-Step Verification'} size={13} />}
+                centerProps={<CenterButton text={'Two-Step Verification'} size={14} />}
                 />
               }}/>
               <Stack.Screen name= "UpdatePassword" component={UpdatePassword} options={{ 
@@ -312,7 +312,7 @@ const OpenCLoseDrawer = (props) => {
     const CustomDrawerContent = (props) => {   
       return (
         <DrawerContentScrollView {...props}>
-          <SafeAreaViewDrawer>
+          <SafeAreaViewDrawer os={Platform.OS}>
             <TouchableOpacity  onPress={ () => { }} >
                 <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
@@ -359,7 +359,7 @@ background-color: #262626;
 padding-top: ${props => props.statusBarProps};
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
-margin-top:-38px;
+  margin-top: ${props => props.os === 'android' ? '-15px' : '-38px'}
 `
 const DrawerItemStyle = styled.View`
 padding-left: 20px;

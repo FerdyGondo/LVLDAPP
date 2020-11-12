@@ -7,11 +7,6 @@ const data = [{name: "Yeezy 350 ZEB", date: "9/25/20", place: '11th', cost: "3.0
 
 export default function index() {
     const [transaction, setTransaction] = useState('')
-    const [filteredTransaction, setFilteredTransaction] = useState(data)
-    const newSearch = (item) => {
-        let filtered = data.filter((transaction, index) => transaction.name.toLowerCase().indexOf(item.toLowerCase()) !== -1)
-        setFilteredTransaction(filtered)
-    }
 
     const renderItem = ({ item }) => {
         return (
@@ -31,7 +26,6 @@ export default function index() {
     return (
         <Container>
             <ProfileComponent />
-            <SearchDate newSearch={newSearch} />
             <List 
                 data={data}
                 keyExtractor={(item, index) => index.toString()}

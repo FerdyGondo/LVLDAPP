@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import styled from 'styled-components'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-left" size={20} color="#fff" />;
@@ -15,3 +15,10 @@ export default function BackButton({ onPress }: Props) {
         </TouchableOpacity>
     )
 }
+
+const TouchableOpacity = styled.TouchableOpacity`
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    margin-left: 10px
+`
