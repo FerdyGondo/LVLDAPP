@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default function Button({ text }) {
+export default function Button({ text, onPress }) {
     return (
-        <CardContainer>
+        <CardContainer onPress={onPress}>
             <CardText>{text}</CardText>
         </CardContainer>
     )

@@ -5,6 +5,7 @@ import Icons from 'react-native-vector-icons/Entypo';
 const myIcon = <Icons name="plus" size={22} color={"#d2a474"} />;
 import CheckBox from '@react-native-community/checkbox';
 import Button from '../shared/components/Button';
+import Modal from './components/Modal'
 
 export default function index() {
     const [focus1, setFocus1] = useState(false)
@@ -20,6 +21,9 @@ export default function index() {
     const [focus6, setFocus6] = useState(false)
     const [zip, setZip] = useState('')
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
+
+    const selected = 100;
 
     const askAgain = (value) => {
         setToggleCheckBox(value)
@@ -27,6 +31,7 @@ export default function index() {
 
     return (
         <Container>
+            <Modal modalVisible={modalVisible} setModalVisible={setModalVisible} selected={100} />
             <ProfileComponent />
             <AmountContainer>
                 <IconContainer>
@@ -85,7 +90,7 @@ export default function index() {
                         </Divider>
                             <PayPal source={require('../../assets/images/credit/paypal.png')} />
                     </PayPalContainer>
-                    <Button text={"Pay $100.00"} />
+                    <Button text={"Pay $100.00"} onPress={() => setModalVisible(true)} />
                 </BottomContainer>
             </Scroll>
         </Container>
