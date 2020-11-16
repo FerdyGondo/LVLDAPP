@@ -53,11 +53,8 @@ export default function index({ route, navigation }: Props) {
             <RenderContainer>
                 <ProfileIcon width={30} />
                 <LvdContainer>
-                    <NameText>{item.userName}</NameText>
+                    <PlayerName>{item.userName}</PlayerName>
                 </LvdContainer>
-                <Play onPress={() => navigation.navigate("Placeholder", { lobbyItem: lobbyItem, entry: entry, users: mappedData()})}>
-                    <NameText>Play</NameText>
-                </Play>
             </RenderContainer>
         )
     }
@@ -140,16 +137,17 @@ export default function index({ route, navigation }: Props) {
                 <ProfileContainer>
                     <EntryContainer>
                         <EntryRow>
-                            <EntryText>{`Entry:`}</EntryText>
-                            <EntryText>{`$${entry}.00`}</EntryText>
+                            <EntryText>{`Entry: $${entry}.00`}</EntryText>
                         </EntryRow>
                         <EntryRow>
-                            <StartText>{`End:`}</StartText>
-                            <StartText>{lobbyItem.endTime[0]}</StartText>
+                            <StartText>{`End: ${lobbyItem.endTime[0]} 12/04`}</StartText>
                         </EntryRow>
                     </EntryContainer>
                 </ProfileContainer>
             </ProfileHeader>
+                <ContestContainer>
+                    <ContestText>Contest Ends In:</ContestText>
+                </ContestContainer>
                 <LowerContainer>
                     <BigSizeContainer>
                         <BigUpperText>01</BigUpperText>
@@ -173,6 +171,22 @@ export default function index({ route, navigation }: Props) {
                     </ChatMainContainer>
                 </LobbyContainer>
                 {renderItem()}
+                <BottomContainer>
+                    <OwnerContainer>
+                        <Profile>
+                            <ProfileIcon width={30} />
+                        </Profile>
+                        <LvdContainer>
+                            <ProfileName>Peter C.</ProfileName>
+                        </LvdContainer>
+                    </OwnerContainer>
+                    <Practice>
+                        <NameText>Practice</NameText>
+                    </Practice>
+                    <Play onPress={() => navigation.navigate("Placeholder", { lobbyItem: lobbyItem, entry: entry, users: mappedData()})}>
+                        <NameText play={true}>{`${entry}/3`}</NameText>
+                    </Play>
+                </BottomContainer>
         </Container>
     )
 }
@@ -190,26 +204,46 @@ const ProfileHeader = styled.View`
 `
 const NameContainer = styled.View`
     margin: 0px 20px;
+    margin-top: 3px;
 `
 const EntryContainer = styled.View`
     justify-content: center;
-    width: 90px
 `
 const EntryRow = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
+    
+`
+const ContestContainer = styled.View`
+    align-items: center;
+    margin-top: 10px;
+`
+const ContestText = styled.Text`
+    height: 24px;
+    font-size: 20px;
+    font-family: "Montserrat"
 `
 const NameText = styled.Text`
     font-family: "Montserrat-Bold";
+    font-size: 10px;
+    ${({ play }) => play && `
+        color: #ffffff;
+    `}
+`
+const PlayerName = styled(NameText)`
+    font-size: 12px;
+`
+const ProfileName = styled(PlayerName)`
+    color: #ffffff;
 `
 const EntryText = styled.Text`
     font-family: "Montserrat";
-    font-size: 12px;
+    font-size: 10px;
     align-items: center;
+    line-height: 15px;
 `
 const StartText = styled.Text`
     font-family: "Montserrat-Bold"
-    font-size: 12px;
+    font-size: 10px;
+    color: #ff0000;
 `
 
 const SizeContainer = styled.View`
@@ -239,9 +273,11 @@ const Image = styled.Image`
 const SubListContainer = styled.View`
     flex-direction: row;
     align-items: center;
+    margin-top: 3px;
 `
 const ListText = styled.Text`
     font-family: "Montserrat";
+    font-size: 12px;
 `
 const ProfileContainer = styled.View`
     flex-direction: row;
@@ -277,7 +313,7 @@ const LobbyContainer = styled.View`
   border-bottom-width: 0.7px;
 `
 const LobbyMainContainer = styled.TouchableOpacity`
-  background-color: ${props => props.lobby === "lobby" ? "#fff" : "#000"};
+  background-color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
   border-radius: 20px;
   align-items: center;
   justify-content: center;
@@ -287,21 +323,21 @@ const LobbyMainContainer = styled.TouchableOpacity`
   width: ${width/2.3}px;
 `
 const ChatMainContainer = styled(LobbyMainContainer)`
-  background-color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
+  background-color: ${props => props.lobby === "lobby" ? "#fff" : "#000"};
 `
 const FirstText = styled.Text`
   font-size: 16px;
-  color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
+  color: ${props => props.lobby === "lobby" ? "#fff" : "#000"};
   font-family: "Montserrat-Medium"
 `
 const SecondText = styled(FirstText)`
-  color: ${props => props.lobby === "lobby" ? "#fff": "#000"};
+  color: ${props => props.lobby === "lobby" ? "#000": "#fff"};
 `
 const List = styled.FlatList`
 `
 const RenderContainer = styled.View`
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     border-bottom-width: 0.7px;
     border-color: #3f3f3f;
     padding: 12px 25px;
@@ -310,11 +346,16 @@ const LvdContainer = styled.View`
     margin-left: 10px;
 `
 const Play = styled.TouchableOpacity`
-    margin-left: 20px;
-    background-color: #fff;
-    border-color: #000;
-    border-width: 0.5px;
-    padding: 5px;
+    background-color: #D2A747;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    border-radius: 30px;
+    height: 25px;
+`
+const Practice = styled(Play)`
+    background-color: #D6D6D6;
+    left: 20px;
 `
 const MessageContainer = styled.View`
     flex-direction: row;
@@ -363,4 +404,19 @@ const SendContainer = styled.TouchableOpacity`
     padding: 10px 15px;
     border-radius: 20px;
 `
+const BottomContainer = styled.View`
+    flex-direction: row;
+    background-color: #252525;
+    padding: 10px 20px 10px 25px;
+    justify-content: space-between;
+    align-items: center;
 
+`
+const OwnerContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+`
+const Profile = styled.View`
+    background-color: #fff;
+    border-radius: 20px;
+`
