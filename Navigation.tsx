@@ -244,7 +244,7 @@ const HomeStackNavigator = ({navigation}) => {
                 <LVLD_Header 
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Transaction History'} size={12} />}
+                centerProps={<CenterButton text={'Transaction History'} size={14} />}
                 />
               }}/>
           </Stack.Navigator> )
