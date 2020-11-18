@@ -5,7 +5,7 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={25} color={"#979797"} />;
 import BankModal from './components/BankModal';
 
-const data = [{name: "Chase", logo: require('../../assets/images/banks/chase.png')},{name: "Bank of America", logo: require('../../assets/images/banks/america.png')},{name: "Wells Fargo", logo: require("../../assets/images/banks/wells.png")},{name: "PNC", logo: require("../../assets/images/banks/pnc.png")},{name: "TD Bank", logo: require('../../assets/images/banks/td.png')},{name: "U.S Bank", logo: require('../../assets/images/banks/us.png')},{name: "Navy Federal", logo: require('../../assets/images/banks/navy.png')}]
+const data = [{name: "Chase", logo: require('../../assets/images/banks/chase.png')},{name: "Bank of America", logo: require('../../assets/images/banks/america.png')},{name: "Wells Fargo", logo: require("../../assets/images/banks/wells.png")},{name: "PNC", logo: require("../../assets/images/banks/pnc.png")},{name: "TD Bank", logo: require('../../assets/images/banks/td.png')},{name: "U.S. Bank", logo: require('../../assets/images/banks/us.png')},{name: "Navy Federal", logo: require('../../assets/images/banks/navy.png')}]
 
 export default function index() {
     const [modalVisible, setModalVisible] = useState(false)
