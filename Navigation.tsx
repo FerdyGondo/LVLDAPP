@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { 
   Text, 
   View, 
   Image,
   TouchableOpacity,
-  SafeAreaView,
+  SafeAreaView, 
   Dimensions,
   useWindowDimensions,
   StatusBar,
@@ -13,7 +13,7 @@ import {
 import styled from 'styled-components';
 import { 
   NavigationContainer, 
-  DrawerActions, useNavigation
+  DrawerActions
 }      from '@react-navigation/native';
 const {width,height} = Dimensions.get("window")
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,6 +23,7 @@ import {
 } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon, Header }             from 'react-native-elements';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import LvldLogo from './assets/svg/LvldLogo';
 import Home     from './src/home/index';
@@ -54,28 +55,32 @@ const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
-
 const PreStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator  
-          >
-            <Stack.Screen name = "drawer"    component = {DrawerNavigator} options={{ headerShown: false }} />
-          </Stack.Navigator> )
-}
+    return( <Stack.Navigator>
+              <Stack.Screen name = "drawer"  component = {DrawerNavigator} 
+                options={{ headerShown: false }} 
+              />
+            </Stack.Navigator> )
+  }
 
 const DrawerNavigator = ({navigation}) => {
   const window = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   return (      
       <Drawer.Navigator 
           drawerContent={props => <CustomDrawerContent {...props} />}
           drawerPosition={"right"}
           drawerType={'front'}
+          headerShown={true}
+          hideStatusBar={false}
+
           drawerStyle={{
             width: window.width,
-            marginTop: Platform.OS === 'android' ? height /6.7 : height /6.9,
+            marginTop: Platform.OS === 'android' ? insets.top+80 : insets.top+80,
           }}
           overlayColor={0}
       >
-      <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator}/>
+        <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator} />
       </Drawer.Navigator>
     )
 }
@@ -120,14 +125,16 @@ const BottomTabNavigator = ({navigation}) => {
 
 const HomeStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  initialRouteName="home" >
-            <Stack.Screen name = "home"    component = {Home}  options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={<LvldLogo />}
-                />
-              }}/>
+            <Stack.Screen name = "home"    component = {Home} 
+                options={{ 
+                  header: (navigation) => 
+                    <LVLD_Header 
+                        props={navigation} 
+                        leftProps={<NotificationIcon  width={20} />} 
+                        centerProps={<LvldLogo />}
+                    />
+                  }}
+              />
             <Stack.Screen name = "Account" component = {Account} options={{ 
               header: (navigation) => 
                 <LVLD_Header 
@@ -280,7 +287,6 @@ const ContentStackNavigator = ({navigation}) => {
           </Stack.Navigator> )
 }
 
-
 export const LVLD_Navigation = ({navigation}) => {
   return(
     <NavigationContainer>
@@ -311,7 +317,8 @@ const OpenCLoseDrawer = (props) => {
               containerStyle={{
                 backgroundColor: '#262626',
                 justifyContent: 'space-around',
-                paddingBottom: 25
+                paddingBottom: 20,
+                height: 80
               }}
           />
       </SafeAreaViewStyled>
@@ -319,9 +326,10 @@ const OpenCLoseDrawer = (props) => {
     } 
 
     const CustomDrawerContent = (props) => {   
+      const insetsProp = useSafeAreaInsets();
       return (
         <DrawerContentScrollView {...props}>
-          <SafeAreaViewDrawer os={Platform.OS}>
+          <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp.top}>
             <TouchableOpacity  onPress={ () => { }} >
                 <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
@@ -368,7 +376,7 @@ background-color: #262626;
 padding-top: ${props => props.statusBarProps};
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
-  margin-top: ${props => props.os === 'android' ? '-15px' : '-38px'}
+  margin-top: ${props => props.os === 'android' ? -(props.insetsProp - 6) + 'px' : -(props.insetsProp - 6) + 'px'};
 `
 const DrawerItemStyle = styled.View`
 padding-left: 20px;
