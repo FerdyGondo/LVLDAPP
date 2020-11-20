@@ -27,7 +27,7 @@ export default function ProfileComponent() {
 
 const MainContainer = styled.View`
   flex-direction: row;
-  margin: 8px 20px;
+  margin: 8px 15px;
 `
 const ProfileText = styled.Text`
   font-size: 13px;
