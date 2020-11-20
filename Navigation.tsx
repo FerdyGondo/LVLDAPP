@@ -48,6 +48,7 @@ import Verification from './src/verification'
 import UpdatePassword from './src/updatepassword'
 import Personal from './src/personal'
 import History from './src/history'
+import Tutorial from './src/hamburger/tutorial'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -247,6 +248,14 @@ const HomeStackNavigator = ({navigation}) => {
                 centerProps={<CenterButton text={'Transaction History'} size={14} />}
                 />
               }}/>
+              <Stack.Screen name= "Tutorial" component={Tutorial} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Tutorial'} size={14} />}
+                />
+              }}/>
           </Stack.Navigator> )
 }
 
@@ -316,7 +325,7 @@ const OpenCLoseDrawer = (props) => {
             <TouchableOpacity  onPress={ () => { }} >
                 <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { }} >
+            <TouchableOpacity  onPress={ () => props.navigation.navigate("Tutorial")} >
                 <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => { }} >
