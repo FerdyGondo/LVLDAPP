@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Dimensions } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
+import MessageComponent from '../shared/components/MessageComponent'
 
 const {width,height} = Dimensions.get("window")
 
@@ -11,12 +12,12 @@ const {width,height} = Dimensions.get("window")
     }
 
 export default function index({ route }: Props) {
-    const [lobby, setLobby] = useState("lobby")
+    const [leaderboard, setLeaderboard] = useState("leaderboard")
     const {entry, lobbyItem, users} = route?.params
     const [currentIndex, setCurrentIndex] = useState(0)
 
-    const lobbySwitch = (data: string): void => {
-        setLobby(data)
+    const leaderboardSwitch = (data: string): void => {
+        setLeaderboard(data)
     }
 
     useEffect(() => {
@@ -69,6 +70,18 @@ export default function index({ route }: Props) {
         return comparison;
     }
 
+    const renderRequest = () => {
+        if (leaderboard === "leaderboard") {
+            return <List 
+            data={users.sort(compare)}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderList}
+        />
+        } else {
+            return <MessageComponent />
+        }
+    }
+
     return (
         <Container>
             <ProfileHeader>
@@ -97,19 +110,15 @@ export default function index({ route }: Props) {
                     </EntryContainer>
                 </ProfileContainer>
             </ProfileHeader>
-                <LobbyContainer>
-                    <LobbyMainContainer onPress={() => lobbySwitch("lobby")} lobby={lobby}>
-                        <FirstText lobby={lobby}>{`Leaderboard`}</FirstText>
-                    </LobbyMainContainer>
-                    <ChatMainContainer onPress={() => lobbySwitch("chat")} lobby={lobby}>
-                        <SecondText lobby={lobby}>{`Chat`}</SecondText>
+                <LeaderBoardContainer>
+                    <LeaderBoardMainContainer onPress={() => leaderboardSwitch("leaderboard")} leaderboard={leaderboard}>
+                        <FirstText leaderboard={leaderboard}>{`Leaderboard`}</FirstText>
+                    </LeaderBoardMainContainer>
+                    <ChatMainContainer onPress={() => leaderboardSwitch("chat")} leaderboard={leaderboard}>
+                        <SecondText leaderboard={leaderboard}>{`Chat`}</SecondText>
                     </ChatMainContainer>
-                </LobbyContainer>
-                <List 
-                    data={users.sort(compare)}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={renderList}
-                />
+                </LeaderBoardContainer>
+                {renderRequest()}
                 <BottomContainer>
                     <IndexContainer>
                         <CurrentName>{currentIndex}</CurrentName>
@@ -188,7 +197,7 @@ const ProfileContainer = styled.View`
     flex-direction: row;
     margin-right: 5px;
 `
-const LobbyContainer = styled.View`
+const LeaderBoardContainer = styled.View`
   background-color: #fff;
   padding: 14px 20px;
   flex-direction: row;
@@ -197,8 +206,8 @@ const LobbyContainer = styled.View`
   border-top-width: 0.7px;
   border-bottom-width: 0.7px;
 `
-const LobbyMainContainer = styled.TouchableOpacity`
-  background-color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
+const LeaderBoardMainContainer = styled.TouchableOpacity`
+  background-color: ${props => props.leaderboard === "leaderboard" ? "#000" : "#fff"};
   border-radius: 20px;
   align-items: center;
   justify-content: center;
@@ -207,16 +216,16 @@ const LobbyMainContainer = styled.TouchableOpacity`
   border-color: #3f3f3f;
   width: ${width/2.3}px;
 `
-const ChatMainContainer = styled(LobbyMainContainer)`
-  background-color: ${props => props.lobby === "lobby" ? "#fff" : "#000"};
+const ChatMainContainer = styled(LeaderBoardMainContainer)`
+  background-color: ${props => props.leaderboard === "leaderboard" ? "#fff" : "#000"};
 `
 const FirstText = styled.Text`
   font-size: 16px;
-  color: ${props => props.lobby === "lobby" ? "#fff" : "#000"};
+  color: ${props => props.leaderboard === "leaderboard" ? "#fff" : "#000"};
   font-family: "Montserrat-Medium"
 `
 const SecondText = styled(FirstText)`
-  color: ${props => props.lobby === "lobby" ? "#000": "#fff"};
+  color: ${props => props.leaderboard === "leaderboard" ? "#000": "#fff"};
 `
 const List = styled.FlatList`
 `
