@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { 
+  Alert,
   Text, 
   View, 
   Image,
   TouchableOpacity,
-  SafeAreaView,
+  SafeAreaView, 
   Dimensions,
   useWindowDimensions,
   StatusBar,
@@ -13,7 +14,7 @@ import {
 import styled from 'styled-components';
 import { 
   NavigationContainer, 
-  DrawerActions, useNavigation
+  DrawerActions
 }      from '@react-navigation/native';
 const {width,height} = Dimensions.get("window")
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,8 +22,12 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { 
+  createBottomTabNavigator
+} from '@react-navigation/bottom-tabs';
+
 import { Icon, Header }             from 'react-native-elements';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import LvldLogo from './assets/svg/LvldLogo';
 import Home     from './src/home/index';
@@ -48,38 +53,50 @@ import Verification from './src/verification'
 import UpdatePassword from './src/updatepassword'
 import Personal from './src/personal'
 import History from './src/history'
+import Tutorial from './src/hamburger/tutorial'
+import Privacy from './src/hamburger/privacy'
+import Faq from './src/hamburger/faq'
+import Rules from './src/hamburger/rules'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
-
 const PreStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator  
-          >
-            <Stack.Screen name = "drawer"    component = {DrawerNavigator} options={{ headerShown: false }} />
-          </Stack.Navigator> )
-}
+    return( <Stack.Navigator>
+              <Stack.Screen name = "drawer"  component = {DrawerNavigator} 
+                options={{ headerShown: false }} 
+              />
+            </Stack.Navigator> )
+  }
 
 const DrawerNavigator = ({navigation}) => {
   const window = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   return (      
       <Drawer.Navigator 
           drawerContent={props => <CustomDrawerContent {...props} />}
           drawerPosition={"right"}
           drawerType={'front'}
+          headerShown={true}
+          hideStatusBar={false}
+
           drawerStyle={{
             width: window.width,
-            marginTop: Platform.OS === 'android' ? height /6.7 : height /6.9,
+            marginTop: Platform.OS === 'android' ? insets.top+80 : insets.top+80,
+            marginBottom: Platform.OS === 'android' ? window.height/14 : window.height/11,
           }}
           overlayColor={0}
       >
-      <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator}/>
+        <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator} />
       </Drawer.Navigator>
     )
 }
 
 const BottomTabNavigator = ({navigation}) => {
+  const window = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
   return(
       <BottomTab.Navigator
               initialRouteName="home"
@@ -108,6 +125,7 @@ const BottomTabNavigator = ({navigation}) => {
                 inactiveTintColor: 'gray',
                 activeBackgroundColor: '#ddd',
                 inactiveBackgroundColor: '#fff',
+                style: {height: Platform.OS === 'android' ? window.height/14 : window.height/11}
               }}
       >
         <BottomTab.Screen name="home"     component={HomeStackNavigator}  />
@@ -119,14 +137,16 @@ const BottomTabNavigator = ({navigation}) => {
 
 const HomeStackNavigator = ({navigation}) => {
   return( <Stack.Navigator  initialRouteName="home" >
-            <Stack.Screen name = "home"    component = {Home}  options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={<LvldLogo />}
-                />
-              }}/>
+            <Stack.Screen name = "home"    component = {Home} 
+                options={{ 
+                  header: (navigation) => 
+                    <LVLD_Header 
+                        props={navigation} 
+                        leftProps={<NotificationIcon  width={20} />} 
+                        centerProps={<LvldLogo />}
+                    />
+                  }}
+              />
             <Stack.Screen name = "Account" component = {Account} options={{ 
               header: (navigation) => 
                 <LVLD_Header 
@@ -244,9 +264,42 @@ const HomeStackNavigator = ({navigation}) => {
                 <LVLD_Header 
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Transaction History'} size={12} />}
+                centerProps={<CenterButton text={'Transaction History'} size={14} />}
                 />
               }}/>
+              <Stack.Screen name= "Tutorial" component={Tutorial} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Tutorial'} size={14} />}
+                />
+              }}/>
+              <Stack.Screen name= "Faq" component={Faq} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'FAQ'} size={14} />}
+                
+                />
+              }}/>
+              <Stack.Screen name= "Rules" component={Rules} options={{ 
+                header: (navigation) => 
+                  <LVLD_Header 
+                  props={navigation} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                  centerProps={<CenterButton text={'Rules and GamePlay'} size={14} />}
+                  />
+                }}/>
+              <Stack.Screen name= "Privacy" component={Privacy} options={{ 
+                header: (navigation) => 
+                  <LVLD_Header 
+                  props={navigation} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                  centerProps={<CenterButton text={'Privacy Policy'} size={14} />}
+                  />
+                }}/>
           </Stack.Navigator> )
 }
 
@@ -271,8 +324,8 @@ const ContentStackNavigator = ({navigation}) => {
           </Stack.Navigator> )
 }
 
-
 export const LVLD_Navigation = ({navigation}) => {
+  
   return(
     <NavigationContainer>
       <PreStackNavigator />
@@ -285,8 +338,7 @@ const OpenCLoseDrawer = (props) => {
         <TouchableOpacity
           onPress={() => { 
             props.navigation.dispatch(DrawerActions.toggleDrawer());
-          }}
-        >
+          }} >
           <MenuIcon width={25} />
         </TouchableOpacity>
       );
@@ -302,45 +354,51 @@ const OpenCLoseDrawer = (props) => {
               containerStyle={{
                 backgroundColor: '#262626',
                 justifyContent: 'space-around',
-                paddingBottom: 25
+                paddingBottom: 20,
+                height: 80
               }}
           />
       </SafeAreaViewStyled>
       )
     } 
 
-    const CustomDrawerContent = (props) => {   
+    const CustomDrawerContent = (props) => { 
+      const insetsProp = useSafeAreaInsets();
       return (
-        <DrawerContentScrollView {...props}>
-          <SafeAreaViewDrawer os={Platform.OS}>
+        <DrawerContentScrollView contentContainerStyle={{ flex: 1, justifyContent:"space-between"}} {...props}>
+          <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp}>
             <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+            <TouchableOpacity  onPress={ () => props.navigation.navigate("Tutorial")} >
+                <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { }} >
+            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Rules")}} >
                 <DrawerItemStyle><DrawerTextStyle>Rules and Gameplays</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { }} >
+            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Faq")}} >
                 <DrawerItemStyle><DrawerTextStyle>FAQ</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
+            </TouchableOpacity>            
+            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Privacy")}} >
                 <DrawerItemStyle><DrawerTextStyle>Term of Use</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
             <TouchableOpacity  onPress={ () => { }} >
                 <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
+            <DrawerLocationViewStyle>
+                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>CA, US</DrawerLocationTextStyle></DrawerItemStyle>
+            </DrawerLocationViewStyle>
+            <TouchableOpacity  onPress={ () => Alert.alert(
+                                    "LVLD", "Are you sure you want to sign out from LVLD",
+                                    [ { text: "Sign Out", onPress: () => {} },
+                                      { text: "Cancel", style: "cancel" } ],
+                                    { cancelable: false } ) } >
                 <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>App Version 1.00.22</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>
-            </SafeAreaViewDrawer>
+          </SafeAreaViewDrawer>
+            <BottomView os={Platform.OS} insetsProp={insetsProp}>
+                <DrawerTextStyle>App Version 1.00.22</DrawerTextStyle>
+            </BottomView> 
         </DrawerContentScrollView>
       );
     }
@@ -359,17 +417,31 @@ background-color: #262626;
 padding-top: ${props => props.statusBarProps};
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
-  margin-top: ${props => props.os === 'android' ? '-15px' : '-38px'}
+  margin-top: ${props => props.os === 'android' ? -(props.insetsProp.top - 6) + 'px' : -(props.insetsProp.top - 6) + 'px'};
 `
 const DrawerItemStyle = styled.View`
-padding-left: 20px;
 flex-direction: row;
 justify-content: space-between;
 border-bottom-color: black;
 border-bottom-width: 1px;
 margin:10px;
-padding-bottom: 20px;
+padding-left: 20px;
+padding-bottom: 15px;
 `
 const DrawerTextStyle = styled.Text`
 font-family: Montserrat;
 `
+const DrawerLocationTextStyle = styled.Text`
+font-family: Montserrat;
+font-weight: bold;
+color: #d2a747;
+margin-bottom:8px;
+`
+const DrawerLocationViewStyle = styled.View`
+margin-top:3px;
+`
+const BottomView = styled.View`
+align-items: center;
+margin-bottom: ${props => props.os === 'android' ? 10 + 'px' : 10 + 'px'};
+`
+

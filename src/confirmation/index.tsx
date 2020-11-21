@@ -5,7 +5,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import ProfileComponent from '../shared/components/Profile'
 import PickerModal from '../shared/components/PickerModal'
 import SecondChance from './components/SecondChance'
-import { useTimer, resetData } from '../shared/utils'
+import { useTimer } from '../shared/utils'
 
 const {width,height} = Dimensions.get("window")
 
@@ -23,26 +23,6 @@ export default function index({ route, navigation }: Props) {
     const { key, item } = route?.params
     let popupRef = React.createRef()
     const [showSecond, setShowSecond] = useState(false)
-
-    const resetButton = async () => {
-        await resetData()
-        navigation.navigate('Sneaker')
-    }
-
-    const createTwoButtonAlert = () =>
-    Alert.alert(
-      "Are you sure you want to reset the size?",
-      "",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: () => resetButton() }
-      ],
-      { cancelable: false }
-    );
     
     const data = item
     const result = useTimer(data)
@@ -83,7 +63,7 @@ export default function index({ route, navigation }: Props) {
                         <MainText>{item.nickname}</MainText>
                         <SubText>{item.name}</SubText>
                     </MainTextContainer>
-                    <SizeContainer onPress={() => createTwoButtonAlert()}>
+                    <SizeContainer>
                         <SizeTextUpper>Size</SizeTextUpper>
                         <SizeTextLower>{key}</SizeTextLower>
                     </SizeContainer>

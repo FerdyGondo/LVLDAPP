@@ -2,20 +2,33 @@ import React, { useState, useEffect } from 'react'
 import { Dimensions } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
+import MessageComponent from '../shared/components/MessageComponent'
 
 const {width,height} = Dimensions.get("window")
 
-  const userId = "rhazen";
-type Props = {
-    route: () => {};
-}
+  const userId = "jjimmy";
+    type Props = {
+        route: () => {};
+    }
 
 export default function index({ route }: Props) {
-    const [lobby, setLobby] = useState("lobby")
+    const [leaderboard, setLeaderboard] = useState("leaderboard")
     const {entry, lobbyItem, users} = route?.params
+    const [currentIndex, setCurrentIndex] = useState(0)
 
-    const lobbySwitch = (data: string): void => {
-        setLobby(data)
+    const leaderboardSwitch = (data: string): void => {
+        setLeaderboard(data)
+    }
+
+    useEffect(() => {
+        getUserIndex()
+    },[])
+    const getUserIndex = () => {
+        return users.find((data, index) => {
+            if (data.userId === userId) {
+                setCurrentIndex(index+1)
+            }
+        } )
     }
 
     const abbreviateData = (name) => {
@@ -57,6 +70,18 @@ export default function index({ route }: Props) {
         return comparison;
     }
 
+    const renderRequest = () => {
+        if (leaderboard === "leaderboard") {
+            return <List 
+            data={users.sort(compare)}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderList}
+        />
+        } else {
+            return <MessageComponent />
+        }
+    }
+
     return (
         <Container>
             <ProfileHeader>
@@ -77,29 +102,42 @@ export default function index({ route }: Props) {
                 <ProfileContainer>
                     <EntryContainer>
                         <EntryRow>
-                            <EntryText>{`Entry:`}</EntryText>
-                            <EntryText>{`$${entry}.00`}</EntryText>
+                            <EntryText>{`Entry: $${entry}.00`}</EntryText>
                         </EntryRow>
                         <EntryRow>
-                            <StartText>{`Ends:`}</StartText>
-                            <StartText>{lobbyItem.endTime[0]}</StartText>
+                            <StartText>{`End: ${lobbyItem.endTime[0]} 12/04`}</StartText>
                         </EntryRow>
                     </EntryContainer>
                 </ProfileContainer>
             </ProfileHeader>
-                <LobbyContainer>
-                    <LobbyMainContainer onPress={() => lobbySwitch("lobby")} lobby={lobby}>
-                        <FirstText lobby={lobby}>{`Lobby`}</FirstText>
-                    </LobbyMainContainer>
-                    <ChatMainContainer onPress={() => lobbySwitch("chat")} lobby={lobby}>
-                        <SecondText lobby={lobby}>{`Chat`}</SecondText>
+                <LeaderBoardContainer>
+                    <LeaderBoardMainContainer onPress={() => leaderboardSwitch("leaderboard")} leaderboard={leaderboard}>
+                        <FirstText leaderboard={leaderboard}>{`Leaderboard`}</FirstText>
+                    </LeaderBoardMainContainer>
+                    <ChatMainContainer onPress={() => leaderboardSwitch("chat")} leaderboard={leaderboard}>
+                        <SecondText leaderboard={leaderboard}>{`Chat`}</SecondText>
                     </ChatMainContainer>
-                </LobbyContainer>
-                <List 
-                    data={users.sort(compare)}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={renderList}
-                />
+                </LeaderBoardContainer>
+                {renderRequest()}
+                <BottomContainer>
+                    <IndexContainer>
+                        <CurrentName>{currentIndex}</CurrentName>
+                    </IndexContainer>
+                    <OwnerContainer>
+                        <Profile>
+                            <ProfileIcon width={30} />
+                        </Profile>
+                        <LvdContainer>
+                            <ProfileName>Peter C.</ProfileName>
+                        </LvdContainer>
+                    </OwnerContainer>
+                    <Practice>
+                        <BottomText>Practice</BottomText>
+                    </Practice>
+                    <Play>
+                        <BottomText play={true}>{`${entry}/3`}</BottomText>
+                    </Play>
+                </BottomContainer>
         </Container>
     )
 }
@@ -118,11 +156,8 @@ const NameContainer = styled.View`
 `
 const EntryContainer = styled.View`
     justify-content: center;
-    width: 90px
 `
 const EntryRow = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
 `
 const NameText = styled.Text`
     font-family: "Montserrat-ExtraBold";
@@ -136,7 +171,8 @@ const EntryText = styled.Text`
 `
 const StartText = styled.Text`
     font-family: "Montserrat-Bold"
-    font-size: 12px;
+    font-size: 10px;
+    color: #ff0000;
 `
 const ImageContainer = styled.View`
     width: ${width * 0.16}px;
@@ -161,7 +197,7 @@ const ProfileContainer = styled.View`
     flex-direction: row;
     margin-right: 5px;
 `
-const LobbyContainer = styled.View`
+const LeaderBoardContainer = styled.View`
   background-color: #fff;
   padding: 14px 20px;
   flex-direction: row;
@@ -170,8 +206,8 @@ const LobbyContainer = styled.View`
   border-top-width: 0.7px;
   border-bottom-width: 0.7px;
 `
-const LobbyMainContainer = styled.TouchableOpacity`
-  background-color: ${props => props.lobby === "lobby" ? "#fff" : "#000"};
+const LeaderBoardMainContainer = styled.TouchableOpacity`
+  background-color: ${props => props.leaderboard === "leaderboard" ? "#000" : "#fff"};
   border-radius: 20px;
   align-items: center;
   justify-content: center;
@@ -180,16 +216,16 @@ const LobbyMainContainer = styled.TouchableOpacity`
   border-color: #3f3f3f;
   width: ${width/2.3}px;
 `
-const ChatMainContainer = styled(LobbyMainContainer)`
-  background-color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
+const ChatMainContainer = styled(LeaderBoardMainContainer)`
+  background-color: ${props => props.leaderboard === "leaderboard" ? "#fff" : "#000"};
 `
 const FirstText = styled.Text`
   font-size: 16px;
-  color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
+  color: ${props => props.leaderboard === "leaderboard" ? "#fff" : "#000"};
   font-family: "Montserrat-Medium"
 `
 const SecondText = styled(FirstText)`
-  color: ${props => props.lobby === "lobby" ? "#fff": "#000"};
+  color: ${props => props.leaderboard === "leaderboard" ? "#000": "#fff"};
 `
 const List = styled.FlatList`
 `
@@ -205,7 +241,6 @@ const RenderContainer = styled.View`
 const LvdContainer = styled.View`
    flex-direction: row;
    align-items: center;
-   width: 40%
 `
 const Profile = styled.View`
     margin: 0px 10px 0px 5px;
@@ -225,4 +260,48 @@ const ScoreText = styled.Text`
     font-family: "Montserrat-Bold";
     font-size: 12px;
     color: ${props => props.userId === userId || props.index === 1 ? "#fff": "#000"};
+`
+const BottomContainer = styled.View`
+    flex-direction: row;
+    background-color: #252525;
+    padding: 10px 20px;
+    justify-content: space-between;
+    align-items: center;
+
+`
+const OwnerContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+    padding-left: 34px;
+`
+const Play = styled.TouchableOpacity`
+    background-color: #D2A747;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    border-radius: 30px;
+    height: 25px;
+`
+const Practice = styled(Play)`
+    background-color: #D6D6D6;
+    left: 10%;
+`
+const ProfileName = styled(NameText)`
+    color: #ffffff;
+`
+const BottomText = styled.Text`
+    font-family: "Montserrat-Bold";
+    font-size: 10px;
+    ${({ play }) => play && `
+        color: #ffffff;
+    `}
+`
+const IndexContainer = styled.View`
+    position: absolute;
+    left: 26px;
+`
+const CurrentName = styled.Text`
+    font-family: "Montserrat-ExtraBold";
+    font-size: 12px;
+    color: #fff;
 `

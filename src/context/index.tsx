@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import ProfileComponent from '../shared/components/Profile';
+import { resetData, getData } from '../shared/utils'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-right" size={16} color="#A9A9A9" />;
 
 import ProfileIcon from '../../assets/svg/ProfileIcon'
+const SIZE = '@saved_size';
 
 type Props = {
     navigation: () => {};
@@ -21,6 +23,14 @@ export default function index({ route, navigation }: Props) {
 
     const data = items.data[0]
     const result = useTimer(data)
+    const [size, setSize] = useState(null)
+    
+    useEffect(() => {
+        (async () => {
+            const size = await getData(SIZE)
+            setSize(size)
+        })()
+    },[])
     
     const renderItem = ({ item }) => {
         return (
@@ -29,16 +39,21 @@ export default function index({ route, navigation }: Props) {
                     <Image source={{ uri: item.image }} />
                 </ImageContainer>
                 <TextContainer>
-                    <Text2Container>
-                        <NameText>{item.name}</NameText>
-                        <SvgContainer>
-                            <ProfileIcon width={13} />
-                            <SizeText>{item.requiredParticipants}</SizeText>
-                        </SvgContainer>
-                    </Text2Container>
+                    <NameSize>
+                        <Text2Container>
+                            <NameText>{item.name}</NameText>
+                            <SvgContainer>
+                                <ProfileIcon width={13} />
+                                <SizeText>{item.requiredParticipants}</SizeText>
+                            </SvgContainer>
+                        </Text2Container>
+                        <SizeContainer>
+                            <SizeTextLower>{items.key}</SizeTextLower>
+                        </SizeContainer>
+                    </NameSize>
                     <BottomContainer>
                         <BottomText>{`Entry: $${item.entry}`}</BottomText>
-                        <BottomText>{`End: ${item.endTime[0]}`}</BottomText>
+                        <RedBottomText>{`End: ${item.endTime[0]} 12/04`}</RedBottomText>
                     </BottomContainer>
                 </TextContainer>
                 <ChevronContainer>
@@ -46,6 +61,11 @@ export default function index({ route, navigation }: Props) {
                 </ChevronContainer>
             </MainContainer>
         )
+    }
+
+    const setDefaultMethod = () => {
+        resetData();
+        navigation.goBack()
     }
     
     return (
@@ -56,6 +76,16 @@ export default function index({ route, navigation }: Props) {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
             />
+            {
+                size && (
+                    <FooterContainer onPress={() => setDefaultMethod()}>
+                        <SizeContainerF>
+                            <SizeTextLower>{items.key}</SizeTextLower>
+                        </SizeContainerF>
+                        <ChangeSizeText>Change Size</ChangeSizeText>
+                    </FooterContainer>
+                )
+            }
         </Container>
     )
 }
@@ -65,6 +95,11 @@ const Container = styled.View`
     background-color: #fff;
 `
 const List = styled.FlatList``
+
+const NameSize = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+`
 
 const MainContainer = styled.TouchableOpacity`
     background-color: #fff;
@@ -77,7 +112,7 @@ const MainContainer = styled.TouchableOpacity`
 `
 const NameText = styled.Text`
     font-family: "Montserrat-ExtraBold";
-    font-size: 13px;
+    font-size: 12px;
 `
 const SvgContainer = styled.View`
     flex-direction: row;
@@ -86,7 +121,7 @@ const SvgContainer = styled.View`
 const SizeText = styled.Text`
     left: 7px;
     font-family: "Montserrat-Medium";
-    font-size: 13px;
+    font-size: 10px;
 `
 const BottomContainer = styled.View`
     flex-direction: row;
@@ -96,7 +131,16 @@ const BottomContainer = styled.View`
 
 const BottomText = styled.Text`
     font-family: "Montserrat-Bold";
-    font-size: 13px;
+    font-size: 10px;
+`
+const RedBottomText = styled(BottomText)`
+    color: #ff0000;
+`
+const ChangeSizeText = styled(BottomText)`
+    font-size: 12px;
+    font-family: "Montserrat-Bold";
+    color: #000000;
+    left: 10px;
 `
 const ImageContainer = styled.View`
     width: 100px;
@@ -107,7 +151,7 @@ const Image = styled.Image`
     height: 100%;
 `
 const TextContainer = styled.View`
-    height: 75px;
+    height: 70px;
     justify-content: space-between;
     width: 66%;
 `
@@ -121,4 +165,31 @@ const ChevronContainer = styled.View`
     top: 42px;
     right: 10px;
     align-self: center;
+`
+
+const SizeContainer = styled.TouchableOpacity`
+    width: 28px;
+    height: 28.28px;
+    background-color: #252525;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    right: 25px;
+`
+const SizeContainerF = styled(SizeContainer)`
+    right: 0px;
+`
+const SizeTextLower = styled.Text`
+    color: #fff;
+    font-family: "Montserrat-ExtraBold"
+    font-size: 10px;
+`
+const FooterContainer = styled.TouchableOpacity`
+    flex-direction: row;
+    background-color: #ffffff;
+    border-color: #979797;
+    border-top-width: 1px;
+    padding: 10px 20px;
+    align-items: center;
+    border-bottom-width: 1px;
 `

@@ -99,7 +99,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const renderList = ({ item, index }: List) => {
         return (
             <TileContainer key={index} tile={item.key} onPress={() => selectTile(item)} selected={selected} available={item.data.length !== 0} disabled={item.data.length === 0}>
-                <Tile tile={item.key} selected={selected}>
+                <Tile tile={item.key} selected={selected} available={item.data.length !== 0}>
                     {item.key}
                 </Tile>
             </TileContainer>
@@ -117,7 +117,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
                     <FirstText gender={gender}>{`Men's`}</FirstText>
                 </GenderMaleContainer>
                 <GenderFemaleContainer onPress={() => genderSwitch("female")} gender={gender}>
-                    <SecondText gender={gender}>{`Woman's`}</SecondText>
+                    <SecondText gender={gender}>{`Women's`}</SecondText>
                 </GenderFemaleContainer>
             </GenderContainer>
             <SizeContainer>
@@ -126,8 +126,14 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
                     keyExtractor={(item) => item.key.toString()}
                     numColumns={numColumns}
                     renderItem={renderList}
+                    ListFooterComponent={Height}
+                    ListHeaderComponent={VerticalHeight}
                 />
             </SizeContainer>
+
+            <ButtonContainer>
+                <ButtonText>{gender === 'male' ? "View All Men's Contests" : "View All Women's Contests"}</ButtonText>
+              </ButtonContainer>
         </Container>
     )
 })
@@ -139,59 +145,100 @@ const Container = styled.View`
   background-color: #fff;
   height: ${height}px;
 `
+const Height = styled.View`
+  height: 70px;
+  width: 100%;
+  margin-top: auto;
+`
 const GenderContainer = styled.View`
   background-color: #fff;
-  padding: 18px 20px;
+  padding: 15px 20px;
   flex-direction: row;
   justify-content: space-between;
   border-color: #3f3f3f;
   border-top-width: 1px;
   border-bottom-width: 1px;
+  position: absolute;
+  top: 46px;
+  z-Index: 1;
+  opacity: 0.9;
 `
 const GenderMaleContainer = styled.TouchableOpacity`
-  background-color: ${props => props.gender === "male" ? "#fff" : "#000"};
+  background-color: ${props => props.gender === "male" ? "#000" : "#fff"};
   border-radius: 20px;
   align-items: center;
   justify-content: center;
   padding: 8px;
   border-width: 1px;
   border-color: #3f3f3f;
-  width: ${width/2.3}px;
+  width: ${width/2.4}px;
+  margin-right: 20px;
 `
 const GenderFemaleContainer = styled(GenderMaleContainer)`
-  background-color: ${props => props.gender === "male" ? "#000" : "#fff"};
+  background-color: ${props => props.gender === "male" ? "#fff" : "#000"};
 `
 const FirstText = styled.Text`
-  font-size: 16px;
-  color: ${props => props.gender === "male" ? "#000" : "#fff"};
+  font-size: 14px;
+  color: ${props => props.gender === "male" ? "#fff" : "#000"};
   font-family: "Montserrat-Medium"
 `
 const SecondText = styled(FirstText)`
-  color: ${props => props.gender === "male" ? "#fff": "#000"};
+  color: ${props => props.gender === "male" ? "#000": "#fff"};
 `
 const SizeContainer = styled.View`
-  margin: 10px 0px;
   margin-left: 20px;
+  flex: 1;
+`
+const VerticalHeight = styled.View`
+  height: 10px;
+  margin-top: 65px;
 `
 const TileContainer = styled.TouchableOpacity`
   width: ${width/5.4}px;
   height: ${height/11}px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   margin-right: 16px;
   margin-top: 2px;
   margin-left: 3px;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
-  opacity: ${props => props.available ? 1 : 0.5};
-  background-color: ${props => props.tile === props.selected ? "#fff" : "#000" };
-  shadow-color: ${props => props.tile === props.selected ? "#000" : "#fff"};
+  background-color: ${props => props.tile === props.selected ? "#000" : "#fff" };
+  shadow-color: ${props => props.tile === props.selected ? "#fff" : "#000"};
   shadow-opacity: 0.3;
   shadow-offset: 2px 2px;
   elevation: 20;
+  ${({ available }) => !available && `
+      background-color: #AAAAAA;
+  `}
 `
 const Tile = styled.Text`
   font-size: 24px;
-  color: ${props => props.tile === props.selected ? "#000" : "#fff"};
+  color: ${props => props.tile === props.selected ? "#fff" : "#000"};
   font-family: "Montserrat-ExtraBold";
+  ${({ available }) => !available && `
+    color: #ffffff;
+  `}
+`
+const ButtonContainer = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    padding: 14px;
+    background-color: #979797;
+
+    position: absolute;
+    bottom: 0px;
+    margin: 15px 25px;
+    width: 88%;
+`
+const ButtonText = styled.Text`
+    color: #fff;
+    font-family: "Montserrat-Bold";
+    font-size: 18px;
+`
+const LitterContainer = styled.View`
+  width: 103%;
+  right: 3px;
+  flex: 0.1px;
 `

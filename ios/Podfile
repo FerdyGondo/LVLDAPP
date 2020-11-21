@@ -18,6 +18,8 @@ target 'LVLDAPP' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
   target 'LVLDAPPTests' do
     inherit! :complete
     # Pods for testing
