@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { 
+  Alert,
   Text, 
   View, 
   Image,
@@ -382,13 +383,17 @@ const OpenCLoseDrawer = (props) => {
                 <DrawerItemStyle><DrawerTextStyle>Term of Use</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
             <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
-            </TouchableOpacity>
+                <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+            </TouchableOpacity>        
             <DrawerLocationViewStyle>
                 <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>CA, US</DrawerLocationTextStyle></DrawerItemStyle>
             </DrawerLocationViewStyle>
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
+            <TouchableOpacity  onPress={ () => Alert.alert(
+                                    "LVLD", "Are you sure you want to sign out from LVLD",
+                                    [ { text: "Sign Out", onPress: () => {} },
+                                      { text: "Cancel", style: "cancel" } ],
+                                    { cancelable: false } ) } >
+                <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
           </SafeAreaViewDrawer>
             <BottomView os={Platform.OS} insetsProp={insetsProp}>
