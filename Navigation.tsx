@@ -50,6 +50,7 @@ import UpdatePassword from './src/updatepassword'
 import Personal from './src/personal'
 import History from './src/history'
 import Tutorial from './src/hamburger/tutorial'
+import Rules from './src/hamburger/rules'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -263,6 +264,14 @@ const HomeStackNavigator = ({navigation}) => {
                 centerProps={<CenterButton text={'Tutorial'} size={14} />}
                 />
               }}/>
+               <Stack.Screen name= "Rules" component={Rules} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                props={navigation} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                centerProps={<CenterButton text={'Rules and GamePlay'} size={14} />}
+                />
+              }}/>
           </Stack.Navigator> )
 }
 
@@ -336,7 +345,7 @@ const OpenCLoseDrawer = (props) => {
             <TouchableOpacity  onPress={ () => props.navigation.navigate("Tutorial")} >
                 <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { }} >
+            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Rules")}} >
                 <DrawerItemStyle><DrawerTextStyle>Rules and Gameplays</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => { }} >
