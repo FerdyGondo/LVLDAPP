@@ -50,6 +50,7 @@ import UpdatePassword from './src/updatepassword'
 import Personal from './src/personal'
 import History from './src/history'
 import Tutorial from './src/hamburger/tutorial'
+import Privacy from './src/hamburger/privacy'
 import Faq from './src/hamburger/faq'
 import Rules from './src/hamburger/rules'
 
@@ -271,6 +272,7 @@ const HomeStackNavigator = ({navigation}) => {
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'FAQ'} size={14} />}
+                
                 />
               }}/>
               <Stack.Screen name= "Rules" component={Rules} options={{ 
@@ -279,6 +281,14 @@ const HomeStackNavigator = ({navigation}) => {
                   props={navigation} 
                   leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Rules and GamePlay'} size={14} />}
+                  />
+                }}/>
+              <Stack.Screen name= "Privacy" component={Privacy} options={{ 
+                header: (navigation) => 
+                  <LVLD_Header 
+                  props={navigation} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                  centerProps={<CenterButton text={'Privacy Policy'} size={14} />}
                   />
                 }}/>
           </Stack.Navigator> )
@@ -363,7 +373,7 @@ const OpenCLoseDrawer = (props) => {
             <TouchableOpacity  onPress={ () => { }} >
                 <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
+            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Privacy")}} >
                 <DrawerItemStyle><DrawerTextStyle>Term of Use</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
             <TouchableOpacity  onPress={ () => { }} >
