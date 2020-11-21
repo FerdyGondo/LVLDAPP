@@ -21,7 +21,10 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { 
+  createBottomTabNavigator
+} from '@react-navigation/bottom-tabs';
+
 import { Icon, Header }             from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -80,6 +83,7 @@ const DrawerNavigator = ({navigation}) => {
           drawerStyle={{
             width: window.width,
             marginTop: Platform.OS === 'android' ? insets.top+80 : insets.top+80,
+            marginBottom: Platform.OS === 'android' ? window.height/14 : window.height/11,
           }}
           overlayColor={0}
       >
@@ -89,6 +93,9 @@ const DrawerNavigator = ({navigation}) => {
 }
 
 const BottomTabNavigator = ({navigation}) => {
+  const window = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
   return(
       <BottomTab.Navigator
               initialRouteName="home"
@@ -117,6 +124,7 @@ const BottomTabNavigator = ({navigation}) => {
                 inactiveTintColor: 'gray',
                 activeBackgroundColor: '#ddd',
                 inactiveBackgroundColor: '#fff',
+                style: {height: Platform.OS === 'android' ? window.height/14 : window.height/11}
               }}
       >
         <BottomTab.Screen name="home"     component={HomeStackNavigator}  />
@@ -316,6 +324,7 @@ const ContentStackNavigator = ({navigation}) => {
 }
 
 export const LVLD_Navigation = ({navigation}) => {
+  
   return(
     <NavigationContainer>
       <PreStackNavigator />
@@ -328,8 +337,7 @@ const OpenCLoseDrawer = (props) => {
         <TouchableOpacity
           onPress={() => { 
             props.navigation.dispatch(DrawerActions.toggleDrawer());
-          }}
-        >
+          }} >
           <MenuIcon width={25} />
         </TouchableOpacity>
       );
@@ -353,39 +361,39 @@ const OpenCLoseDrawer = (props) => {
       )
     } 
 
-    const CustomDrawerContent = (props) => {   
+    const CustomDrawerContent = (props) => { 
       const insetsProp = useSafeAreaInsets();
       return (
-        <DrawerContentScrollView {...props}>
-          <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp.top}>
+        <DrawerContentScrollView contentContainerStyle={{ flex: 1, justifyContent:"space-between"}} {...props}>
+          <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp}>
             <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => props.navigation.navigate("Tutorial")} >
-                <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => { props.navigation.navigate("Rules")}} >
                 <DrawerItemStyle><DrawerTextStyle>Rules and Gameplays</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => { props.navigation.navigate("Faq")}} >
                 <DrawerItemStyle><DrawerTextStyle>FAQ</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
+            </TouchableOpacity>            
             <TouchableOpacity  onPress={ () => { props.navigation.navigate("Privacy")}} >
                 <DrawerItemStyle><DrawerTextStyle>Term of Use</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
             <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
+            <DrawerLocationViewStyle>
+                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>CA, US</DrawerLocationTextStyle></DrawerItemStyle>
+            </DrawerLocationViewStyle>
             <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>App Version 1.00.22</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
-            </SafeAreaViewDrawer>
+          </SafeAreaViewDrawer>
+            <BottomView os={Platform.OS} insetsProp={insetsProp}>
+                <DrawerTextStyle>App Version 1.00.22</DrawerTextStyle>
+            </BottomView> 
         </DrawerContentScrollView>
       );
     }
@@ -404,17 +412,31 @@ background-color: #262626;
 padding-top: ${props => props.statusBarProps};
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
-  margin-top: ${props => props.os === 'android' ? -(props.insetsProp - 6) + 'px' : -(props.insetsProp - 6) + 'px'};
+  margin-top: ${props => props.os === 'android' ? -(props.insetsProp.top - 6) + 'px' : -(props.insetsProp.top - 6) + 'px'};
 `
 const DrawerItemStyle = styled.View`
-padding-left: 20px;
 flex-direction: row;
 justify-content: space-between;
 border-bottom-color: black;
 border-bottom-width: 1px;
 margin:10px;
-padding-bottom: 20px;
+padding-left: 20px;
+padding-bottom: 15px;
 `
 const DrawerTextStyle = styled.Text`
 font-family: Montserrat;
 `
+const DrawerLocationTextStyle = styled.Text`
+font-family: Montserrat;
+font-weight: bold;
+color: #d2a747;
+margin-bottom:8px;
+`
+const DrawerLocationViewStyle = styled.View`
+margin-top:3px;
+`
+const BottomView = styled.View`
+align-items: center;
+margin-bottom: ${props => props.os === 'android' ? 10 + 'px' : 10 + 'px'};
+`
+
