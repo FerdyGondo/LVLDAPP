@@ -78,6 +78,7 @@ export default function index({ navigation }) {
 
 const Container = styled.View`
     flex: 1;
+    background-color: #fff;
 `
 const Profile = styled.View`
     border-color: #979797;

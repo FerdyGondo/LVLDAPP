@@ -57,6 +57,7 @@ import Tutorial from './src/hamburger/tutorial'
 import Privacy from './src/hamburger/privacy'
 import Faq from './src/hamburger/faq'
 import Rules from './src/hamburger/rules'
+import Invite from './src/invite'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -298,6 +299,14 @@ const HomeStackNavigator = ({navigation}) => {
                   props={navigation} 
                   leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Privacy Policy'} size={14} />}
+                  />
+                }}/>
+                <Stack.Screen name= "Invite" component={Invite} options={{ 
+                header: (navigation) => 
+                  <LVLD_Header 
+                  props={navigation} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                  centerProps={<CenterButton text={'Invite Friends'} size={14} />}
                   />
                 }}/>
           </Stack.Navigator> )
