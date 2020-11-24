@@ -58,16 +58,23 @@ export default function index({ route, navigation }: Props) {
         if (showSecond) return <Scroll><SecondChance /></Scroll>
         return (
             <Scroll>
-                <MainContainer>
-                    <MainTextContainer>
-                        <MainText>{item.nickname}</MainText>
-                        <SubText>{item.name}</SubText>
-                    </MainTextContainer>
+                <SpoilContainer>
+                    <MainContainer>
+                        <MainTextContainer>
+                            <MainText>{item.nickname}</MainText>
+                            <SubText>{item.name}</SubText>
+                        </MainTextContainer>
+                        <SubListContainer>
+                            <ProfileContainer>
+                                <ProfileIcon width={14}/>
+                            </ProfileContainer>
+                            <ListText>{item.requiredParticipants}</ListText>
+                        </SubListContainer>
+                    </MainContainer>
                     <SizeContainer>
-                        <SizeTextUpper>Size</SizeTextUpper>
-                        <SizeTextLower>{key}</SizeTextLower>
+                        <SizeText>{key}</SizeText>
                     </SizeContainer>
-                </MainContainer>
+                </SpoilContainer>
                 <ImageContainer>
                     <Image source={require('../../assets/images/shoes/sneakers.png')} />
                 </ImageContainer>
@@ -75,16 +82,11 @@ export default function index({ route, navigation }: Props) {
                     <SubListContainer>
                         <ListText>{`Entry: $${item.entry}`}</ListText>
                     </SubListContainer>
-                    <SubListContainer>
-                        <ProfileContainer>
-                            <ProfileIcon width={14}/>
-                        </ProfileContainer>
-                        <ListText>{item.requiredParticipants}</ListText>
-                    </SubListContainer>
+                    <EndText>{`Ends: ${item.endTime[0]} 12/04`}</EndText>
+                    
                 </ListContainer>
 
                 <EndContainer>
-                        <EndText>{`Ends: ${item.endTime[0]} 12/04`}</EndText>
                 </EndContainer>
                 <ContextContainer>
                     <ContextText>Contest Ends In:</ContextText>
@@ -145,10 +147,12 @@ const Scroll = styled.ScrollView`
     flex: 1;
 `
 const MainContainer = styled.View`
-    padding: 30px;
-    padding-bottom: 0px;
 `
-
+const SpoilContainer = styled.View`
+    flex-direction: row;
+    padding: 10px 20px;
+    justify-content: space-between;
+`
 const MainTextContainer = styled.View`
 `
 const MainText = styled.Text`
@@ -158,29 +162,19 @@ const MainText = styled.Text`
 const SubText = styled.Text`
     font-family: "Montserrat"
 `
-
 const SizeContainer = styled.TouchableOpacity`
     width: 50px;
     height: 50px;
     background-color: #000;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-top: 7px;
     align-items: center;
     justify-content: center;
 `
-const SizeTextUpper = styled.Text`
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 11px;
-    bottom: -1px;
-    font-family: "Montserrat-Bold"
-    opacity: 0.5;
-`
-const SizeTextLower = styled.Text`
+const SizeText = styled.Text`
     color: #fff;
     font-family: "Montserrat-ExtraBold"
     font-size: 16px;
-    top: -2px;
 `
 const ImageContainer = styled.View`
     background-color: #fff;
@@ -213,6 +207,7 @@ const ContextText = styled.Text`
 `
 const SubListContainer = styled.View`
     flex-direction: row;
+    align-items: center;
 `
 const ListText = styled.Text`
     font-family: "Montserrat-ExtraBold";
@@ -221,11 +216,11 @@ const EndText = styled(ListText)`
     color: #FF0B0B;
 `
 const ProfileContainer = styled.View`
-    top: 2px;
     margin-left: 5px;
     right: 5px;
 `
-const LowerContainer = styled(MainContainer)`
+const LowerContainer = styled.View`
+    padding: 30px;
     flex-direction: row;
     justify-content: space-between;
     padding-top: 5px;
@@ -238,7 +233,7 @@ const BigSizeContainer = styled(SizeContainer)`
     height: 85px;
     border-radius: 20px;
 `
-const BigUpperText = styled(SizeTextLower)`
+const BigUpperText = styled(SizeText)`
     font-size: 50px;
     font-family: "Montserrat"
 `
