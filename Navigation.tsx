@@ -63,6 +63,14 @@ const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
+export const LVLD_Navigation = ({navigation}) => {
+  return(
+    <NavigationContainer>
+      <PreStackNavigator />
+    </NavigationContainer>
+    )
+}
+
 const PreStackNavigator = ({navigation}) => {
     return( <Stack.Navigator>
               <Stack.Screen name = "drawer"  component = {DrawerNavigator} 
@@ -81,13 +89,12 @@ const DrawerNavigator = ({navigation}) => {
           drawerType={'front'}
           headerShown={true}
           hideStatusBar={false}
-
+          overlayColor={0}
           drawerStyle={{
             width: window.width,
             marginTop: Platform.OS === 'android' ? insets.top+80 : insets.top+80,
             marginBottom: Platform.OS === 'android' ? window.height/14 : window.height/11,
           }}
-          overlayColor={0}
       >
         <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator} />
       </Drawer.Navigator>
@@ -144,7 +151,7 @@ const HomeStackNavigator = ({navigation}) => {
                     <LVLD_Header 
                         props={navigation} 
                         leftProps={<NotificationIcon  width={20} />} 
-                        centerProps={<LvldLogo />}
+                        centerProps={centerLogo(navigation)}
                     />
                   }}
               />
@@ -153,7 +160,7 @@ const HomeStackNavigator = ({navigation}) => {
                 <LVLD_Header 
                     props={navigation} 
                     leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={<LvldLogo />}
+                    centerProps={centerLogo(navigation)}
                 />
               }} />
             <Stack.Screen name = "Sneaker" component = {Sneaker} options={{ 
@@ -333,26 +340,20 @@ const ContentStackNavigator = ({navigation}) => {
           </Stack.Navigator> )
 }
 
-export const LVLD_Navigation = ({navigation}) => {
-  
-  return(
-    <NavigationContainer>
-      <PreStackNavigator />
-    </NavigationContainer>
-    )
-}
+    const OpenCLoseDrawer = (props) => {
+          return <TouchableOpacity onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer()) } >
+                    <MenuIcon width={25} />
+                  </TouchableOpacity>
+        }
 
-const OpenCLoseDrawer = (props) => {
-      return (
-        <TouchableOpacity
-          onPress={() => { 
-            props.navigation.dispatch(DrawerActions.toggleDrawer());
-          }} >
-          <MenuIcon width={25} />
-        </TouchableOpacity>
-      );
+    const centerLogo = (props) => {
+      return <TouchableOpacity onPress={ () => props.navigation.navigate("home") } >
+                <LvldLogo />
+             </TouchableOpacity>
     }
+    
     const LVLD_Header = ({props, leftProps, centerProps}) => { 
+      const insets = useSafeAreaInsets();
       return(
       <SafeAreaViewStyled statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >
         <Header 
@@ -362,9 +363,14 @@ const OpenCLoseDrawer = (props) => {
               rightComponent={ OpenCLoseDrawer(props) }
               containerStyle={{
                 backgroundColor: '#262626',
+                borderBottomWidth:1,
+                borderBottomColor:'#262626',
                 justifyContent: 'space-around',
-                paddingBottom: 20,
-                height: 80
+                marginTop:-10,
+                marginLeft: 12,
+                marginRight: 15,
+                paddingBottom: insets.top*0.6,
+                height: 90
               }}
           />
       </SafeAreaViewStyled>
