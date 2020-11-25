@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import MessageComponent from '../shared/components/MessageComponent'
+import RedContainer from '../shared/components/RedContainer'
 
 const {width,height} = Dimensions.get("window")
 
@@ -116,6 +117,9 @@ export default function index({ route }: Props) {
                     </LeaderBoardMainContainer>
                     <ChatMainContainer onPress={() => leaderboardSwitch("chat")} leaderboard={leaderboard}>
                         <SecondText leaderboard={leaderboard}>{`Chat`}</SecondText>
+                        {
+                            leaderboard === 'leaderboard' && <RedContainer />
+                        }
                     </ChatMainContainer>
                 </LeaderBoardContainer>
                 {renderRequest()}
