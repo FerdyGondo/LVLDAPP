@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import ProfileComponent from '../shared/components/Profile'
 import styled from 'styled-components'
+import { Dimensions } from 'react-native'
+
+const { width, height } = Dimensions.get("window")
 
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={25} color={"#979797"} />;
@@ -24,12 +27,12 @@ export default function index({ navigation }) {
             <Profile>
                 <ProfileComponent />
             </Profile>
-                <TopContainer>
-                    <MainText>Invite Friends</MainText>
-                    <SubText>and get $10 in Gameplay</SubText>
-                </TopContainer>
-                <InviteImageContainer><InviteImage resizeMode="contain"  source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/invite-friends/invite-friends.png"}} /></InviteImageContainer>
-                <Scroll>
+                <Scroll contentContainerStyle={{ flexGrow: 1 }}>
+                    <TopContainer>
+                        <MainText>Invite Friends</MainText>
+                        <SubText>and get $10 in Gameplay</SubText>
+                    </TopContainer>
+                    <InviteImageContainer><InviteImage resizeMode="contain"  source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/invite-friends/invite-friends.png"}} /></InviteImageContainer>
                     <BottomContainer>
                         <InviteText>Invite friends using the options below</InviteText>
                         <FlatList 
@@ -71,7 +74,6 @@ const Profile = styled.View`
 `
 const Scroll = styled.ScrollView`
     flex: 1;
-    margin-top: -10px;
 `
 const FlatList = styled.FlatList`
 `
@@ -98,12 +100,11 @@ const SubText = styled.Text`
 `
 const InviteImageContainer = styled.View`
     width: 100%;
-    height: 50%;
-    top: -20px;
+    margin-top: -20px;
 `
 const InviteImage = styled.Image`
-    width: 100%;
-    height: 100%;
+    width: ${width*0.8}px;
+    height: ${width*0.8}px;
     align-self: center;
 `
 const InviteText = styled.Text`
