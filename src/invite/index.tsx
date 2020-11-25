@@ -40,7 +40,7 @@ export default function index({ navigation }) {
                         />
                     </BottomContainer>
                     <CardContainer>
-                        <CardText>
+                        <CardText onPress={() => navigation.navigate("Referrals")}>
                         <LeftText>Your Referrals</LeftText>
                         {myIcon}
                         </CardText>
