@@ -21,9 +21,9 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
         <ProfileComponent />
       </ShadowContainer>
       <BodyContainer>
-        <Carousel data = {dummyData} navigation = {navigation} />
         <Scroll>
           <Center>
+            <Carousel data = {dummyData} navigation = {navigation} />
             <RenderItemContainer onPress={() => navigation.navigate("Sneaker")}>
               <SneakerContainer os={Platform.OS} onPress={() => navigation.navigate("Sneaker")}>
                 <HeroText>{"Sneaker Contests"}</HeroText>
