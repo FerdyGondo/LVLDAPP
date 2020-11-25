@@ -57,6 +57,7 @@ import Tutorial from './src/hamburger/tutorial'
 import Privacy from './src/hamburger/privacy'
 import Faq from './src/hamburger/faq'
 import Rules from './src/hamburger/rules'
+import Support from './src/hamburger/support'
 import Invite from './src/invite'
 import Referrals from './src/referrals'
 
@@ -316,7 +317,7 @@ const HomeStackNavigator = ({navigation}) => {
                   leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Invite Friends'} size={14} />}
                   />
-                }}/>
+                }}/> 
                 <Stack.Screen name= "Referrals" component={Referrals} options={{ 
                 header: (navigation) => 
                   <LVLD_Header 
@@ -324,6 +325,14 @@ const HomeStackNavigator = ({navigation}) => {
                   leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Refferals'} size={14} />}
                   />
+                }}/>
+                <Stack.Screen name= "Support" component={Support} options={{
+                  header: (navigation) => 
+                    <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={<CenterButton text={'Support'} size={14} />}
+                    />
                 }}/>
           </Stack.Navigator> )
 }
@@ -391,7 +400,7 @@ const ContentStackNavigator = ({navigation}) => {
       return (
         <DrawerContentScrollView contentContainerStyle={{ flex: 1, justifyContent:"space-between"}} {...props}>
           <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp}>
-            <TouchableOpacity  onPress={ () => { }} >
+            <TouchableOpacity  onPress={ () => { props.navigation.navigate('Support')}} >
                 <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
             </TouchableOpacity>
             <TouchableOpacity  onPress={ () => props.navigation.navigate("Tutorial")} >
