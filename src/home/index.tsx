@@ -5,6 +5,9 @@ import ProfileComponent from '../shared/components/Profile'
 
 import { Dimensions, Platform } from 'react-native'
 
+import Carousel from '../carousel'
+import { dummyData } from '../carousel/data/Data'
+
 const { width } = Dimensions.get("window")
 
 type Props = {
@@ -18,7 +21,7 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
         <ProfileComponent />
       </ShadowContainer>
       <BodyContainer>
-        <LiveText os={Platform.OS}>Live contests</LiveText>
+        <Carousel data = {dummyData} navigation = {navigation} />
         <Scroll>
           <Center>
             <RenderItemContainer onPress={() => navigation.navigate("Sneaker")}>
