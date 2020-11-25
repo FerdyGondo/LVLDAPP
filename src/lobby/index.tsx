@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Actions from '../../actions'
 import Loading from '../shared/components/Loading'
 import MessageComponent from '../shared/components/MessageComponent'
+import RedContainer from '../shared/components/RedContainer'
 
 const {width,height} = Dimensions.get("window")
 
@@ -109,6 +110,9 @@ export default function index({ route, navigation }: Props) {
                     </LobbyMainContainer>
                     <ChatMainContainer onPress={() => lobbySwitch("chat")} lobby={lobby}>
                         <SecondText lobby={lobby}>{`Chat`}</SecondText>
+                        {
+                            lobby === 'lobby' && <RedContainer />
+                        }
                     </ChatMainContainer>
                 </LobbyContainer>
                 {renderItem()}
