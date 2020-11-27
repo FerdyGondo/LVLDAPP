@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "365258044320",
+    "firebase_url": "https://lvldapp.firebaseio.com",
+    "project_id": "lvldapp",
+    "storage_bucket": "lvldapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365258044320:android:c4e0363d8e3a1b189deac5",
+        "android_client_info": {
+          "package_name": "com.lvldapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365258044320-9r917dqh8uri95pj793nvgieevqq8uq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz1veCvC5E-S6L3lnTOGrskUMTkk3IjkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365258044320-9r917dqh8uri95pj793nvgieevqq8uq6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "365258044320-2p0tsb635vq2iiln4elnaqppuu353n36.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.LVLDAPP"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365258044320:android:8bad973b10d0f7759deac5",
+        "android_client_info": {
+          "package_name": "com.tfareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365258044320-9r917dqh8uri95pj793nvgieevqq8uq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz1veCvC5E-S6L3lnTOGrskUMTkk3IjkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365258044320-9r917dqh8uri95pj793nvgieevqq8uq6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "365258044320-2p0tsb635vq2iiln4elnaqppuu353n36.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.LVLDAPP"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
