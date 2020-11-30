@@ -5,7 +5,6 @@ const myIcon = <Icons name="angle-right" size={25} color={"#252525"} />;
 
 const data = [{name: "Contest Tutorial"}, {name: "Second Chance Contest"}, {name: "Member Referrals"}, {name: "LVLD Points"}]
 import { Icon } from 'react-native-elements';
-import ProfileComponent from '../../shared/components/Profile'
 
 type FlatProps = {
     item: any;
@@ -26,9 +25,6 @@ export default function index({ navigation }) {
 
     return (
         <Container>
-            <Profile>
-                <ProfileComponent />
-            </Profile>
             <FlatList 
                 data={data}
                 keyExtractor={(item, index) => index.toString()}
@@ -41,10 +37,6 @@ export default function index({ navigation }) {
 const Container = styled.View`
     flex: 1;
     background-color: #fff;
-`
-const Profile = styled.View`
-   border-bottom-width: 1px;
-   border-color: #979797; 
 `
 const FlatList = styled.FlatList``
 

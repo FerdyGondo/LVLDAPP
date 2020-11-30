@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import ProfileComponent from '../../shared/components/Profile'
 
 const data = [{name: "Privacy", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Electronic Communications", answer: `Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5. ${"\n\n"}Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.`},{name: "Your Account", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Chidren Under 18", answer: `Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5. ${"\n\n"}5.Answer to question number 5.Answer to question number 5.`}]
 
@@ -16,9 +15,6 @@ export default function index() {
 
     return (
         <Container>
-            <Profile>
-                <ProfileComponent />
-            </Profile>
             <MainContainer>
                 <List 
                     data={data}
@@ -33,10 +29,6 @@ export default function index() {
 const Container = styled.View`
     flex: 1;
     background-color: #fff;
-`
-const Profile = styled.View`
-   border-bottom-width: 1px;
-   border-color: #979797; 
 `
 const List = styled.FlatList`
 `
