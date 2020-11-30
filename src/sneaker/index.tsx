@@ -34,6 +34,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     const [modalVisible, setModalVisible] = useState(false)
     const [sizeText, setSizeText] = useState()
     const [item, setItem] = useState()
+    const [buttonState, setButtonState] = useState({ color: "#000000", background: "#ffffff"})
 
     useEffect(() => {
         dispatch(Actions.sneakers.fetchSneakers.trigger())
@@ -108,6 +109,10 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
 
     if (sneakers.length === 0) return <Loading />
 
+    const buttonPress = () => {
+      setButtonState({ color: "#ffffff", background: "#000000"})
+    }
+
     return (
         <Container>
             <SizeModal modalVisible={modalVisible} setModalVisible={setModalVisible} selected={selected} sizeModal={sizeModal} />
@@ -131,8 +136,8 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
                 />
             </SizeContainer>
 
-            <ButtonContainer>
-                <ButtonText>{gender === 'male' ? "View All Men's Contests" : "View All Women's Contests"}</ButtonText>
+            <ButtonContainer buttonState={buttonState} onPress={() => buttonPress()}>
+                <ButtonText buttonState={buttonState}>{gender === 'male' ? "View All Men's Contests" : "View All Women's Contests"}</ButtonText>
               </ButtonContainer>
         </Container>
     )
@@ -225,17 +230,20 @@ const ButtonContainer = styled.TouchableOpacity`
     align-items: center;
     border-radius: 40px;
     padding: 14px;
-    background-color: #979797;
-
+    background-color: ${props => props.buttonState.background};
+    border-color: #979797;
+    border-width: 2px;
     position: absolute;
     bottom: 0px;
     margin: 15px 25px;
     width: 88%;
 `
 const ButtonText = styled.Text`
-    color: #fff;
-    font-family: "Montserrat-Bold";
+    color: ${props => props.buttonState.color};
+    font-family: "Montserrat";
+    font-weight: 700;
     font-size: 18px;
+    line-height: 21.94px;
 `
 const LitterContainer = styled.View`
   width: 103%;
