@@ -30,6 +30,9 @@ import { Icon, Header }             from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import LvldLogo from './assets/svg/LvldLogo';
+import WelcomeScreen from './src/auth/welcome';
+import SignInScreen  from './src/auth/signIn';
+import SignUpScreen  from './src/auth/signUp';
 import Home     from './src/home/index';
 import Account  from './src/account/index';
 import Content  from './src/content/index';
@@ -68,18 +71,20 @@ const BottomTab = createBottomTabNavigator();
 export const LVLD_Navigation = ({navigation}) => {
   return(
     <NavigationContainer>
-      <PreStackNavigator />
+      <AuthStackNavigator/>
     </NavigationContainer>
     )
 }
 
-const PreStackNavigator = ({navigation}) => {
-    return( <Stack.Navigator>
-              <Stack.Screen name = "drawer"  component = {DrawerNavigator} 
-                options={{ headerShown: false }} 
-              />
-            </Stack.Navigator> )
-  }
+const AuthStackNavigator = () => {
+  return( <Stack.Navigator screenOptions={{ headerShown: false}} >
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name ="drawer" component={DrawerNavigator} options={{ headerShown: false }} />
+          </Stack.Navigator> 
+          )
+        }
 
 const DrawerNavigator = ({navigation}) => {
   const window = useWindowDimensions();
