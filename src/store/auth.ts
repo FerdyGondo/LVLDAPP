@@ -16,6 +16,7 @@ const auth = ( state = INITIAL_STATE, action:Actions) => {
       case "SIGNUP_SUCCESS":
         return {
             ...state,
+            loggedIn: true,
             errorMsgUp:'Sign up success. Please check your email to verify before login'
         };
       case "SIGNUP_FAILED":

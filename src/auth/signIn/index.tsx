@@ -36,16 +36,15 @@ const SignInScreen = ({navigation}) => {
     const [password, setPassword] = useState('');
     const auth = useSelector(state => state.auth);
     const signInDispatch = useDispatch();
-    const navigationConst = navigation;
-
-    useEffect( () => {
-        if(auth.loggedIn) navigation.navigate('drawer');
-    });
 
     const googleIcon    = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Google-Circle_Auth.png'} ;
     const facebookIcon  = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Facebook-Circle_Auth.png'} ;
     const amazonIcon    = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Amazon-Circle_Auth.png'} ;
     const appleIcon     = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Apple-Circle_Auth.png'} ;
+    
+    useEffect( () => {
+        if(auth.loggedIn) navigation.navigate('drawer');
+    });
     
     return (
     <SafeAreaViewContainer statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >

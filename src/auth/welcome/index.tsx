@@ -21,6 +21,7 @@ import {
     Input,
 } from 'react-native-elements';
 import styled from 'styled-components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LvldLogo from '../../../assets/svg/LvldLogo';
 import Spacer   from '../../shared/components/Spacer';
@@ -28,6 +29,21 @@ import Button   from '../../shared/components/ButtonComp';
 
 const WelcomeScreen = ({navigation}) => {    
         const image = { uri: "https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/App-Entry-Bg.jpg" };
+
+        const [token, updateToken] = useState(null);
+        const getToken = async () => {
+            try {
+              const token = await AsyncStorage.getItem('token')
+              updateToken(token);
+            } catch(err) {
+              console.log("getToken err", err);
+            }
+          }
+
+        useEffect( () => {
+            getToken();
+            if(token) navigation.navigate('drawer');
+        });
 
     return (
           <Container>
