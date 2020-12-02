@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { 
   Alert,
   Text, 
@@ -63,6 +64,7 @@ import Rules from './src/hamburger/rules'
 import Support from './src/hamburger/support'
 import Invite from './src/invite'
 import Referrals from './src/referrals'
+import {signOutAction} from './src/store/authActions';
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -401,6 +403,7 @@ const ContentStackNavigator = ({navigation}) => {
     } 
 
     const CustomDrawerContent = (props) => { 
+      const signOutDispatch = useDispatch();
       const insetsProp = useSafeAreaInsets();
       return (
         <DrawerContentScrollView contentContainerStyle={{ flex: 1, justifyContent:"space-between"}} {...props}>
@@ -428,7 +431,11 @@ const ContentStackNavigator = ({navigation}) => {
             </DrawerLocationViewStyle>
             <TouchableOpacity  onPress={ () => Alert.alert(
                                     "LVLD", "Are you sure you want to sign out from LVLD",
-                                    [ { text: "Sign Out", onPress: () => {} },
+                                    [ { text: "Sign Out", onPress: () => {
+                                              signOutDispatch(signOutAction());
+                                              props.navigation.navigate("Welcome");
+                                           }
+                                        },
                                       { text: "Cancel", style: "cancel" } ],
                                     { cancelable: false } ) } >
                 <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>

@@ -1,7 +1,8 @@
 import { all, fork, call, put, takeEvery, takeLatest, cancel, getContext } from 'redux-saga/effects';
-import * as actionTypes from "./actionTypes";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { gql } from 'apollo-boost';
 
+import * as actionTypes from "./actionTypes";
 import { graphqlApiSignIn } from './graphqlApiSignIn';
 import { graphqlApiSignUp } from './graphqlApiSignUp';
 
@@ -39,10 +40,12 @@ function* signInSaga (signInAction) {
 };
 
 function* signOutSaga (signOutAction) {
-      try {
-      } catch (err) {
-          console.log("sagas SIGNOUT err.message: " , err.message);
-      }
+  try {
+    yield AsyncStorage.removeItem('token');
+    yield put({ type : actionTypes.SIGNOUT});
+  } catch (err) {
+      console.log("sagas SIGNOUT err: " , err);
+  }
 };
 
 function* watchSignUpSaga() {

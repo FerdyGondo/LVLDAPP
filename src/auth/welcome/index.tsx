@@ -28,7 +28,6 @@ import Button   from '../../shared/components/ButtonComp';
 
 const WelcomeScreen = ({navigation}) => {    
         const image = { uri: "https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/App-Entry-Bg.jpg" };
-        const [user, updateUser] = useState(null);
 
     return (
           <Container>

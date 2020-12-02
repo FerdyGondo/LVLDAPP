@@ -1,4 +1,5 @@
 import { createApolloFetch } from 'apollo-fetch';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const uri = 'https://oo3hzxedx2.execute-api.us-east-1.amazonaws.com/staging/graphql';
 const apolloFetch = createApolloFetch({ uri });
@@ -22,7 +23,14 @@ export const graphqlApiSignIn = async (obj:Object) => {
                 let err = res.errors[0].message;
                 throw (err);
             } else {
-                let accessToken = res.data.login.accessToken;
-                let refreshToken  = res.data.login.refreshToken;
+                storeToken(res.data.login.accessToken);
             }
 }
+
+const storeToken = async (token) => {
+    try {
+      await AsyncStorage.setItem('token', token)
+    } catch (err) {
+        console.log("storeToken err",err);
+    }
+  }
