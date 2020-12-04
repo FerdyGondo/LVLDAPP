@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={25} color={"#252525"} />;
 
-const data = [{name: "Contest Tutorial"}, {name: "Second Chance Contest"}, {name: "Member Referrals"}, {name: "LVLD Points"}]
+const data = [{name: "Contest Tutorial", screen: "ContestTutorial"}, {name: "Second Chance Contest", screen: ""}, {name: "Member Referrals", screen: ""}, {name: "LVLD Points", screen: ""}]
 import { Icon } from 'react-native-elements';
 
 type FlatProps = {

@@ -65,6 +65,7 @@ import Support from './src/hamburger/support'
 import Invite from './src/invite'
 import Referrals from './src/referrals'
 import {signOutAction} from './src/store/authActions';
+import ContestTutorial from './src/hamburger/tutorial/contest'
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -339,6 +340,14 @@ const HomeStackNavigator = ({navigation}) => {
                     props={navigation} 
                     leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                     centerProps={<CenterButton text={'Support'} size={14} />}
+                    />
+                }}/>
+                <Stack.Screen name= "ContestTutorial" component={ContestTutorial} options={{
+                  header: (navigation) => 
+                    <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={<CenterButton text={'How It Works'} size={14} />}
                     />
                 }}/>
           </Stack.Navigator> )
