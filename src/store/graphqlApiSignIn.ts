@@ -31,6 +31,6 @@ const storeToken = async (token) => {
     try {
       await AsyncStorage.setItem('token', token)
     } catch (err) {
-        console.log("storeToken err",err);
+        console.log("storeToken error ",err);
     }
   }

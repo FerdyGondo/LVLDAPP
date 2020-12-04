@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { KeyboardAvoidingView, Platform } from 'react-native'
+import { getAuthData }   from '../shared/utils';
 
 export default function index() {
     const [userName, setName] = useState("")
@@ -19,6 +20,16 @@ export default function index() {
         }
     },[userName, firstName, lastName, email, password])
     
+    const [first_name, setFirst_name] = useState(null);
+    const [last_name, setLast_name] = useState(null);
+    useEffect(  () => {
+        (async () => {
+            const first_name = await getAuthData('firstname')
+            setFirst_name(first_name);
+            const last_name = await getAuthData('lastname')
+            setLast_name(last_name);
+        })()
+    },[]);
 
     return (
         <Container>
@@ -29,7 +40,7 @@ export default function index() {
                 </TopContainer>
                 <ProfileContainer>
                     <ProfileIcon width={70} />
-                    <MainText>Peter{" "}<SubText>Cho</SubText></MainText>
+                    <MainText>{first_name+" "}<SubText>{last_name}</SubText></MainText>
                 </ProfileContainer>
                 <BottomContainer>
                     <BoldText>$1,000</BoldText>
@@ -105,6 +116,7 @@ const Bottom = styled.Text`
   font-size: 11px;
 `
 const ProfileContainer = styled.View`
+    align-items: center;
 `
 const MainText = styled.Text`
   font-weight: bold;

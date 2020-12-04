@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import MessageComponent from '../shared/components/MessageComponent'
 import RedContainer from '../shared/components/RedContainer'
+import { getAuthData }   from '../shared/utils';
 
 const {width,height} = Dimensions.get("window")
 
@@ -20,6 +21,17 @@ export default function index({ route }: Props) {
     const leaderboardSwitch = (data: string): void => {
         setLeaderboard(data)
     }
+
+    const [firstname, setFirstname] = useState(null);
+    const [lastname, setLastname] = useState(null);
+    useEffect(  () => {
+        (async () => {
+            const firstname = await getAuthData('firstname')
+            setFirstname(firstname);
+            const lastname = await getAuthData('lastname')
+            setLastname(lastname);
+        })()
+    },[]);
 
     useEffect(() => {
         getUserIndex()
@@ -132,7 +144,7 @@ export default function index({ route }: Props) {
                             <ProfileIcon width={30} />
                         </Profile>
                         <LvdContainer>
-                            <ProfileName>Peter C.</ProfileName>
+                            <ProfileName>{firstname+" "+lastname}</ProfileName>
                         </LvdContainer>
                     </OwnerContainer>
                     <Practice>

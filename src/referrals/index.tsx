@@ -6,7 +6,7 @@ import { Dimensions } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 
-const data = [{name: "Jason S.", account: true},{name: "Peter C.", account: true},{name: "Brandt L.", account: true},{name: "Reed H.", account: true},{name: "Shane S.", account: false}]
+const data = [{name: "Jason S.", account: true},{name: "Peter Cho.", account: true},{name: "Brandt L.", account: true},{name: "Reed H.", account: true},{name: "Shane S.", account: false}]
 
 export default function index() {
     const renderItem = ({ item }) => {

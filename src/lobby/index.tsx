@@ -7,6 +7,7 @@ import Actions from '../../actions'
 import Loading from '../shared/components/Loading'
 import MessageComponent from '../shared/components/MessageComponent'
 import RedContainer from '../shared/components/RedContainer'
+import { getAuthData }   from '../shared/utils';
 
 const {width,height} = Dimensions.get("window")
 
@@ -20,6 +21,16 @@ export default function index({ route, navigation }: Props) {
     const { entry, lobbyItem } = route?.params
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.list)
+    const [firstname, setFirstname] = useState(null);
+    const [lastname, setLastname] = useState(null);
+    useEffect(  () => {
+        (async () => {
+            const firstname = await getAuthData('firstname')
+            setFirstname(firstname);
+            const lastname = await getAuthData('lastname')
+            setLastname(lastname);
+        })()
+    },[]);
 
     useEffect(() => {
         dispatch(Actions.users.fetchUsers.trigger())
@@ -122,7 +133,7 @@ export default function index({ route, navigation }: Props) {
                             <ProfileIcon width={30} />
                         </Profile>
                         <LvdContainer>
-                            <ProfileName>Peter C.</ProfileName>
+                    <ProfileName>{firstname+" "+lastname}</ProfileName>
                         </LvdContainer>
                     </OwnerContainer>
                     <Practice>
