@@ -17,9 +17,9 @@ type Props = {
 const Home = React.memo(({ navigation }: Props): ReactElement => {
   return (
     <Container>
-      <ShadowContainer elevation={5}>
-        <ProfileComponent />
-      </ShadowContainer>
+        <Profile>
+          <ProfileComponent />
+        </Profile>
       <BodyContainer>
         <Scroll>
           <Center>
@@ -27,7 +27,9 @@ const Home = React.memo(({ navigation }: Props): ReactElement => {
             <RenderItemContainer onPress={() => navigation.navigate("Sneaker")}>
               <SneakerContainer os={Platform.OS} onPress={() => navigation.navigate("Sneaker")}>
                 <HeroText>{"Sneaker Contests"}</HeroText>
-                <HeroSmallerText>{"Entry Fee $1.00-$5.00"}</HeroSmallerText>
+                <HeroShadow>
+                  <HeroSmallerText>{"Entry Fee $1.00-$5.00"}</HeroSmallerText>
+                </HeroShadow>
                 <SneakerMainText>
                   <PlayText>{"PLAY NOW"}</PlayText>
                 </SneakerMainText>
@@ -75,16 +77,10 @@ const Scroll = styled.ScrollView`
   flex: 1;
 `
 const Center = styled.View`
-  margin-bottom: 40px
 `
-const ShadowContainer = styled.View`
-  background-color: #fff;
-  shadow-color: #000;
-  shadow-opacity: 0.2;
-  shadow-offset: 1px 5px;
-  elevation: 20;
-  padding: 1px;
-  margin: 1px;
+const Profile = styled.View`
+  border-color: #979797;
+  border-bottom-width: 1px;
 `
 const BodyContainer = styled.View`
   padding: 12px 0px 0px;;
@@ -112,12 +108,18 @@ const HeroText = styled.Text`
 `
 const HeroSmallerText = styled.Text`
   font-size: 12px;
-  color: #fff;
-  font-family: "Montserrat-Bold";
+  color: #ffffff;
+  font-family: "Montserrat";
+  font-weight: 600;
+  line-height: 15px;
+  letter-spacing: 0.0003375px;
   margin-top: 2px;
-  text-shadow-offset: 2px 2px;
-  text-shadow-radius: 0.1px;
-  text-shadow-color: rgba(0, 0, 0, 0.4);
+`
+const HeroShadow = styled.View`
+  shadow-color: #000;
+  shadow-opacity: 0.4;
+  shadow-offset: 0px 1px;
+  elevation: 20;
 `
 const PlayText = styled.Text`
   font-family: "Montserrat";
@@ -133,7 +135,7 @@ const RenderItemContainer = styled.TouchableOpacity`
 const Rockus = styled.View`
   height: 185px;
   background-color: #292929;
-  margin-top: 7px;
+  margin-top: 2px
 `
 const RokusWatch = styled(Rockus)`
   background-color: #626262;
