@@ -48,7 +48,7 @@ export default function index({ navigation }) {
                         {myIcon}
                         </CardText>
                         <CardText onPress={() => setOpen(open => open = !open)}>
-                        <LeftText>How it works</LeftText>
+                        <LeftText>Referral Rules</LeftText>
                         {open ? myDown : myIcon}
                         </CardText>
                     </CardContainer>
@@ -103,8 +103,8 @@ const InviteImageContainer = styled.View`
     margin-top: -20px;
 `
 const InviteImage = styled.Image`
-    width: ${width*0.8}px;
-    height: ${width*0.8}px;
+    width: ${width}px;
+    height: ${width}px;
     align-self: center;
 `
 const InviteText = styled.Text`
@@ -112,6 +112,7 @@ const InviteText = styled.Text`
     font-weight: 700;
     line-height: 17.07px;
     font-size: 14px;
+    margin-top: -1%;
 `
 const InviteIcon = styled.Image`
     width: 50px;
