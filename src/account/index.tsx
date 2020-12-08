@@ -50,12 +50,8 @@ const Account = React.memo((): ReactElement => {
     
       <ShadowContainer>
         <MainContainer>
-          <TopContainer>
-            <BoldText>17,000</BoldText>
-            <Bottom>LVLD POINTS</Bottom>
-          </TopContainer>
           <ProfileContainer>
-            <ProfileIcon width={70} />
+            <ProfileIcon width={50} />
             <MainText>{firstname + " "}<SubText>{lastname}</SubText></MainText>
           </ProfileContainer>
           <BottomContainer>
@@ -92,23 +88,31 @@ const ShadowContainer = styled.View`
 const MainContainer = styled.View`
   flex-direction: row;
   margin: 8px 15px;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 const TopContainer = styled.View`
 `
 const BottomContainer = styled.View`
-  align-items: flex-end;
+  position: absolute;
+  top: 1%;
+  right: 1%;
 `
 
 const BoldText = styled.Text`
-  font-size: 11px;
-  font-weight: bold;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 700;
+  text-align: right;
+  line-height: 12.19px;
 `
 
 const Bottom = styled.Text`
-  font-weight: 400;
-  font-size: 11px;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 500;
+  text-align: right;
+  line-height: 12.19px;
 `
 
 const ProfileContainer = styled.View`
@@ -117,12 +121,16 @@ const ProfileContainer = styled.View`
 
 
 const MainText = styled.Text`
-  font-weight: bold;
-  font-size: 18px;
+  font-family: "Montserrat-Bold";
+  font-size: 17px;
+  line-height: 19.92px;
 `
 
 const SubText = styled.Text`
+  font-family: "Montserrat";
   font-weight: 200;
+  font-size: 17px;
+  line-height: 20.72px;
 `
 
 const FlatList = styled.FlatList``

@@ -6,7 +6,6 @@ import {
   View, 
   Image,
   TouchableOpacity,
-  SafeAreaView, 
   Dimensions,
   useWindowDimensions,
   StatusBar,
@@ -17,6 +16,7 @@ import {
   NavigationContainer, 
   DrawerActions
 }      from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 const {width,height} = Dimensions.get("window")
 import { createStackNavigator } from '@react-navigation/stack';
 import {
@@ -146,7 +146,17 @@ const BottomTabNavigator = ({navigation}) => {
                 style: {height: Platform.OS === 'android' ? window.height/14 : window.height/11}
               }}
       >
-        <BottomTab.Screen name="home"     component={HomeStackNavigator}  />
+        <BottomTab.Screen 
+          name="home"     
+          component={HomeStackNavigator}  
+          listeners={({ navigation, route }) => ({
+            tabPress: e => {
+                if (route.state && route.state.routeNames.length > 0) {
+                    navigation.navigate('home')
+                }
+            },
+        })}
+        />
         <BottomTab.Screen name="content"  component={ContentStackNavigator} />
         <BottomTab.Screen name="entries"  component={Entries} />
       </BottomTab.Navigator>
@@ -389,7 +399,7 @@ const ContentStackNavigator = ({navigation}) => {
     const LVLD_Header = ({props, leftProps, centerProps}) => { 
       const insets = useSafeAreaInsets();
       return(
-      <SafeAreaViewStyled statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >
+      <SafeAreaView style={{ backgroundColor: '#262626', paddingBottom: Platform.OS === "ios" ? -30 : 0 }}>
         <Header 
             statusBarProps={{ barStyle: 'light-content' }}
               leftComponent={leftProps}
@@ -407,7 +417,7 @@ const ContentStackNavigator = ({navigation}) => {
                 height: 90
               }}
           />
-      </SafeAreaViewStyled>
+      </SafeAreaView>
       )
     } 
 
@@ -465,10 +475,6 @@ tintColor: ${props => props.colorProps};
 const TabText = styled.Text`
 font-family: Montserrat;
 font-size: 10px;
-`
-const SafeAreaViewStyled = styled.SafeAreaView`
-background-color: #262626;
-padding-top: ${props => props.statusBarProps};
 `
 const SafeAreaViewDrawer = styled.SafeAreaView`
   margin-top: ${props => props.os === 'android' ? -(props.insetsProp.top - 6) + 'px' : -(props.insetsProp.top - 6) + 'px'};
