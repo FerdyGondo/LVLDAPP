@@ -37,8 +37,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>LVLD would like to access your lcoation</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>LVLD would like to access your lcoation</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>LVLD would like to access your lcoation</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -75,6 +79,10 @@
 		<string>Montserrat-SemiBoldItalic.ttf</string>
 		<string>Montserrat-Thin.ttf</string>
 		<string>Montserrat-ThinItalic.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

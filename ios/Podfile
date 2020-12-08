@@ -20,6 +20,8 @@ target 'LVLDAPP' do
 
   pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
 
+#  pod 'react-native-location', :path => '../node_modules/react-native-location/react-native-location.podspec'
+
   target 'LVLDAPPTests' do
     inherit! :complete
     # Pods for testing

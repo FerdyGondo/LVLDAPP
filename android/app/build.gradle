@@ -188,7 +188,19 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
+
+    implementation "androidx.annotation:annotation:1.1.0"
+    implementation "androidx.core:core-ktx:+"
+
+//    implementation "com.google.android.gms:play-services-gcm:12.+"
+
+//    implementation(project(':react-native-location')) {
+//        exclude group: 'com.google.android.gms', module: 'play-services-location'
+//    }
+//    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+    implementation project(':react-native-location')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

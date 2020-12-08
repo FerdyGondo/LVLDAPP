@@ -13,6 +13,7 @@ const LOGIN_QUERY = `
 `
 
 export const graphqlApiSignIn = async (obj:Object) => {
+    try{
          let res = await apolloFetch({ query : LOGIN_QUERY, 
             variables: { 
                     username    : obj.username, 
@@ -25,6 +26,9 @@ export const graphqlApiSignIn = async (obj:Object) => {
             } else {
                 storeToken(res.data.login.accessToken);
             }
+        } catch(e){
+            console.log('e ', e);
+        }
 }
 
 const storeToken = async (token) => {

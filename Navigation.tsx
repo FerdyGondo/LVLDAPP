@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import { 
   Alert,
@@ -66,6 +66,7 @@ import Invite from './src/invite'
 import Referrals from './src/referrals'
 import {signOutAction} from './src/store/authActions';
 import ContestTutorial from './src/hamburger/tutorial/contest'
+import { geolocation } from './src/shared/geolocation';
 
 const Stack     = createStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -424,6 +425,15 @@ const ContentStackNavigator = ({navigation}) => {
     const CustomDrawerContent = (props) => { 
       const signOutDispatch = useDispatch();
       const insetsProp = useSafeAreaInsets();
+      const [stateregion, setStateregion] = useState('');
+
+      useEffect(() => {
+        (async () => {
+          let  stateregion = await geolocation();
+          setStateregion(stateregion);
+        })();
+      }, []);
+      
       return (
         <DrawerContentScrollView contentContainerStyle={{ flex: 1, justifyContent:"space-between"}} {...props}>
           <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp}>
@@ -446,7 +456,7 @@ const ContentStackNavigator = ({navigation}) => {
                 <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
             </TouchableOpacity>        
             <DrawerLocationViewStyle>
-                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>CA, US</DrawerLocationTextStyle></DrawerItemStyle>
+                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>{stateregion.state}</DrawerLocationTextStyle></DrawerItemStyle>
             </DrawerLocationViewStyle>
             <TouchableOpacity  onPress={ () => Alert.alert(
                                     "LVLD", "Are you sure you want to sign out from LVLD",

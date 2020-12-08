@@ -23,6 +23,7 @@ const SIGNUP_MUTATION = `
 `
 
 export const graphqlApiSignUp = async (obj:Object) => {
+    try{
         let res =  await apolloFetch({ query : SIGNUP_MUTATION, 
             variables: { 
                     username    : obj.username, 
@@ -41,6 +42,9 @@ export const graphqlApiSignUp = async (obj:Object) => {
                 storeItem('firstname', res.data.signup.firstname);
                 storeItem('lastname', res.data.signup.lastname);
             }
+        } catch(e){
+            console.log('e ', e);
+        }
 }
 
 const storeItem = async (key, item) => {

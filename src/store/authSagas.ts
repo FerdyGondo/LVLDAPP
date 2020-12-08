@@ -1,7 +1,5 @@
 import { all, fork, call, put, takeEvery, takeLatest, cancel, getContext } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { gql } from 'apollo-boost';
-
 import * as actionTypes from "./actionTypes";
 import { graphqlApiSignIn } from './graphqlApiSignIn';
 import { graphqlApiSignUp } from './graphqlApiSignUp';
@@ -11,15 +9,6 @@ import {
   signInAction, 
   signOutAction
 } from './authActions';
-
-const LOGIN_QUERY = gql`
-    query login($username: String!, $password:String!){
-              login(username: $username, password: $password) {
-                  accessToken
-                  refreshToken
-              }
-          }
-`
 
 function* signUpSaga (signUpAction) {
   try {
