@@ -34,7 +34,7 @@ export default function index() {
                         </SendContainer>
                     </UpperContainer>
                     <InputContainer os={Platform.OS}>
-                        <PlaceHolderInput placeholder={"Type your message here"} focus={focus1} onFocus={() => setFocus1(true)} onBlur={() => setFocus1(false)} placeholderTextColor={'#979797'} value={name} onChangeText={(text) => setName(text)} returnKeyType={"next"} />
+                        <PlaceHolderInput placeholder={"Type your message here"} focus={focus1} onFocus={() => setFocus1(true)} onBlur={() => setFocus1(false)} placeholderTextColor={'#979797'} value={name} onChangeText={(text) => setName(text)} returnKeyType={"next"} multiline={true} maxLength={500} />
                     </InputContainer>
                 </TextContainer>
             </MainContainer>
@@ -111,6 +111,7 @@ const AttatchmentContainer = styled.View`
 `
 const PlaceHolderInput = styled.TextInput`
     padding-left: 5.7%;
+    padding-right: 5.7%;
     font-size: 14px;
     font-family: "Montserrat";
     color: #000000;
