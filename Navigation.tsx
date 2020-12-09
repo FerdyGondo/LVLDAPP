@@ -9,6 +9,7 @@ import {
   Dimensions,
   useWindowDimensions,
   StatusBar,
+  Button,
   Platform
 } from 'react-native';
 import styled from 'styled-components';
@@ -399,7 +400,7 @@ const ContentStackNavigator = ({navigation}) => {
     const LVLD_Header = ({props, leftProps, centerProps}) => { 
       const insets = useSafeAreaInsets();
       return(
-      <SafeAreaView style={{ backgroundColor: '#262626', paddingBottom: Platform.OS === "ios" ? -30 : 0 }}>
+      <SafeAreaView style={{ backgroundColor: '#262626', paddingBottom: Platform.OS === "ios" ? -50 : 0 }}>
         <Header 
             statusBarProps={{ barStyle: 'light-content' }}
               leftComponent={leftProps}
@@ -414,7 +415,7 @@ const ContentStackNavigator = ({navigation}) => {
                 marginLeft: 12,
                 marginRight: 15,
                 paddingBottom: insets.top*0.6,
-                height: 90
+                height: 80
               }}
           />
       </SafeAreaView>
