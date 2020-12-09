@@ -1,7 +1,7 @@
 import { createApolloFetch } from 'apollo-fetch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const uri = 'https://oo3hzxedx2.execute-api.us-east-1.amazonaws.com/staging/graphql';
+const uri = 'https://oo3hzxedx2.execute-api.us-east-1.amazonaws.com/staging/auth';
 const apolloFetch = createApolloFetch({ uri });
 const SIGNUP_MUTATION = `
     mutation signup($username: String!, $email: String!, $password: String!, $firstname: String, $lastname: String){
@@ -23,7 +23,6 @@ const SIGNUP_MUTATION = `
 `
 
 export const graphqlApiSignUp = async (obj:Object) => {
-    try{
         let res =  await apolloFetch({ query : SIGNUP_MUTATION, 
             variables: { 
                     username    : obj.username, 
@@ -42,9 +41,6 @@ export const graphqlApiSignUp = async (obj:Object) => {
                 storeItem('firstname', res.data.signup.firstname);
                 storeItem('lastname', res.data.signup.lastname);
             }
-        } catch(e){
-            console.log('e ', e);
-        }
 }
 
 const storeItem = async (key, item) => {
