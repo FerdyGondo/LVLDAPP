@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen'
+import { StatusBar } from 'react-native'
 import { 
   createStore, 
   applyMiddleware 
@@ -34,6 +35,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
               <LVLD_Navigation />  
       </ThemeProvider>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
     </Provider>
   );
 }
