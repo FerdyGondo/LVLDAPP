@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProfileIcon from '../../../assets/svg/ProfileIcon'
-import { KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native'
 
 const messages = [{userId: "rhazen", name: "Reed H.", message: "Who is ready to play?", createdAt: Date.now()},{userId: "jspaits", name: "Jason S.", message: "Been practicing all day", createdAt: Date.now()},{userId: "eumeh", name: "Ebuka U.", message: "Who is ready to play?", createdAt: Date.now()}]
 
 const userId = "eumeh";
 
-export default function Message() {
+export default function Message({ setFocusInput }) {
     const [message, setMessage] = useState('')
     const [messaged, setMessaged] = useState(messages)
+    const scroll = React.useRef()
 
     const onSubmit = () => {
         if (!message) return 
@@ -54,25 +55,29 @@ export default function Message() {
     }
 
     return (
-        <Container>
             <KeyboardAvoidingView
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
                 style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 130 : '10%'}
                 >
                 <List 
                     data={messaged}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={renderMessageList}
+                    ref={scroll}
+                    onContentSizeChange={() => scroll.current.scrollToEnd({ animating: true })}
+                    onLayout={() => scroll.current.scrollToEnd({ animating: true })}
                 />
             <BoxContainer>
-                <EnterMessage placeholder={'Enter Message'} onChangeText={(text) => setMessage(text)} value={message} />
-                <SendContainer onPress={() => onSubmit()}>
-                    <MessageText color={'white'}>Send</MessageText>
-                </SendContainer>
+                <EnterMessage placeholder={'Enter Message'} onChangeText={(text) => setMessage(text)} value={message} onFocus={() => setFocusInput(true)} onBlur={() => setFocusInput(false)} />
+                <TouchableWithoutFeedback  onPress={() => onSubmit()}>
+                    <SendContainer>
+                        <MessageText color={'white'}>Send</MessageText>
+                    </SendContainer>
+                </TouchableWithoutFeedback>
             </BoxContainer>
                 </KeyboardAvoidingView>
            
-        </Container>
     )
 }
 
@@ -122,7 +127,7 @@ const EnterMessage = styled.TextInput`
     border-radius: 20px;
     padding-left: 10px;
 `
-const SendContainer = styled.TouchableOpacity`
+const SendContainer = styled.View`
     margin-left: 15px;
     background-color: #000;
     padding: 10px 15px;

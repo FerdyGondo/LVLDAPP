@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions, TouchableWithoutFeedback } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import MessageComponent from '../shared/components/MessageComponent'
@@ -17,6 +17,7 @@ export default function index({ route }: Props) {
     const [leaderboard, setLeaderboard] = useState("leaderboard")
     const {entry, lobbyItem, users} = route?.params
     const [currentIndex, setCurrentIndex] = useState(0)
+    const [focusInput, setFocusInput] = useState(false)
 
     const leaderboardSwitch = (data: string): void => {
         setLeaderboard(data)
@@ -91,48 +92,27 @@ export default function index({ route }: Props) {
             renderItem={renderList}
         />
         } else {
-            return <MessageComponent />
+            return <MessageComponent setFocusInput={setFocusInput} />
         }
     }
 
     return (
         <Container>
-            <ProfileHeader>
-                <ProfileContainer>
-                    <ImageContainer>
-                        <Image source={require('../../assets/images/shoes/sneakers.png')} />
-                    </ImageContainer>
-                    <NameContainer>
-                        <NameText>{lobbyItem.name}</NameText>
-                        <SubListContainer>
-                            <ProfileContainer>
-                                <ProfileIcon width={12}/>
-                            </ProfileContainer>
-                            <ListText>{lobbyItem.requiredParticipants}</ListText>
-                        </SubListContainer>
-                    </NameContainer>
-                </ProfileContainer>
-                <ProfileContainer>
-                    <EntryContainer>
-                        <EntryRow>
-                            <EntryText>{`Entry: $${entry}.00`}</EntryText>
-                        </EntryRow>
-                        <EntryRow>
-                            <StartText>{`End: ${lobbyItem.endTime[0]} 12/04`}</StartText>
-                        </EntryRow>
-                    </EntryContainer>
-                </ProfileContainer>
-            </ProfileHeader>
+            
                 <LeaderBoardContainer>
-                    <LeaderBoardMainContainer onPress={() => leaderboardSwitch("leaderboard")} leaderboard={leaderboard}>
-                        <FirstText leaderboard={leaderboard}>{`Leaderboard`}</FirstText>
-                    </LeaderBoardMainContainer>
-                    <ChatMainContainer onPress={() => leaderboardSwitch("chat")} leaderboard={leaderboard}>
-                        <SecondText leaderboard={leaderboard}>{`Chat`}</SecondText>
-                        {
-                            leaderboard === 'leaderboard' && <RedContainer />
-                        }
-                    </ChatMainContainer>
+                    <TouchableWithoutFeedback onPress={() => leaderboardSwitch("leaderboard")} >
+                        <LeaderBoardMainContainer leaderboard={leaderboard}>
+                            <FirstText leaderboard={leaderboard}>{`Leaderboard`}</FirstText>
+                        </LeaderBoardMainContainer>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => leaderboardSwitch("chat")} >
+                        <ChatMainContainer leaderboard={leaderboard}>
+                            <SecondText leaderboard={leaderboard}>{`Chat`}</SecondText>
+                            {
+                                leaderboard === 'leaderboard' && <RedContainer />
+                            }
+                        </ChatMainContainer>
+                    </TouchableWithoutFeedback>
                 </LeaderBoardContainer>
                 {renderRequest()}
                 <BottomContainer>
@@ -222,7 +202,7 @@ const LeaderBoardContainer = styled.View`
   border-top-width: 0.7px;
   border-bottom-width: 0.7px;
 `
-const LeaderBoardMainContainer = styled.TouchableOpacity`
+const LeaderBoardMainContainer = styled.View`
   background-color: ${props => props.leaderboard === "leaderboard" ? "#000" : "#fff"};
   border-radius: 20px;
   align-items: center;
