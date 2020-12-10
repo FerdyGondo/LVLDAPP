@@ -153,7 +153,7 @@ const HomeStackNavigator = ({navigation}) => {
               header: (navigation) => 
                 <LVLD_Header 
                     props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                     centerProps={centerLogo(navigation)}
                 />
               }} />
