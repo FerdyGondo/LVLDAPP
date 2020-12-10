@@ -281,7 +281,7 @@ const HomeStackNavigator = ({navigation}) => {
               header: (navigation) => 
                 <LVLD_Header 
                 props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.popToTop()} />} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'Tutorial'} size={14} />}
                 />
               }}/>
@@ -289,7 +289,7 @@ const HomeStackNavigator = ({navigation}) => {
               header: (navigation) => 
                 <LVLD_Header 
                 props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.popToTop()} />} 
+                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                 centerProps={<CenterButton text={'FAQ'} size={14} />}
                 
                 />
@@ -298,7 +298,7 @@ const HomeStackNavigator = ({navigation}) => {
                 header: (navigation) => 
                   <LVLD_Header 
                   props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.popToTop()} />} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Rules and GamePlay'} size={14} />}
                   />
                 }}/>
@@ -306,7 +306,7 @@ const HomeStackNavigator = ({navigation}) => {
                 header: (navigation) => 
                   <LVLD_Header 
                   props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.popToTop()} />} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Privacy Policy'} size={14} />}
                   />
                 }}/>
@@ -330,7 +330,7 @@ const HomeStackNavigator = ({navigation}) => {
                   header: (navigation) => 
                     <LVLD_Header 
                     props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.popToTop()} />} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                     centerProps={<CenterButton text={'Support'} size={14} />}
                     />
                 }}/>
@@ -338,7 +338,7 @@ const HomeStackNavigator = ({navigation}) => {
                   header: (navigation) => 
                     <LVLD_Header 
                     props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.popToTop()} />} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                     centerProps={<CenterButton text={'How It Works'} size={14} />}
                     />
                 }}/>
@@ -383,7 +383,7 @@ const ContentStackNavigator = ({navigation}) => {
           <CenterButtonComponent>
             {centerProps}
           </CenterButtonComponent>
-          <RightButton onPress={() => props.navigation.navigate("Hamburger")}>
+          <RightButton onPress={() => props.scene.route.name === "Hamburger" ? props.navigation.goBack() : props.navigation.navigate("Hamburger")}>
             <MenuIcon width={25} />
           </RightButton>
         </NewHeader>
