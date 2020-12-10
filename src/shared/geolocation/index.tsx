@@ -1,4 +1,4 @@
-import RNLocation from 'react-native-location';
+import Geolocation from '@react-native-community/geolocation';
 
 const getStates = async (data) => {
   try {
@@ -12,38 +12,17 @@ const getStates = async (data) => {
 };
 
 export  const geolocation = async () => {
-    try {
-        let coor = new Object;
-        var obj = new Object;
-        await RNLocation.configure({
-            allowsBackgroundLocationUpdates: true,
-            distanceFilter: 5.0
-        })
-
-        await RNLocation.requestPermission({
-          ios: "whenInUse",
-          android: {
-            detail: "coarse", // or 'fine'
-            rationale: {
-              title: "LVLD need to access your location",
-              message: "LVLD use your location to know where you are",
-              buttonPositive: "OK",
-              buttonNegative: "Cancel"
-            }
-          }
-        })
-        .then( async granted => {
-            if (granted) {
-              await RNLocation.subscribeToLocationUpdates(async locations => {
-                  coor.latitude = locations[0].latitude;
-                  coor.longitude = locations[0].longitude;
-                  let temp =  await getStates(coor);
-                   obj.state = temp;
-                })
-            } 
-          })
-            return obj;
-} catch(err) {
-    console.log("geolocation error " , err);
+  try{
+  var obj = new Object;
+  Geolocation.getCurrentPosition( async position => {
+      let temp =  await getStates(position.coords);
+      obj.state = temp;
+    },
+    error => console.log('error ', error),
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+  );
+  } catch (e) {
+    console.log('err ', e);
   }
+  return obj;
 }
