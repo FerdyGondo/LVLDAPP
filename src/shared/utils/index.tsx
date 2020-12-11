@@ -117,6 +117,15 @@ export  const getData = async (key) => {
     }
   }
 
+  export  const getAuthData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key)
+      return value ? value : '';
+    } catch(err) {
+      console.log("getAuthData error " , err);
+    }
+  }
+
   export  const resetData = async () => {
     try {
       await AsyncStorage.removeItem(SIZE)

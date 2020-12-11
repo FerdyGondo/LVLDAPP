@@ -17,8 +17,5 @@ export default function BackButton({ onPress }: Props) {
 }
 
 const TouchableOpacity = styled.TouchableOpacity`
-    width: 50px;
-    height: 50px;
-    justify-content: center;
-    margin-left: 10px
+   
 `

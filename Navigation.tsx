@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useDispatch } from 'react-redux';
 import { 
   Alert,
   Text, 
   View, 
   Image,
   TouchableOpacity,
-  SafeAreaView, 
   Dimensions,
   useWindowDimensions,
   StatusBar,
@@ -13,15 +13,11 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import { 
-  NavigationContainer, 
-  DrawerActions
+  NavigationContainer
 }      from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 const {width,height} = Dimensions.get("window")
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-} from '@react-navigation/drawer';
 import { 
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs';
@@ -30,6 +26,9 @@ import { Icon, Header }             from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import LvldLogo from './assets/svg/LvldLogo';
+import WelcomeScreen from './src/auth/welcome';
+import SignInScreen  from './src/auth/signIn';
+import SignUpScreen  from './src/auth/signUp';
 import Home     from './src/home/index';
 import Account  from './src/account/index';
 import Content  from './src/content/index';
@@ -60,48 +59,31 @@ import Rules from './src/hamburger/rules'
 import Support from './src/hamburger/support'
 import Invite from './src/invite'
 import Referrals from './src/referrals'
+import {signOutAction} from './src/store/authActions';
+import ContestTutorial from './src/hamburger/tutorial/contest'
+import { geolocation } from './src/shared/geolocation';
+import Hamburger from './src/hamburger'
 
 const Stack     = createStackNavigator();
-const Drawer    = createDrawerNavigator();
 const BottomTab = createBottomTabNavigator();
 
 export const LVLD_Navigation = ({navigation}) => {
   return(
     <NavigationContainer>
-      <PreStackNavigator />
+      <AuthStackNavigator/>
     </NavigationContainer>
     )
 }
 
-const PreStackNavigator = ({navigation}) => {
-    return( <Stack.Navigator>
-              <Stack.Screen name = "drawer"  component = {DrawerNavigator} 
-                options={{ headerShown: false }} 
-              />
-            </Stack.Navigator> )
-  }
-
-const DrawerNavigator = ({navigation}) => {
-  const window = useWindowDimensions();
-  const insets = useSafeAreaInsets();
-  return (      
-      <Drawer.Navigator 
-          drawerContent={props => <CustomDrawerContent {...props} />}
-          drawerPosition={"right"}
-          drawerType={'front'}
-          headerShown={true}
-          hideStatusBar={false}
-          overlayColor={0}
-          drawerStyle={{
-            width: window.width,
-            marginTop: Platform.OS === 'android' ? insets.top+80 : insets.top+80,
-            marginBottom: Platform.OS === 'android' ? window.height/14 : window.height/11,
-          }}
-      >
-        <Drawer.Screen name="bottomTabNavigator"    component={BottomTabNavigator} />
-      </Drawer.Navigator>
-    )
-}
+const AuthStackNavigator = () => {
+  return( <Stack.Navigator screenOptions={{ headerShown: false}} >
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="SignIn" component={SignInScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name ="drawer" component={BottomTabNavigator} options={{ headerShown: false }} />
+          </Stack.Navigator> 
+          )
+        }
 
 const BottomTabNavigator = ({navigation}) => {
   const window = useWindowDimensions();
@@ -138,7 +120,17 @@ const BottomTabNavigator = ({navigation}) => {
                 style: {height: Platform.OS === 'android' ? window.height/14 : window.height/11}
               }}
       >
-        <BottomTab.Screen name="home"     component={HomeStackNavigator}  />
+        <BottomTab.Screen 
+          name="home"     
+          component={HomeStackNavigator}  
+          listeners={({ navigation, route }) => ({
+            tabPress: e => {
+                if (route.state && route.state.routeNames.length > 0) {
+                    navigation.navigate('home')
+                }
+            },
+        })}
+        />
         <BottomTab.Screen name="content"  component={ContentStackNavigator} />
         <BottomTab.Screen name="entries"  component={Entries} />
       </BottomTab.Navigator>
@@ -158,6 +150,14 @@ const HomeStackNavigator = ({navigation}) => {
                   }}
               />
             <Stack.Screen name = "Account" component = {Account} options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={centerLogo(navigation)}
+                />
+              }} />
+              <Stack.Screen name = "Hamburger" component = {Hamburger} options={{ 
               header: (navigation) => 
                 <LVLD_Header 
                     props={navigation} 
@@ -334,6 +334,14 @@ const HomeStackNavigator = ({navigation}) => {
                     centerProps={<CenterButton text={'Support'} size={14} />}
                     />
                 }}/>
+                <Stack.Screen name= "ContestTutorial" component={ContestTutorial} options={{
+                  header: (navigation) => 
+                    <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={<CenterButton text={'How It Works'} size={14} />}
+                    />
+                }}/>
           </Stack.Navigator> )
 }
 
@@ -358,12 +366,6 @@ const ContentStackNavigator = ({navigation}) => {
           </Stack.Navigator> )
 }
 
-    const OpenCLoseDrawer = (props) => {
-          return <TouchableOpacity onPress={() => props.navigation.dispatch(DrawerActions.toggleDrawer()) } >
-                    <MenuIcon width={25} />
-                  </TouchableOpacity>
-        }
-
     const centerLogo = (props) => {
       return <TouchableOpacity onPress={ () => props.navigation.navigate("home") } >
                 <LvldLogo />
@@ -373,68 +375,22 @@ const ContentStackNavigator = ({navigation}) => {
     const LVLD_Header = ({props, leftProps, centerProps}) => { 
       const insets = useSafeAreaInsets();
       return(
-      <SafeAreaViewStyled statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >
-        <Header 
-            statusBarProps={{ barStyle: 'light-content' }}
-              leftComponent={leftProps}
-              centerComponent={centerProps}
-              rightComponent={ OpenCLoseDrawer(props) }
-              containerStyle={{
-                backgroundColor: '#262626',
-                borderBottomWidth:1,
-                borderBottomColor:'#262626',
-                justifyContent: 'space-around',
-                marginTop:-10,
-                marginLeft: 12,
-                marginRight: 15,
-                paddingBottom: insets.top*0.6,
-                height: 90
-              }}
-          />
-      </SafeAreaViewStyled>
+      <SafeAreaView style={{ backgroundColor: '#262626', paddingBottom: Platform.OS === "ios" ? -50 : 0 }}>
+        <NewHeader style={{ paddingBottom: insets.top*0.1 }}>
+          <LeftButton>
+            {leftProps}
+          </LeftButton>
+          <CenterButtonComponent>
+            {centerProps}
+          </CenterButtonComponent>
+          <RightButton onPress={() => props.scene.route.name === "Hamburger" ? props.navigation.goBack() : props.navigation.navigate("Hamburger")}>
+            <MenuIcon width={25} />
+          </RightButton>
+        </NewHeader>
+      </SafeAreaView>
       )
     } 
 
-    const CustomDrawerContent = (props) => { 
-      const insetsProp = useSafeAreaInsets();
-      return (
-        <DrawerContentScrollView contentContainerStyle={{ flex: 1, justifyContent:"space-between"}} {...props}>
-          <SafeAreaViewDrawer os={Platform.OS} insetsProp={insetsProp}>
-            <TouchableOpacity  onPress={ () => { props.navigation.navigate('Support')}} >
-                <DrawerItemStyle><DrawerTextStyle>Support</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => props.navigation.navigate("Tutorial")} >
-                <DrawerItemStyle><DrawerTextStyle>Tutorials</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Rules")}} >
-                <DrawerItemStyle><DrawerTextStyle>Rules and Gameplays</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Faq")}} >
-                <DrawerItemStyle><DrawerTextStyle>FAQ</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>            
-            <TouchableOpacity  onPress={ () => { props.navigation.navigate("Privacy")}} >
-                <DrawerItemStyle><DrawerTextStyle>Term of Use</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
-            <TouchableOpacity  onPress={ () => { }} >
-                <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>        
-            <DrawerLocationViewStyle>
-                <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>CA, US</DrawerLocationTextStyle></DrawerItemStyle>
-            </DrawerLocationViewStyle>
-            <TouchableOpacity  onPress={ () => Alert.alert(
-                                    "LVLD", "Are you sure you want to sign out from LVLD",
-                                    [ { text: "Sign Out", onPress: () => {} },
-                                      { text: "Cancel", style: "cancel" } ],
-                                    { cancelable: false } ) } >
-                <DrawerItemStyle><DrawerTextStyle>Sign Out</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
-            </TouchableOpacity>
-          </SafeAreaViewDrawer>
-            <BottomView os={Platform.OS} insetsProp={insetsProp}>
-                <DrawerTextStyle>App Version 1.00.22</DrawerTextStyle>
-            </BottomView> 
-        </DrawerContentScrollView>
-      );
-    }
 
 const TabImage = styled.Image`
 width: 25px;
@@ -445,36 +401,24 @@ const TabText = styled.Text`
 font-family: Montserrat;
 font-size: 10px;
 `
-const SafeAreaViewStyled = styled.SafeAreaView`
-background-color: #262626;
-padding-top: ${props => props.statusBarProps};
+const NewHeader = styled.View`
+  background-color: #262626;
+  border-bottom-width: 1px;
+  justify-content: space-between;
+  flex-direction: row;
+  border-bottom-color: #262626;
+  align-items: flex-start;
+  padding: 30px 0px 0px;
 `
-const SafeAreaViewDrawer = styled.SafeAreaView`
-  margin-top: ${props => props.os === 'android' ? -(props.insetsProp.top - 6) + 'px' : -(props.insetsProp.top - 6) + 'px'};
+const LeftButton = styled.TouchableOpacity`
+    width: 40px;
+    height: 40px;
+    left: 20px;
 `
-const DrawerItemStyle = styled.View`
-flex-direction: row;
-justify-content: space-between;
-border-bottom-color: black;
-border-bottom-width: 1px;
-margin:10px;
-padding-left: 20px;
-padding-bottom: 15px;
+const RightButton = styled.TouchableOpacity`
+    width: 40px;
+    height: 40px;
 `
-const DrawerTextStyle = styled.Text`
-font-family: Montserrat;
+const CenterButtonComponent = styled.View`
+  margin-top: -5px;
 `
-const DrawerLocationTextStyle = styled.Text`
-font-family: Montserrat;
-font-weight: bold;
-color: #d2a747;
-margin-bottom:8px;
-`
-const DrawerLocationViewStyle = styled.View`
-margin-top:3px;
-`
-const BottomView = styled.View`
-align-items: center;
-margin-bottom: ${props => props.os === 'android' ? 10 + 'px' : 10 + 'px'};
-`
-

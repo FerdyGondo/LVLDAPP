@@ -1,10 +1,14 @@
-import React, { ReactElement } from 'react';
-
+import React, { 
+  ReactElement,
+  useState,
+  useEffect
+} from 'react';
 import styled from 'styled-components/native'
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={30} color={"#000"} />;
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { useNavigation } from '@react-navigation/native'
+import { getAuthData }   from '../shared/utils';
 
 const data = [{ id: 0, name: "Add Funds", screen: "AddFund"}, { id: 1, name: "Transaction History", screen: "History"}, { id: 2, name: "Invite Friends: Get Rewards", screen: "Invite"}, { id: 3, name: "Account Settings", screen: "Settings"}, { id: 4, name: "Notification Settings", screen: ""}, { id: 5, name: "Sign Out", screen: ""},{id: 6, name: "Cash Out", screen: ""}]
 import { Icon } from 'react-native-elements';
@@ -15,6 +19,16 @@ type FlatProps = {
 
 const Account = React.memo((): ReactElement => {
   const navigation = useNavigation()
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  useEffect(  () => {
+      (async () => {
+          const firstname = await getAuthData('firstname')
+          setFirstname(firstname);
+          const lastname = await getAuthData('lastname')
+          setLastname(lastname);
+      })()
+  },[]);
   const renderCardItem = ({ item, index }: FlatProps) => {
     return (
       <CardContainer onPress={() => navigation.navigate(item.screen)}>
@@ -36,13 +50,9 @@ const Account = React.memo((): ReactElement => {
     
       <ShadowContainer>
         <MainContainer>
-          <TopContainer>
-            <BoldText>17,000</BoldText>
-            <Bottom>LVLD POINTS</Bottom>
-          </TopContainer>
           <ProfileContainer>
-            <ProfileIcon width={70} />
-            <MainText>Peter{" "}<SubText>Cho</SubText></MainText>
+            <ProfileIcon width={50} />
+            <MainText>{firstname + " "}<SubText>{lastname}</SubText></MainText>
           </ProfileContainer>
           <BottomContainer>
             <BoldText>$1,000</BoldText>
@@ -78,36 +88,49 @@ const ShadowContainer = styled.View`
 const MainContainer = styled.View`
   flex-direction: row;
   margin: 8px 15px;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 const TopContainer = styled.View`
 `
 const BottomContainer = styled.View`
-  align-items: flex-end;
+  position: absolute;
+  top: 1%;
+  right: 1%;
 `
 
 const BoldText = styled.Text`
-  font-size: 11px;
-  font-weight: bold;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 700;
+  text-align: right;
+  line-height: 12.19px;
 `
 
 const Bottom = styled.Text`
-  font-weight: 400;
-  font-size: 11px;
+  font-family: "Montserrat";
+  font-size: 10px;
+  font-weight: 500;
+  text-align: right;
+  line-height: 12.19px;
 `
 
 const ProfileContainer = styled.View`
+  align-items: center;
 `
 
 
 const MainText = styled.Text`
-  font-weight: bold;
-  font-size: 18px;
+  font-family: "Montserrat-Bold";
+  font-size: 17px;
+  line-height: 19.92px;
 `
 
 const SubText = styled.Text`
+  font-family: "Montserrat";
   font-weight: 200;
+  font-size: 17px;
+  line-height: 20.72px;
 `
 
 const FlatList = styled.FlatList``

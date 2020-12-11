@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import ProfileComponent from '../../shared/components/Profile'
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={25} color={"#252525"} />;
 
@@ -30,9 +29,6 @@ export default function index({ navigation }) {
 
     return (
         <Container>
-            <Profile>
-                <ProfileComponent />
-            </Profile>
             <Scroll>
                 {renderComponent('Rules')}
                 {renderComponent("Gameplay")}
@@ -44,10 +40,6 @@ export default function index({ navigation }) {
 const Container = styled.View`
     flex: 1;
     background-color: #fff;
-`
-const Profile = styled.View`
-   border-bottom-width: 1px;
-   border-color: #979797; 
 `
 const Scroll = styled.ScrollView`
   flex: 1;

@@ -1,18 +1,34 @@
-import React from 'react'
+import React, 
+{
+    useState,
+    useEffect
+} from 'react'
 import styled from 'styled-components'
 import { Icon } from 'react-native-elements';
 import ProfileIcon from '../../../assets/svg/ProfileIcon'
 import { useNavigation } from '@react-navigation/native'
+import { getAuthData }   from '../utils';
 
 export default function ProfileComponent() {
     const navigation = useNavigation()
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
+    useEffect(  () => {
+        (async () => {
+            const firstname = await getAuthData('firstname')
+            setFirstname(firstname);
+            const lastname = await getAuthData('lastname')
+            setLastname(lastname);
+        })()
+    },[]);
+
     return (
         <MainContainer>
             <ProfileContainer onPress={() => navigation.navigate("Account")}>
                 <Profile>
                     <ProfileIcon width={30} />
                 </Profile>
-                <ProfileText>Peter{" "}</ProfileText><SubText>Cho</SubText>
+                <ProfileText>{firstname+" "}</ProfileText><SubText>{lastname}</SubText>
             </ProfileContainer>
             <MoneyContainer onPress={() => navigation.navigate("AddFund")}>
                 <MoneyText>$1000</MoneyText>

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import ProfileComponent from '../../shared/components/Profile'
 import { Transition, Transitioning } from 'react-native-reanimated'
 
 const data = [{name: "Question 1", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 2", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 3", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 4", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 5", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 6", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 7", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."}]
@@ -50,9 +49,6 @@ export default function index({ navigation }) {
 
     return (
        <Container>
-           <Profile>
-                <ProfileComponent />
-            </Profile>
             <Transitioning.View
                 ref={ref}
                 transition={transition}
@@ -71,10 +67,6 @@ export default function index({ navigation }) {
 const Container = styled.View`
     flex: 1;
     background-color: #fff;
-`
-const Profile = styled.View`
-   border-bottom-width: 1px;
-   border-color: #979797; 
 `
 const FlatList = styled.FlatList``
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, KeyboardAvoidingView, Platform } from 'react-native'
+import { Dimensions, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,6 +7,7 @@ import Actions from '../../actions'
 import Loading from '../shared/components/Loading'
 import MessageComponent from '../shared/components/MessageComponent'
 import RedContainer from '../shared/components/RedContainer'
+import { getAuthData }   from '../shared/utils';
 
 const {width,height} = Dimensions.get("window")
 
@@ -20,6 +21,17 @@ export default function index({ route, navigation }: Props) {
     const { entry, lobbyItem } = route?.params
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.list)
+    const [firstname, setFirstname] = useState(null);
+    const [lastname, setLastname] = useState(null);
+    const [focusInput, setFocusInput] = useState(false)
+    useEffect(  () => {
+        (async () => {
+            const firstname = await getAuthData('firstname')
+            setFirstname(firstname);
+            const lastname = await getAuthData('lastname')
+            setLastname(lastname);
+        })()
+    },[]);
 
     useEffect(() => {
         dispatch(Actions.users.fetchUsers.trigger())
@@ -56,12 +68,19 @@ export default function index({ route, navigation }: Props) {
             renderItem={renderList}
         />
         }
-        return <MessageComponent />
+        return <MessageComponent setFocusInput={setFocusInput} />
     }
 
-    return (
-        <Container>
-            <ProfileHeader>
+    const lobbySwitchFunction = (data) => {
+        lobbySwitch(data)
+        setFocusInput(false)
+    }
+
+    const headContainer = () => {
+        if (focusInput && height < 700) return null
+        return (
+            <>
+             <ProfileHeader>
                 <ProfileContainer>
                     <ImageContainer>
                         <Image source={require('../../assets/images/shoes/sneakers.png')} />
@@ -104,16 +123,27 @@ export default function index({ route, navigation }: Props) {
                         <BigLowerText>SECONDS</BigLowerText>
                     </BigSizeContainer>
                 </LowerContainer>
+            </>
+        )
+    }
+
+    return (
+        <Container>
+                {headContainer()}
                 <LobbyContainer>
-                    <LobbyMainContainer onPress={() => lobbySwitch("lobby")} lobby={lobby}>
-                        <FirstText lobby={lobby}>{`Lobby`}</FirstText>
-                    </LobbyMainContainer>
-                    <ChatMainContainer onPress={() => lobbySwitch("chat")} lobby={lobby}>
-                        <SecondText lobby={lobby}>{`Chat`}</SecondText>
-                        {
-                            lobby === 'lobby' && <RedContainer />
-                        }
-                    </ChatMainContainer>
+                    <TouchableWithoutFeedback onPress={() => lobbySwitchFunction("lobby")} >
+                        <LobbyMainContainer lobby={lobby}>
+                            <FirstText lobby={lobby}>{`Lobby`}</FirstText>
+                        </LobbyMainContainer>
+                    </TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => lobbySwitchFunction("chat")} >
+                        <ChatMainContainer lobby={lobby}>
+                            <SecondText lobby={lobby}>{`Chat`}</SecondText>
+                            {
+                                lobby === 'lobby' && <RedContainer />
+                            }
+                        </ChatMainContainer>
+                    </TouchableWithoutFeedback>
                 </LobbyContainer>
                 {renderItem()}
                 <BottomContainer>
@@ -122,7 +152,7 @@ export default function index({ route, navigation }: Props) {
                             <ProfileIcon width={30} />
                         </Profile>
                         <LvdContainer>
-                            <ProfileName>Peter C.</ProfileName>
+                    <ProfileName>{firstname+" "+lastname}</ProfileName>
                         </LvdContainer>
                     </OwnerContainer>
                     <Practice>
@@ -257,7 +287,7 @@ const LobbyContainer = styled.View`
   border-top-width: 0.7px;
   border-bottom-width: 0.7px;
 `
-const LobbyMainContainer = styled.TouchableOpacity`
+const LobbyMainContainer = styled.View`
   background-color: ${props => props.lobby === "lobby" ? "#000" : "#fff"};
   border-radius: 20px;
   align-items: center;

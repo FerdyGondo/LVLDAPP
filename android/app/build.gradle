@@ -188,7 +188,21 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation project(path: ':@react-native-community_geolocation')
+
+//    implementation "androidx.annotation:annotation:1.1.0"
+//    implementation "androidx.core:core-ktx:+"
+
+//    compileOnly "com.facebook.react:react-native:+"
+//    compileOnly "com.google.android.gms:play-services-base:$googlePlayServicesVersion"
+//    compileOnly "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+//    implementation "com.google.android.gms:play-services-gcm:12.+"
+
+//    implementation "com.google.android.gms:play-services-base:17.0.0"
+//    implementation "com.google.android.gms:play-services-location:17.0.0"
+
+//    implementation project(':react-native-community-geolocation')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

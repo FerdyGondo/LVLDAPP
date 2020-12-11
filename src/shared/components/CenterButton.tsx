@@ -12,8 +12,7 @@ export default function CenterButton({ text, size=16 }: Props) {
 }
 
 const CenterContainer = styled.View`
-    width: 120%;
-    align-items: center;
+    margin-top: 5px;
 `
 const CenterText = styled.Text`
     text-transform: uppercase;
