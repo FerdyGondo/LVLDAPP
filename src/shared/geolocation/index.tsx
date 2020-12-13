@@ -1,4 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
+import { storeAuthData }   from '../utils';
 
 const getStates = async (data) => {
   try {
@@ -16,6 +17,7 @@ export  const geolocation = async () => {
   var obj = new Object;
   Geolocation.getCurrentPosition( async position => {
       let temp =  await getStates(position.coords);
+      storeAuthData('states',await getStates(position.coords));
       obj.state = temp;
     },
     error => console.log('error ', error),
