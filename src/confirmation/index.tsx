@@ -5,7 +5,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import ProfileComponent from '../shared/components/Profile'
 import PickerModal from '../shared/components/PickerModal'
 import SecondChance from './components/SecondChance'
-import { useTimer } from '../shared/utils'
+import { useTimer, convertDate } from '../shared/utils'
 
 const {width,height} = Dimensions.get("window")
 
@@ -19,8 +19,8 @@ type Props = {
 
 
 export default function index({ route, navigation }: Props) {
-    const [entry, setEntry] = useState(1)
     const { key, item } = route?.params
+    const [entry, setEntry] = useState(item.entryFee)
     let popupRef = React.createRef()
     const [showSecond, setShowSecond] = useState(false)
     
@@ -61,14 +61,14 @@ export default function index({ route, navigation }: Props) {
                 <SpoilContainer>
                     <MainContainer>
                         <MainTextContainer>
-                            <MainText>{item.nickname}</MainText>
-                            <SubText>{item.name}</SubText>
+                            <MainText>{item.name}</MainText>
+                            <SubText>{item.product.name}</SubText>
                         </MainTextContainer>
                         <SubListContainer>
                             <ProfileContainer>
                                 <ProfileIcon width={14}/>
                             </ProfileContainer>
-                            <ListText>{item.requiredParticipants}</ListText>
+                            <ListText>{`25/40`}</ListText>
                         </SubListContainer>
                     </MainContainer>
                     <SizeContainer>
@@ -76,13 +76,13 @@ export default function index({ route, navigation }: Props) {
                     </SizeContainer>
                 </SpoilContainer>
                 <ImageContainer>
-                    <Image source={require('../../assets/images/shoes/sneakers.png')} />
+                    <Image source={{ uri: item.product.mainImage.asset.url }} />
                 </ImageContainer>
                 <ListContainer>
                     <SubListContainer>
-                        <ListText>{`Entry: $${item.entry}`}</ListText>
+                        <ListText>{`Entry: $${entry}`}</ListText>
                     </SubListContainer>
-                    <EndText>{`Ends: ${item.endTime[0]} 12/04`}</EndText>
+                    <EndText>{`Ends: ${convertDate(item.finishDateTime)}`}</EndText>
                     
                 </ListContainer>
 
@@ -182,6 +182,8 @@ const ImageContainer = styled.View`
 `
 const Image = styled.Image`
     align-self: center;
+    width: ${width*0.9}px;
+    height: ${width*0.5}px;
 `
 const ListContainer = styled.View`
     padding: 0px 30px;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import ProfileComponent from '../shared/components/Profile';
-import { resetData, getData } from '../shared/utils'
+import { resetData, getData, convertDate } from '../shared/utils'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-right" size={16} color="#A9A9A9" />;
@@ -34,26 +34,26 @@ export default function index({ route, navigation }: Props) {
     
     const renderItem = ({ item }) => {
         return (
-            <MainContainer onPress={() => navigation.navigate("Confirmation", { item: item, key: items.key })}>
+            <MainContainer onPress={() => navigation.navigate("Confirmation", { item: item, key: items.variant })}>
                 <ImageContainer>
-                    <Image source={{ uri: item.image }} />
+                    <Image source={{ uri: item.product.mainImage.asset.url }} />
                 </ImageContainer>
                 <TextContainer>
                     <NameSize>
                         <Text2Container>
-                            <NameText>{item.name}</NameText>
+                            <NameText>{item.product.name}</NameText>
                             <SvgContainer>
                                 <ProfileIcon width={13} />
-                                <SizeText>{item.requiredParticipants}</SizeText>
+                                <SizeText>{'12/40'}</SizeText>
                             </SvgContainer>
                         </Text2Container>
                         <SizeContainer>
-                            <SizeTextLower>{items.key}</SizeTextLower>
+                            <SizeTextLower>{items.variant}</SizeTextLower>
                         </SizeContainer>
                     </NameSize>
                     <BottomContainer>
-                        <BottomText>{`Entry: $${item.entry}`}</BottomText>
-                        <RedBottomText>{`End: ${item.endTime[0]} 12/04`}</RedBottomText>
+                        <BottomText>{`Entry: $${item.entryFee}`}</BottomText>
+                        <RedBottomText>{`Ends: ${convertDate(item.finishDateTime)}`}</RedBottomText>
                     </BottomContainer>
                 </TextContainer>
                 <ChevronContainer>
@@ -73,7 +73,7 @@ export default function index({ route, navigation }: Props) {
             <ProfileComponent />
             <List 
                 data={items.data}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}
             />
             {

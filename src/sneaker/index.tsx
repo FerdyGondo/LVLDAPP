@@ -1,12 +1,12 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import styled from 'styled-components/native'
 import {Dimensions, FlatList, View, ActivityIndicator} from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import Actions from '../../actions'
 import ProfileComponent from '../shared/components/Profile'
 import Loading from '../shared/components/Loading'
 import SizeModal from '../shared/components/SizeModal'
 import {getData} from '../shared/utils'
+import { useQuery, GET_ALL_CONTESTS } from '../graphql/query'
+import { variantEntries } from '../shared/data'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-left" size={30} color="#fff" />;
@@ -26,30 +26,27 @@ type List = {
     index: number;
 }
 
+
 const numColumns: number = 4;
 
 const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
-    const dispatch = useDispatch()
-    const sneakers = useSelector(state => state.sneakers.sneaker)
+    const {loading, error, data} = useQuery(GET_ALL_CONTESTS)
     const [modalVisible, setModalVisible] = useState(false)
     const [sizeText, setSizeText] = useState()
     const [item, setItem] = useState()
     const [buttonState, setButtonState] = useState({ color: "#000000", background: "#ffffff"})
 
     useEffect(() => {
-        dispatch(Actions.sneakers.fetchSneakers.trigger())
-    },[])
-
-    useEffect(() => {
       (async () => {
         const showSize = await getData(SIZE)
         setSizeText(showSize)
-        if (showSize && sneakers.length !== 0) {
-          const newData = mappedData.find((data, index) => data.key === showSize)
+        if (showSize && !loading) {
+          const mappedData = favouredData()
+          const newData = mappedData.find((data, index) => data.variant === showSize)
           navigation.navigate("Context", { items: newData})
         }
       })()
-    },[sneakers])
+    },[data, loading])
 
     const [selected, setSelected] = useState<number>()
     const [gender, setGender] = useState<string>('male')
@@ -60,7 +57,7 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
     }
 
     const selectTile = async (item: object): void => {
-        setSelected(selected => selected = item.key);
+        setSelected(selected => selected = item.variant);
         setItem(item)
         const result = await getData(SHOWSIZE)
         if(result) {
@@ -74,40 +71,46 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
         setGender(data)
     }
 
-    const generateId = () => {
-      return Math.floor(Math.random() * 1000) + 1
-    }
+    function compare(a, b) {
+      const variantA = parseFloat(a.variant);
+      const variantB = parseFloat(b.variant);
 
-    const mappedData = sneakers.map(({id, sizes, name, image, nickname}) => {
-      return sizes.map(({key, data}) => {
-        return {key, data: data.map(sizeEntry => ({...sizeEntry, id: generateId(), name, image, nickname}))}
-      })
-    })
-    .reduce((acc, curr)=>{
-      return acc.concat(curr)
-    }, [])
-    .reduce((acc, curr) => {
-      const index = acc.findIndex(item => item.key === curr.key)
-      if (index > -1) {
-        const data = acc[index].data.concat(curr.data)
-        acc[index].data = data
-        return acc
+      let comparison = 0;
+      if (variantA > variantB) {
+          comparison = 1;
+      } else if (variantA < variantB) {
+          comparison = -1
       }
-      return acc.concat(curr)
-    },[])
+      return comparison;
+  }
+
+    const favouredData = () => {
+      let output = data.allContest.reduce((accData, data) => {
+        const { variant } = data;
+        const variantGroup = accData[variant];
+        if (!variantGroup) { return accData };
+        return {
+          ...accData,
+          [variant]: {
+            data: accData[variant].data.concat(data)
+          }
+        };
+      }, variantEntries);
+      return Object.entries(output).map(([variant, { data }]) => ({ variant, data })).sort(compare);
+    }
 
 
     const renderList = ({ item, index }: List) => {
         return (
-            <TileContainer key={index} tile={item.key} onPress={() => selectTile(item)} selected={selected} available={item.data.length !== 0} disabled={item.data.length === 0}>
-                <Tile tile={item.key} selected={selected} available={item.data.length !== 0}>
-                    {item.key}
+            <TileContainer key={index} tile={item.variant} onPress={() => selectTile(item)} selected={selected} available={item.data.length !== 0} disabled={item.data.length === 0}>
+                <Tile tile={item.variant} selected={selected} available={item.data.length !== 0}>
+                    {item.variant}
                 </Tile>
             </TileContainer>
            )
     }
 
-    if (sneakers.length === 0) return <Loading />
+    if (loading) return <Loading />
 
     const buttonPress = () => {
       setButtonState({ color: "#ffffff", background: "#000000"})
@@ -127,8 +130,8 @@ const Sneaker = React.memo(({ navigation }: Prop): ReactElement => {
             </GenderContainer>
             <SizeContainer>
                 <FlatList 
-                    data={mappedData}
-                    keyExtractor={(item) => item.key.toString()}
+                    data={favouredData()}
+                    keyExtractor={(item) => item.variant.toString()}
                     numColumns={numColumns}
                     renderItem={renderList}
                     ListFooterComponent={Height}
