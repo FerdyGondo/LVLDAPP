@@ -1,8 +1,8 @@
 import { all, fork, call, put, takeEvery, takeLatest, cancel, getContext } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as actionTypes from "./actionTypes";
-import { graphqlApiSignIn } from './graphqlApiSignIn';
-import { graphqlApiSignUp } from './graphqlApiSignUp';
+import Auth from '@aws-amplify/auth';
+import { storeAuthData }   from '../shared/utils';
 
 import { 
   signUpAction,
@@ -12,19 +12,34 @@ import {
 
 function* signUpSaga (signUpAction) {
   try {
-        yield (graphqlApiSignUp(signUpAction));
+        const response =  yield  Auth.signUp ({
+            username: signUpAction.username, 
+            password: signUpAction.password,
+            attributes: {
+              'email': signUpAction.email,
+              'custom:first_name': signUpAction.firstname,
+              'custom:last_name': signUpAction.lastname
+            }
+        });
+        storeAuthData('username', signUpAction.username);
+        storeAuthData('email', signUpAction.email);
+        storeAuthData('password', signUpAction.password);
+        storeAuthData('firstname', signUpAction.firstname);
+        storeAuthData('lastname', signUpAction.lastname);
         yield put({ type : actionTypes.SIGNUP_SUCCESS});
       } catch (err) {
-        yield put({ type : actionTypes.SIGNUP_FAILED, errorMsgUp : err})
+        yield put({ type : actionTypes.SIGNUP_FAILED, errorMsgUp : err.message})
       }
 };
 
 function* signInSaga (signInAction) {
       try {
-          yield (graphqlApiSignIn(signInAction));
+          const response = yield call([Auth,'signIn'], ({ username: signInAction.username, password: signInAction.password }));
+          storeAuthData('token',response.signInUserSession.idToken.jwtToken);
           yield put({ type : actionTypes.SIGNIN_SUCCESS});
       } catch (err) {
-          yield put({ type : actionTypes.SIGNIN_FAILED, errorMsgIn : err});
+          console.log('err : ', err.message);
+          yield put({ type : actionTypes.SIGNIN_FAILED, errorMsgIn : err.message});
       }
 };
 
@@ -40,8 +55,10 @@ function* signOutSaga (signOutAction) {
 function* watchSignUpSaga() {
   yield takeLatest(actionTypes.REGISTER, signUpSaga);
 }
+// import { safeSaga } from './actions';
 function* watchSignInSaga() {
-  yield takeLatest(actionTypes.LOGIN, signInSaga);
+    yield takeLatest(actionTypes.LOGIN, signInSaga);
+
 }
 function* watchSignOutSaga() {
   yield takeLatest(actionTypes.SIGNOUT, signOutSaga);

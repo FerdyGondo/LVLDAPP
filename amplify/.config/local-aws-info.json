@@ -1,0 +1,12 @@
+{
+    "lvlddev": {
+        "configLevel": "project",
+        "useProfile": true,
+        "profileName": "default"
+    },
+    "lvldenv": {
+        "configLevel": "project",
+        "useProfile": true,
+        "profileName": "LVLD1"
+    }
+}
