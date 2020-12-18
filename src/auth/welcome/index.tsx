@@ -62,7 +62,7 @@ const WelcomeScreen = ({navigation}) => {
                 </Button>
                 <Spacer />
                 <Spacer />
-                <Button buttonProps ={styles.browseButton} onPress={ () => navigation.navigate('drawer')}>
+                <Button buttonProps ={styles.browseButton} onPress={ () => navigation.navigate('Home')}>
                     Browse the App
                 </Button>
                 <Spacer />

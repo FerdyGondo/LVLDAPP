@@ -21,6 +21,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { 
   createBottomTabNavigator
 } from '@react-navigation/bottom-tabs';
+import deepLinking from './deepLinking';
 
 import { Icon, Header }             from 'react-native-elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -69,7 +70,7 @@ const BottomTab = createBottomTabNavigator();
 
 export const LVLD_Navigation = ({navigation}) => {
   return(
-    <NavigationContainer>
+    <NavigationContainer linking={deepLinking}>
       <AuthStackNavigator/>
     </NavigationContainer>
     )
@@ -80,7 +81,7 @@ const AuthStackNavigator = () => {
             <Stack.Screen name="Welcome" component={WelcomeScreen} />
             <Stack.Screen name="SignIn" component={SignInScreen} />
             <Stack.Screen name="SignUp" component={SignUpScreen} />
-            <Stack.Screen name ="drawer" component={BottomTabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name ="Home" component={BottomTabNavigator} options={{ headerShown: false }} />
           </Stack.Navigator> 
           )
         }
@@ -91,13 +92,13 @@ const BottomTabNavigator = ({navigation}) => {
 
   return(
       <BottomTab.Navigator
-              initialRouteName="home"
+              initialRouteName="HomeButton"
               screenOptions={ ({ route }) => ({
                   tabBarIcon : ({ focused, color }) => {
                     let iconName;
                     switch (route.name){
-                      case 'home'     : iconName = require('./assets/icons/home.png');     break;
-                      case "content"  : iconName = require('./assets/icons/content.png');  break;
+                      case 'HomeButton'     : iconName = require('./assets/icons/home.png');     break;
+                      case "Content"  : iconName = require('./assets/icons/content.png');  break;
                       case "entries"  : iconName = require('./assets/icons/entries.png');  break;
                     }
                     return <TabImage source={ iconName } colorProps={color} />
@@ -105,8 +106,8 @@ const BottomTabNavigator = ({navigation}) => {
                   tabBarLabel : () => {
                         let tabLabel;
                         switch (route.name){
-                          case 'home'     : tabLabel = 'Home';     break;
-                          case "content"  : tabLabel = 'Content';  break;
+                          case 'HomeButton'     : tabLabel = 'Home';     break;
+                          case "Content"  : tabLabel = 'Content';  break;
                           case "entries"  : tabLabel = 'Entries';  break;
                         }
                         return <TabText>{tabLabel}</TabText> 
@@ -121,17 +122,17 @@ const BottomTabNavigator = ({navigation}) => {
               }}
       >
         <BottomTab.Screen 
-          name="home"     
+          name="HomeButton"     
           component={HomeStackNavigator}  
           listeners={({ navigation, route }) => ({
             tabPress: e => {
                 if (route.state && route.state.routeNames.length > 0) {
-                    navigation.navigate('home')
+                    navigation.navigate('HomeButton')
                 }
             },
         })}
         />
-        <BottomTab.Screen name="content"  component={ContentStackNavigator} />
+        <BottomTab.Screen name="Content"  component={ContentStackNavigator} />
         <BottomTab.Screen name="entries"  component={Entries} />
       </BottomTab.Navigator>
   )
