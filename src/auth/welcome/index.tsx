@@ -41,7 +41,7 @@ const WelcomeScreen = ({navigation}) => {
             (async () => {
                 const token = await getAuthData('token')
                 updateToken(token);
-                if(token) navigation.navigate('drawer');
+                if(token) navigation.navigate('Home');
             })()
         });
 

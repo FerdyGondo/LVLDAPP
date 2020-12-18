@@ -24,6 +24,7 @@ import {
     Icon
 } from 'react-native-elements';
 import styled from 'styled-components';
+import { Auth } from 'aws-amplify';
 
 import Spacer from '../../shared/components/Spacer';
 import {signUpAction} from '../../store/authActions';
@@ -45,7 +46,7 @@ const SignUpScreen = ({navigation}) => {
     const appleIcon     = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Apple-Circle_Auth.png'} ;
 
     useEffect( () => {
-        if(auth.loggedIn) navigation.navigate('drawer');
+        if(auth.loggedIn) navigation.navigate('Home');
     });
 
     return (
@@ -109,26 +110,24 @@ const SignUpScreen = ({navigation}) => {
             </SeparatorView>
             <Spacer />
             <IconView>
-            <IconView>
-                <TouchableOpacity  onPress={ () => {} }  >
+            <TouchableOpacity  onPress={ () => Auth.federatedSignIn({provider: 'Google'}) }  >
                     <IconFed source = {googleIcon}/>
                 </TouchableOpacity>
                 <Spacer /><Spacer />
-                <TouchableOpacity  onPress={ () => {} }  >
+                <TouchableOpacity  onPress={ () => Auth.federatedSignIn({provider: 'Facebook'}) }  >
                     <IconFed source = {facebookIcon}/>
                 </TouchableOpacity>
                 <Spacer /><Spacer />
-                <TouchableOpacity  onPress={ () => {} }  >
+                <TouchableOpacity  onPress={ () => Auth.federatedSignIn({provider: 'Amazon'}) }  >
                     <IconFed source = {amazonIcon}/>
                 </TouchableOpacity>
                 <Spacer /><Spacer />
-                <TouchableOpacity  onPress={ () => {} }  >
+                <TouchableOpacity  onPress={ () => Auth.federatedSignIn({provider: 'Apple'}) }  >
                     <IconFed source = {appleIcon}/>
                 </TouchableOpacity>
             </IconView>
-            </IconView>
             <Spacer />
-            <Button buttonProps ={styles.browseButton}  onPress={ () => navigation.navigate('drawer')} >
+            <Button buttonProps ={styles.browseButton}  onPress={ () => navigation.navigate('Home')} >
                     Browse the App
             </Button>
             <Spacer />

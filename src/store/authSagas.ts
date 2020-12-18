@@ -36,6 +36,8 @@ function* signInSaga (signInAction) {
       try {
           const response = yield call([Auth,'signIn'], ({ username: signInAction.username, password: signInAction.password }));
           storeAuthData('token',response.signInUserSession.idToken.jwtToken);
+          console.log(response.signInUserSession.accessToken.jwtToken);
+          console.log(response.signInUserSession.idToken.jwtToken);
           yield put({ type : actionTypes.SIGNIN_SUCCESS});
       } catch (err) {
           console.log('err : ', err.message);
