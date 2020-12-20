@@ -8,50 +8,8 @@ const SHOWSIZE = '@show_size';
 
 
 export function useTimer(data) {
-    const formatData = () => {
-        let year = new Date().getFullYear();
-        let date = data.startDate[0].split("/")
-        let time = data.endTime[0].split(":")
-        let hour = time[0]
-        let minute = time[1].slice(0,2)
-        let timeZone = time[1].slice(-2)
-
-        if (timeZone === "pm") {
-            hour = parseInt(hour)
-            hour+=12
-        }
-
-        const mappedData = date.map((data) => parseInt(data))
-
-        return {
-            date: mappedData,
-            hour: hour,
-            minute: parseInt(minute),
-            year: year
-        }
-    }
-
-    const tommorrowDate = () => {
-      var ms = new Date().getTime() + 106400000;
-      var tomorrow = new Date(ms);
-      var year = tomorrow.getFullYear();
-      var day = tomorrow.getDate();
-      var month = tomorrow.getMonth() + 1;
-      var hour = tomorrow.getHours();
-      var minute = tomorrow.getMinutes();
-
-      return {
-        year: year,
-        day: day,
-        month: month,
-        hour: hour,
-        minute: minute < 10 ? `0${minute}` : minute
-      }
-    }
-
     const calculateTime = () => {
-        const result = tommorrowDate();
-        const difference = +new Date(`${result.year}-${result.month}-${result.day}T${result.hour}:${result.minute}`) - +new Date();
+        const difference = +new Date(data.finishDateTime) - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
@@ -126,12 +84,34 @@ export  const getData = async (key) => {
     }
   }
 
+  export  const storeAuthData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value)
+    } catch(err) {
+      console.log("storeAuthData error " , err);
+    }
+  }
+  
   export  const resetData = async () => {
     try {
       await AsyncStorage.removeItem(SIZE)
     } catch(e) {
       // error reading value
     }
+  }
+
+  export const convertDate = (date) => {
+      const time = new Date(date)
+      const month = time.getMonth() + 1
+      const day = time.getDate()
+      const hour = time.getHours()
+      const minute = time.getMinutes()
+      const roundMinute = minute > 9 ? minute : `0${minute}`
+      const roundDay = day > 9 ? day : `0${day}`
+      const diff = hour > 12 ? `${hour - 12}:${roundMinute}pm` : `${hour}:${roundMinute}am`
+      const roundMonth = month > 9 ? month : `0${month}`
+
+      return `${diff} ${roundMonth}/${roundDay}`
   }
   
 

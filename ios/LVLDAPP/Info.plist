@@ -20,6 +20,19 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>lvldapp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>lvld</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -37,12 +50,20 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>NSCameraUsageDescription</key>
+  <string>LVLD  need to access your camera to capture a picture</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>LVLD would like to access your lcoation</string>
+	<string>LVLD would like to access your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>LVLD would like to access your lcoation</string>
+	<string>LVLD would like to access your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>LVLD would like to access your lcoation</string>
+	<string>LVLD would like to access your location</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>LVLD  Need to access your microphone to record a video</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>LVLD  would like to save photos to your photo gallery</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>LVLD  would like access to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -95,11 +116,17 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>CFBundleURLTypes</key>
+  <array>
+      <dict>
+          <key>CFBundleURLSchemes</key>
+          <array>
+              <string>myapp</string>
+          </array>
+      </dict>
+  </array>
 </dict>
 </plist>

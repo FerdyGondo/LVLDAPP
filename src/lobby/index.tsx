@@ -7,7 +7,7 @@ import Actions from '../../actions'
 import Loading from '../shared/components/Loading'
 import MessageComponent from '../shared/components/MessageComponent'
 import RedContainer from '../shared/components/RedContainer'
-import { getAuthData }   from '../shared/utils';
+import { getAuthData, convertDate, useTimer }   from '../shared/utils';
 
 const {width,height} = Dimensions.get("window")
 
@@ -19,6 +19,7 @@ type Props = {
 export default function index({ route, navigation }: Props) {
     const [lobby, setLobby] = useState("lobby")
     const { entry, lobbyItem } = route?.params
+    const data = lobbyItem;
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.list)
     const [firstname, setFirstname] = useState(null);
@@ -40,6 +41,22 @@ export default function index({ route, navigation }: Props) {
     const lobbySwitch = (data: string): void => {
         setLobby(data)
     }
+    
+    const result = useTimer(data)
+
+    const formatTime = (data, apendder) => {
+        let result 
+        const newData = data.find((item, index) => item.interval === apendder);
+        if (!newData) {
+            return result = "00"
+        } else if(newData.timeLeft  < 10) {
+            result = `0${newData.timeLeft }`
+        } else {
+            result = newData.timeLeft 
+        }
+        return result
+    }
+
 
     const renderList = ({ item }) => {
         return (
@@ -83,15 +100,15 @@ export default function index({ route, navigation }: Props) {
              <ProfileHeader>
                 <ProfileContainer>
                     <ImageContainer>
-                        <Image source={require('../../assets/images/shoes/sneakers.png')} />
+                        <Image source={{ uri: lobbyItem.product.mainImage.asset.url }} />
                     </ImageContainer>
                     <NameContainer>
-                        <NameText>{lobbyItem.name}</NameText>
+                        <NameText>{lobbyItem.product.name}</NameText>
                         <SubListContainer>
                             <ProfileContainer>
                                 <ProfileIcon width={14}/>
                             </ProfileContainer>
-                            <ListText>{lobbyItem.requiredParticipants}</ListText>
+                            <ListText>{`25/40`}</ListText>
                         </SubListContainer>
                     </NameContainer>
                 </ProfileContainer>
@@ -101,7 +118,7 @@ export default function index({ route, navigation }: Props) {
                             <EntryText>{`Entry: $${entry}.00`}</EntryText>
                         </EntryRow>
                         <EntryRow>
-                            <StartText>{`End: ${lobbyItem.endTime[0]} 12/04`}</StartText>
+                            <StartText>{`End: ${convertDate(lobbyItem.finishDateTime)}`}</StartText>
                         </EntryRow>
                     </EntryContainer>
                 </ProfileContainer>
@@ -111,15 +128,15 @@ export default function index({ route, navigation }: Props) {
                 </ContestContainer>
                 <LowerContainer>
                     <BigSizeContainer>
-                        <BigUpperText>01</BigUpperText>
+                        <BigUpperText>{formatTime(result, 'hours')}</BigUpperText>
                         <BigLowerText>HOURS</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>40</BigUpperText>
+                        <BigUpperText>{formatTime(result, 'minutes')}</BigUpperText>
                         <BigLowerText>MINUTES</BigLowerText>
                     </BigSizeContainer>
                     <BigSizeContainer>
-                        <BigUpperText>32</BigUpperText>
+                        <BigUpperText>{formatTime(result, 'seconds')}</BigUpperText>
                         <BigLowerText>SECONDS</BigLowerText>
                     </BigSizeContainer>
                 </LowerContainer>

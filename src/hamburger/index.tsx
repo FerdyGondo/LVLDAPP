@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import {signOutAction} from '../store/authActions'
 import { geolocation } from '../shared/geolocation'
+import { getAuthData } from '../shared/utils'
 import { useNavigation } from '@react-navigation/native'
 import { Icon }             from 'react-native-elements';
 import {Alert} from 'react-native'
@@ -14,8 +15,8 @@ export default function index() {
 
       useEffect(() => {
         (async () => {
-          let  stateregion = await geolocation();
-          setStateregion(stateregion);
+            const stateregion = await getAuthData('states');
+            setStateregion(stateregion);
         })();
       }, []);
       
@@ -41,7 +42,7 @@ export default function index() {
                     <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={20} /></DrawerItemStyle>
                 </TouchableOpacity>        
                 <DrawerLocationViewStyle>
-                    <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>{stateregion.state}</DrawerLocationTextStyle></DrawerItemStyle>
+                    <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>{stateregion}</DrawerLocationTextStyle></DrawerItemStyle>
                 </DrawerLocationViewStyle>
                 <TouchableOpacity  onPress={ () => Alert.alert(
                                         "LVLD", "Are you sure you want to sign out from LVLD",

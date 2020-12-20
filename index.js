@@ -7,6 +7,11 @@ import App from './App';
 import {name as appName} from './app.json';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
+import Amplify from 'aws-amplify';
+import awsmobile from './awsmobile';
+
+Amplify.configure(awsmobile);
+
 const client = new ApolloClient({
     uri: 'https://cqs8qte2.api.sanity.io/v1/graphql/staging/default',
     cache: new InMemoryCache()
@@ -18,5 +23,4 @@ const Root = () => (
     </ApolloProvider>
 )
   
-
 AppRegistry.registerComponent(appName, () => Root);
