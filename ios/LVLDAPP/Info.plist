@@ -50,12 +50,20 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>NSCameraUsageDescription</key>
+  <string>LVLD  need to access your camera to capture a picture</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>LVLD would like to access your lcoation</string>
+	<string>LVLD would like to access your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>LVLD would like to access your lcoation</string>
+	<string>LVLD would like to access your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>LVLD would like to access your lcoation</string>
+	<string>LVLD would like to access your location</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>LVLD  Need to access your microphone to record a video</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>LVLD  would like to save photos to your photo gallery</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>LVLD  would like access to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

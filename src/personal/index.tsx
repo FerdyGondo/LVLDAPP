@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
-import { KeyboardAvoidingView, Platform } from 'react-native'
+import { KeyboardAvoidingView, Platform,TouchableOpacity } from 'react-native'
 import { getAuthData }   from '../shared/utils';
+import { saveInfo }  from './utils';
 
 export default function index() {
     const [userName, setName] = useState("")
@@ -54,8 +55,8 @@ export default function index() {
             <Scroll>
                 <BodyContainer>
                     <UploadText>Upload a Profile Picture</UploadText>
-                    <CardContainer>
-                        <CardText>Choose Image</CardText>
+                    <CardContainer  onPress={ () => { } }>
+                            <CardText>Choose Image</CardText>
                     </CardContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>Username</PlaceHolderText>
@@ -83,7 +84,7 @@ export default function index() {
                         <FooterMainText>Don't have access to your email account?</FooterMainText>
                         <FooterSubText>Contact Customer Support.</FooterSubText>
                     </FooterContainer>
-                    <CardContainer inputComplete={inputComplete} bigger>
+                    <CardContainer inputComplete={inputComplete} bigger  onPress={ () => { saveInfo(userName, firstName, lastName, email, password) } }>
                         <CardText>Save Changes</CardText>
                     </CardContainer>
                 </BodyContainer>
