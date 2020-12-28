@@ -1,84 +1,44 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Dimensions, FlatList, Animated } from 'react-native'
-import CarouselItem from './components/CarouselItem'
+import React, { Component } from 'react';
+import { Text, View, Dimensions, StyleSheet } from 'react-native';
+// import Carousel from 'react-native-looped-carousel'
+// import Carousel from 'react-native-looped-carousel-improved';
+import Carousel from './lib/Carousel';
 
-const { width } = Dimensions.get('window')
+import CarouselItem from './components/CarouselItem';
 
-function infiniteScroll(dataList){
-    const numberOfData = dataList.length
-    let scrollValue = 0, scrolled = 0
+const { width, height } = Dimensions.get('window');
 
-    setInterval(function() {
-        scrolled ++
-        if(scrolled < numberOfData)
-            scrollValue = scrollValue + width
-        else{
-            scrollValue = 0
-            scrolled = 0
-        }
-        try{
-            this.flatList.scrollToOffset({ animated: false, offset: scrollValue})
-        }catch(err){
-            
-        }
-    }, 3000)
-}
+const CarouselLoop = ({ dataInput, navigation }) => {
+  const [size, setSize] = React.useState({ width, height })
+  const _onLayoutDidChange = event => {
+    const layout = event.nativeEvent.layout;
+    setSize({ width: layout.width, height:layout.height  });    
+  };
 
-const Carousel = ({ data, navigation }) => {
-    const scrollX = new Animated.Value(0)
-    let position = Animated.divide(scrollX, width)
-    const [dataList, setDataList] = useState(data)
-    let flatList = '';
+    const pages = generatePages(dataInput, navigation);
+    return (
+      <View style={{ height:120 }} onLayout={_onLayoutDidChange}>
+        <Carousel
+          style={size}
+          delay={2000}
+          currentPage={0}
+          isLooped
+          autoplay
+          bullets
+          bulletStyle={{backgroundColor: '#595959' }}
+          chosenBulletStyle={{ backgroundColor: '#333' }}
+        >
+            {pages}
+        </Carousel>
+      </View>
+    );
+  }
 
-    useEffect(()=> {
-        setDataList(data)
-        infiniteScroll(dataList)
+
+const generatePages = (dataInput, navigation) => {
+    return dataInput.map( (item) => {
+        return <CarouselItem key={item.id} item={item} navigation={navigation}/>
     })
-
-    if (data && data.length) {
-        return (
-            <View>
-                <FlatList data={data} 
-                ref = {(flatList) => {this.flatList = flatList}}
-                    keyExtractor={(item, index) => 'key' + index}
-                    horizontal
-                    pagingEnabled={true}
-                    scrollEnabled
-                    snapToAlignment="center"
-                    scrollEventThrottle={16}
-                    decelerationRate={"fast"}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({ item }) => {
-                        return <CarouselItem item={item} navigation={navigation}/>
-                    }}
-                    onScroll={Animated.event(
-                        [{ nativeEvent: {  contentOffset: {  x: scrollX  }  }  }], { useNativeDriver: false }
-                    )}
-                />
-
-                <View style={styles.dotView}>
-                    {data.map((_, i) => {
-                        let opacity = position.interpolate({
-                            inputRange: [i - 1, i, i + 1],
-                            outputRange: [0.3, 1, 0.3],
-                            extrapolate: 'clamp'
-                        })
-                        return (
-                            <Animated.View
-                                key={i}
-                                style={{ opacity, height: 5, width: 5, backgroundColor: '#595959', margin: 8, borderRadius: 5 }}
-                            />
-                        )
-                    })}
-
-                </View>
-            </View>
-        )
-    }
-    return null
 }
 
-const styles = StyleSheet.create({
-    dotView: { flexDirection: 'row', justifyContent: 'center' }
-})
-export default Carousel
+export default CarouselLoop;
