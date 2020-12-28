@@ -21,7 +21,19 @@ const GET_ALL_CONTESTS = gql`
 }
 `
 
+const GET_ALL_FAQ = gql`
+    query {
+        allFaq {
+            questions {
+            question
+            answerRaw
+            }  
+        }
+    }
+`
+
 export {
     GET_ALL_CONTESTS,
-    useQuery
+    useQuery,
+    GET_ALL_FAQ
 }
