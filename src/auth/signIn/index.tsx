@@ -158,7 +158,7 @@ const ForgotPwdText = styled.Text`
 `
 const ErrorView = styled.TextInput`
     width: 350px;
-    height: 50px;
+    height: 80px;
 `
 const ErrorText = styled.Text`
         font-size: 16px;

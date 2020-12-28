@@ -1,4 +1,4 @@
-import { all, fork, call, put, takeEvery, takeLatest, cancel, getContext } from 'redux-saga/effects';
+import { all, fork, call, put, takeEvery, takeLatest, cancel, getContext, delay } from 'redux-saga/effects';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as actionTypes from "./actionTypes";
 import Auth from '@aws-amplify/auth';
@@ -35,9 +35,13 @@ function* signUpSaga (signUpAction) {
 function* signInSaga (signInAction) {
       try {
           const response = yield call([Auth,'signIn'], ({ username: signInAction.username, password: signInAction.password }));
-          storeAuthData('token',response.signInUserSession.idToken.jwtToken);
-          storeAuthData('username', signInAction.username);
-          storeAuthData('password', signInAction.password);
+          yield storeAuthData('firstname',response.signInUserSession.idToken.payload.['custom:first_name'].toString());
+          yield storeAuthData('lastname',response.signInUserSession.idToken.payload.['custom:last_name'].toString());
+          yield storeAuthData('token',response.signInUserSession.idToken.jwtToken);
+          yield storeAuthData('username',response.username);
+          yield storeAuthData('password', signInAction.password);
+          // yield delay(5000);
+
           yield put({ type : actionTypes.SIGNIN_SUCCESS});
       } catch (err) {
           console.log('err : ', err.message);
@@ -48,7 +52,11 @@ function* signInSaga (signInAction) {
 function* signOutSaga (signOutAction) {
   try {
     yield AsyncStorage.removeItem('token');
-    yield put({ type : actionTypes.SIGNOUT});
+    yield AsyncStorage.removeItem('username');
+    yield AsyncStorage.removeItem('password');
+    yield AsyncStorage.removeItem('firstname');
+    yield AsyncStorage.removeItem('lastname');
+    yield put({ type : actionTypes.SIGNOUT_SUCCESS});
   } catch (err) {
       console.log("sagas SIGNOUT err: " , err);
   }
