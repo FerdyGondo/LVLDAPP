@@ -30,12 +30,15 @@ export default function ProfileComponent() {
                 </Profile>
                 <ProfileText>{firstname+" "}</ProfileText><SubText>{lastname}</SubText>
             </ProfileContainer>
-            <MoneyContainer onPress={() => navigation.navigate("AddFund")}>
-                <MoneyText>$1000</MoneyText>
-                    <IconContainer>
-                        <Icon name="plus" type={"antdesign"} size={10} />
-                    </IconContainer>
-            </MoneyContainer>
+            <Money>
+              <CreditText>Credits:</CreditText>
+              <MoneyContainer onPress={() => navigation.navigate("AddFund")}>
+                  <MoneyText>1000</MoneyText>
+                      <IconContainer>
+                          <Icon name="plus" type={"antdesign"} size={10} />
+                      </IconContainer>
+              </MoneyContainer>
+            </Money>
         </MainContainer>
     )
 }
@@ -46,7 +49,7 @@ const MainContainer = styled.View`
   margin: 8px 15px;
 `
 const ProfileText = styled.Text`
-  font-size: 13px;
+  font-size: 12px;
   font-family: "Montserrat-Bold";
 `
 const SubText = styled.Text`
@@ -60,17 +63,29 @@ const ProfileContainer = styled.TouchableOpacity`
 const Profile = styled.View`
   margin-right: 7px;
 `
+const Money = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+const CreditText = styled.Text`
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  right: 5px;
+`
 const MoneyContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   background-color: #000;
-  padding: 8px;
+  padding: 6px 10px;
   border-radius: 20px;
 `
 const MoneyText = styled.Text`
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: "Montserrat"
 `
 const IconContainer = styled.View`
   background-color: #d2a747;

@@ -214,12 +214,12 @@ const HomeStackNavigator = ({navigation}) => {
                 centerProps={<CenterButton text={'LeaderBoard'} />}
                 />
               }}/>
-              <Stack.Screen name= "AddFund" component={Fund} options={{ 
+              <Stack.Screen name= "BuyCredit" component={Fund} options={{ 
               header: (navigation) => 
                 <LVLD_Header 
                 props={navigation} 
                 leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Add Funds'} />}
+                centerProps={<CenterButton text={'Buy Game Credits'} />}
                 />
               }}/>
               <Stack.Screen name= "Bank" component={Bank} options={{ 
