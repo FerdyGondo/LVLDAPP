@@ -4,7 +4,7 @@ import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={25} color={"#252525"} />;
 const myIconDisable = <Icons name="angle-right" size={25} color={"#ccc"} />;
 
-const data = [{name: "Contest Tutorial", screen: "ContestTutorial"}, {name: "Second Chance Contest", screen: ""}, {name: "Member Referrals", screen: ""}, {name: "LVLD Points", screen: ""}]
+const data = [{name: "Contest Tutorial", screen: "ContestTutorial"}, {name: "Second Chance Contest", screen: ""}, {name: "Member Referrals", screen: ""}]
 import { Icon } from 'react-native-elements';
 import { getAuthData } from '../../shared/utils';
 

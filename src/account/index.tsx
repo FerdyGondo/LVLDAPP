@@ -10,7 +10,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { useNavigation } from '@react-navigation/native'
 import { getAuthData }   from '../shared/utils';
 
-const data = [{ id: 0, name: "Buy Game Credits", screen: "BuyCredit"}, { id: 1, name: "Transaction History", screen: "History"}, { id: 2, name: "Invite Friends: Get Rewards", screen: "Invite"}, { id: 3, name: "Account Settings", screen: "Settings"}, { id: 4, name: "Notification Settings", screen: ""}, { id: 5, name: "Sign Out", screen: ""},{id: 6, name: "Cash Out", screen: ""}]
+const data = [{ id: 0, name: "Buy Game Credits", screen: "BuyCredit"}, { id: 1, name: "Transaction History", screen: "History"}, { id: 2, name: "Invite Friends: Get Rewards", screen: "Invite"}, { id: 3, name: "Account Settings", screen: "Settings"}, { id: 4, name: "Notification Settings", screen: ""}]
 import { Icon } from 'react-native-elements';
 
 type FlatProps = {
