@@ -40,7 +40,6 @@ function* signInSaga (signInAction) {
           yield storeAuthData('token',response.signInUserSession.idToken.jwtToken);
           yield storeAuthData('username',response.username);
           yield storeAuthData('password', signInAction.password);
-          // yield delay(5000);
 
           yield put({ type : actionTypes.SIGNIN_SUCCESS});
       } catch (err) {
@@ -51,11 +50,7 @@ function* signInSaga (signInAction) {
 
 function* signOutSaga (signOutAction) {
   try {
-    yield AsyncStorage.removeItem('token');
-    yield AsyncStorage.removeItem('username');
-    yield AsyncStorage.removeItem('password');
-    yield AsyncStorage.removeItem('firstname');
-    yield AsyncStorage.removeItem('lastname');
+    yield AsyncStorage.clear();
     yield put({ type : actionTypes.SIGNOUT_SUCCESS});
   } catch (err) {
       console.log("sagas SIGNOUT err: " , err);

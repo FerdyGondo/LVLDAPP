@@ -6,6 +6,7 @@ import ProfileComponent from '../shared/components/Profile'
 import PickerModal from '../shared/components/PickerModal'
 import SecondChance from './components/SecondChance'
 import { useTimer, convertDate } from '../shared/utils'
+import { getAuthData } from '../shared/utils';
 
 const {width,height} = Dimensions.get("window")
 
@@ -27,6 +28,14 @@ export default function index({ route, navigation }: Props) {
     const data = item
     const result = useTimer(data)
 
+    const [token, updateToken] = React.useState('');
+    React.useEffect(  () => {
+        (async () => {
+            const token = await getAuthData('token')
+            updateToken(token);
+        })()
+    });
+    
     const onShowPopup = () => {
         popupRef.show()
     }
@@ -51,8 +60,6 @@ export default function index({ route, navigation }: Props) {
         }
         return result
     }
-
-
 
     const renderItem = () => {
         if (showSecond) return <Scroll><SecondChance /></Scroll>
@@ -106,11 +113,22 @@ export default function index({ route, navigation }: Props) {
                     </BigSizeContainer>
                 </LowerContainer>
                 <BottomContainer>
-                    <QuantityContainer onPress={onShowPopup}>
-                        <BottomText>{`Qty: ${entry}`}</BottomText>
-                        {myIcon}
-                    </QuantityContainer>
-                    <ConfirmContainer onPress={() => navigation.navigate("Lobby", { lobbyItem: item, entry: entry })}>
+                    {token ?
+                        <QuantityContainer onPress={onShowPopup}>
+                            <BottomText>{`Qty: ${entry}`}</BottomText>
+                            {myIcon}
+                        </QuantityContainer>
+                    :
+                        <QuantityContainerDisable >
+                            <BottomText>{`Qty: 0`}</BottomText>
+                            {myIcon}
+                        </QuantityContainerDisable>
+                    }
+                    <ConfirmContainer onPress={() =>  token ?
+                        navigation.navigate("Lobby", { lobbyItem: item, entry: entry })
+                        :
+                        navigation.navigate("SignUp", { confirmation: true })
+                    }>
                         <BottomText>{`Confirm Entry: $${entry}.00`}</BottomText>
                     </ConfirmContainer>
                 </BottomContainer>
@@ -252,6 +270,15 @@ const BottomContainer = styled.View`
 `
 const QuantityContainer = styled.TouchableOpacity`
     background-color: #979797;
+    border-radius: 20px;
+    flex-direction: row;
+    padding: 15px;
+    width: 30%;
+    align-items: center;
+    justify-content: space-around;
+`
+const QuantityContainerDisable = styled.View`
+    background-color: #ccc;
     border-radius: 20px;
     flex-direction: row;
     padding: 15px;

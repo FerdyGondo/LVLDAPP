@@ -22,22 +22,45 @@ export default function ProfileComponent() {
         })()
     },[]);
 
+    const [token, updateToken] = useState('');
+    useEffect(  () => {
+        (async () => {
+            const token = await getAuthData('token')
+            updateToken(token);
+        })()
+    });
+
     return (
         <MainContainer>
+          {token ? 
             <ProfileContainer onPress={() => navigation.navigate("Account")}>
                 <Profile>
                     <ProfileIcon width={30} />
                 </Profile>
                 <ProfileText>{firstname+" "}</ProfileText><SubText>{lastname}</SubText>
             </ProfileContainer>
+            :
+            <ProfileContainerSignUp>
+                <Profile>
+                    <ProfileIcon width={30} />
+                </Profile>
+            </ProfileContainerSignUp>
+          }
             <Money>
-              <CreditText>Credits:</CreditText>
-              <MoneyContainer onPress={() => navigation.navigate("AddFund")}>
-                  <MoneyText>1000</MoneyText>
-                      <IconContainer>
-                          <Icon name="plus" type={"antdesign"} size={10} />
-                      </IconContainer>
-              </MoneyContainer>
+            {token ? <CreditText>Credits:</CreditText> : null}
+              <MoneyContainer onPress={() => token ? 
+                                              navigation.navigate("BuyCredit")
+                                              :
+                                              navigation.navigate("SignUp", { confirmation: true })
+                                            }>
+                <MoneyText>{token ? '$1000' : '   Sign Up  '}</MoneyText>
+                {token ?
+                    <IconContainer>
+                        <Icon name="plus" type={"antdesign"} size={10} />
+                    </IconContainer>
+                    : null
+                }
+            </MoneyContainer>
             </Money>
         </MainContainer>
     )
@@ -56,6 +79,11 @@ const SubText = styled.Text`
   font-family: "Montserrat"
 `
 const ProfileContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+`
+const ProfileContainerSignUp = styled.View`
   flex-direction: row;
   flex: 1;
   align-items: center;

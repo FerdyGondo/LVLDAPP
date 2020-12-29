@@ -2,9 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import Icons from 'react-native-vector-icons/FontAwesome';
 const myIcon = <Icons name="angle-right" size={25} color={"#252525"} />;
+const myIconDisable = <Icons name="angle-right" size={25} color={"#ccc"} />;
 
 const data = [{name: "Contest Tutorial", screen: "ContestTutorial"}, {name: "Second Chance Contest", screen: ""}, {name: "Member Referrals", screen: ""}, {name: "LVLD Points", screen: ""}]
 import { Icon } from 'react-native-elements';
+import { getAuthData } from '../../shared/utils';
 
 type FlatProps = {
     item: any;
@@ -12,14 +14,33 @@ type FlatProps = {
   }
   
 export default function index({ navigation }) {
+  const [token, updateToken] = React.useState('');
+    React.useEffect(  () => {
+        (async () => {
+            const token = await getAuthData('token')
+            updateToken(token);
+        })()
+    });
+
     const renderCardItem = ({ item, index }: FlatProps) => {
         return (
-          <CardContainer onPress={() => navigation.navigate(item.screen)}>
-            <CardText>
-              <LeftText>{item.name}</LeftText>
-              {myIcon}
-            </CardText>
-          </CardContainer>
+          <Container>
+              { !token && index == 2 ?
+                <CardContainerDisable>
+                      <CardText>
+                        <LeftTextDisable>{item.name}</LeftTextDisable>
+                        {myIconDisable}
+                      </CardText>
+                  </CardContainerDisable>
+              :
+                <CardContainer onPress={() => navigation.navigate(item.screen)}>
+                    <CardText>
+                      <LeftText>{item.name}</LeftText>
+                      {myIcon}
+                    </CardText>
+                </CardContainer>
+              }
+          </Container>
         )
       }
 
@@ -43,6 +64,9 @@ const FlatList = styled.FlatList``
 const CardContainer = styled.TouchableOpacity`
   margin: 0px 10px;
 `
+const CardContainerDisable = styled.View`
+  margin: 0px 10px;
+`
 
 const CardText = styled.View`
   border-bottom-width: 0.5px;
@@ -58,9 +82,11 @@ const LeftText = styled.Text`
   font-weight: 400;
   font-family: "Montserrat";
   line-height: 17.07px;
-  color: #000000
+  color: #000;
 `
-
+const LeftTextDisable = styled(LeftText)`
+  color: #ccc;
+`
 const IconContainer = styled.View`
   background-color: #d2a747;
   margin-left: 7px;
