@@ -74,6 +74,11 @@ const SignInScreen = ({navigation}) => {
                 autoCapitalize="none"
                 autoCorrect={false}
             />
+
+            <ErrorInput multiline={true} textAlign={'center'}>
+                {auth.errorMsgIn ? <ErrorText>{auth.errorMsgIn}</ErrorText> : null }
+            </ErrorInput>
+            
             <ForgotPwdView onPress={ () => {}}>
                 <ForgotPwdText>Forgot password?</ForgotPwdText>
             </ForgotPwdView>
@@ -82,9 +87,7 @@ const SignInScreen = ({navigation}) => {
                     onPress={ () =>  signInDispatch(signInAction(username, password)) }>
                 Login
             </Button>
-            <ErrorView multiline={true}>
-                {auth.errorMsgIn ? <ErrorText>{auth.errorMsgIn}</ErrorText> : null }
-            </ErrorView>
+
             <SeparatorView>
                 <Line />
                 <SeparationText>   OR   </SeparationText>
@@ -148,7 +151,7 @@ const WelcomeText = styled.Text`
   font-family: Montserrat-Medium;
 `
 const ForgotPwdView = styled.TouchableOpacity`
-    align-self: flex-end;
+    align-self: center;
     margin-right: 40px;
 `
 const ForgotPwdText = styled.Text`
@@ -156,12 +159,13 @@ const ForgotPwdText = styled.Text`
     color: #fff;
     font-family: Montserrat;
 `
-const ErrorView = styled.TextInput`
+const ErrorInput = styled.TextInput`
     width: 350px;
     height: 80px;
 `
 const ErrorText = styled.Text`
         font-size: 16px;
+        font-weight: bold;
         color: red;
         margin : 30px;
         font-family: Montserrat;
