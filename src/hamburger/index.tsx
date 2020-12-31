@@ -47,10 +47,10 @@ export default function index() {
                 <TouchableOpacity  onPress={ () => { navigation.navigate("Faq")}} >
                     <DrawerItemStyle><DrawerTextStyle>FAQ</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
                 </TouchableOpacity>            
-                <TouchableOpacity  onPress={ () => { navigation.navigate("Privacy")}} >
+                <TouchableOpacity  onPress={ () => { navigation.navigate("Terms_of_Use")}} >
                     <DrawerItemStyle><DrawerTextStyle>Terms of Use</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
                 </TouchableOpacity>        
-                <TouchableOpacity  onPress={ () => { }} >
+                <TouchableOpacity  onPress={ () => { navigation.navigate("Privacy")}} >
                     <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
                 </TouchableOpacity>        
                 <DrawerLocationViewStyle>

@@ -54,6 +54,7 @@ import UpdatePassword from './src/updatepassword'
 import Personal from './src/personal'
 import History from './src/history'
 import Tutorial from './src/hamburger/tutorial'
+import TermsOfUse from './src/hamburger/terms_of_use'
 import Privacy from './src/hamburger/privacy'
 import Faq from './src/hamburger/faq'
 import Rules from './src/hamburger/rules'
@@ -301,6 +302,14 @@ const HomeStackNavigator = ({navigation}) => {
                   props={navigation} 
                   leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                   centerProps={<CenterButton text={'Rules and GamePlay'} size={14} />}
+                  />
+                }}/>
+              <Stack.Screen name= "Terms_of_Use" component={TermsOfUse} options={{ 
+                header: (navigation) => 
+                  <LVLD_Header 
+                  props={navigation} 
+                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                  centerProps={<CenterButton text={'Terms of Use'} size={14} />}
                   />
                 }}/>
               <Stack.Screen name= "Privacy" component={Privacy} options={{ 

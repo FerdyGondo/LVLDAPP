@@ -31,9 +31,25 @@ const GET_ALL_FAQ = gql`
         }
     }
 `
+const GET_ALL_TERM = gql`
+    query {
+        allTerms {
+            contentRaw
+        }
+    }
+`
+const GET_ALL_PRIVACY = gql`
+    query {
+        allPrivacy {
+            contentRaw
+        }
+    }
+`
 
 export {
-    GET_ALL_CONTESTS,
     useQuery,
-    GET_ALL_FAQ
+    GET_ALL_CONTESTS,
+    GET_ALL_FAQ,
+    GET_ALL_TERM,
+    GET_ALL_PRIVACY
 }
