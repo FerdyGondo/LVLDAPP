@@ -22,20 +22,46 @@ export default function ProfileComponent() {
         })()
     },[]);
 
+    const [token, updateToken] = useState('');
+    useEffect(  () => {
+        (async () => {
+            const token = await getAuthData('token')
+            updateToken(token);
+        })()
+    });
+
     return (
         <MainContainer>
+          {token ? 
             <ProfileContainer onPress={() => navigation.navigate("Account")}>
                 <Profile>
                     <ProfileIcon width={30} />
                 </Profile>
                 <ProfileText>{firstname+" "}</ProfileText><SubText>{lastname}</SubText>
             </ProfileContainer>
-            <MoneyContainer onPress={() => navigation.navigate("AddFund")}>
-                <MoneyText>$1000</MoneyText>
+            :
+            <ProfileContainerSignUp>
+                <Profile>
+                    <ProfileIcon width={30} />
+                </Profile>
+            </ProfileContainerSignUp>
+          }
+            <Money>
+            {token ? <CreditText>Credits:</CreditText> : null}
+              <MoneyContainer onPress={() => token ? 
+                                              navigation.navigate("BuyCredit")
+                                              :
+                                              navigation.navigate("SignUp", { confirmation: true })
+                                            }>
+                <MoneyText>{token ? '$1000' : '   Sign Up  '}</MoneyText>
+                {token ?
                     <IconContainer>
                         <Icon name="plus" type={"antdesign"} size={10} />
                     </IconContainer>
+                    : null
+                }
             </MoneyContainer>
+            </Money>
         </MainContainer>
     )
 }
@@ -46,7 +72,7 @@ const MainContainer = styled.View`
   margin: 8px 15px;
 `
 const ProfileText = styled.Text`
-  font-size: 13px;
+  font-size: 12px;
   font-family: "Montserrat-Bold";
 `
 const SubText = styled.Text`
@@ -57,20 +83,37 @@ const ProfileContainer = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
 `
+const ProfileContainerSignUp = styled.View`
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+`
 const Profile = styled.View`
   margin-right: 7px;
+`
+const Money = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+const CreditText = styled.Text`
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  right: 5px;
 `
 const MoneyContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   background-color: #000;
-  padding: 8px;
+  padding: 6px 10px;
   border-radius: 20px;
 `
 const MoneyText = styled.Text`
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: "Montserrat"
 `
 const IconContainer = styled.View`
   background-color: #d2a747;

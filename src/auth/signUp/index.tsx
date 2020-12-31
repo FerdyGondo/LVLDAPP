@@ -31,7 +31,10 @@ import {signUpAction} from '../../store/authActions';
 import auth from '../../store/auth';
 import Button from '../../shared/components/ButtonComp';
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = ({route, navigation}) => {
+    if(route !== 'undefined') {
+        const { confirmation } = route?.params;
+    }
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname]   = useState('');
     const [username, setUsername]   = useState('');
@@ -46,7 +49,7 @@ const SignUpScreen = ({navigation}) => {
     const appleIcon     = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Apple-Circle_Auth.png'} ;
 
     useEffect( () => {
-        if(auth.loggedIn) navigation.navigate('Home');
+        if(auth.loggedIn)  navigation.navigate('Home');
     });
 
     return (
@@ -193,7 +196,7 @@ const ForgotPwdText = styled.Text`
 `
 const ErrorView = styled.TextInput`
     width: 350px;
-    height: 50px;
+    height: 80px;
 `
 const ErrorText = styled.Text`
     font-size: 16px;

@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import BlockContent from '@sanity/block-content-to-react'
-import { useQuery, GET_ALL_PRIVACY } from '../../graphql/query'
+import { useQuery, GET_ALL_TERM } from '../../graphql/query'
 import Loading from '../../shared/components/Loading'
 
 export default function index() {
-    const { loading, error, data} = useQuery(GET_ALL_PRIVACY)
+    const { loading, error, data} = useQuery(GET_ALL_TERM)
     if (loading) return <Loading />
 
     const renderEachItem = ({ item }) => {
@@ -32,7 +32,7 @@ export default function index() {
         <Container>
             <MainContainer>
                 <FlatList 
-                    data={data.allPrivacy}
+                    data={data.allTerms}
                     keyExtractor={(data, index) => index.toString()}
                     renderItem={renderEachItem}
                 />

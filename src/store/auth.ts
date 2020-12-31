@@ -46,6 +46,12 @@ const auth = ( state = INITIAL_STATE, action:Actions) => {
               loggedIn: false,
               errorMsgIn:'Processing sign out...'
           };
+      case "SIGNOUT_SUCCESS":
+            return {
+                ...state,
+                errorMsgIn:'',
+                errorMsgUp:''
+            };
       default:
         return state;
     }

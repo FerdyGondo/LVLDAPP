@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Transition, Transitioning } from 'react-native-reanimated'
+import { useQuery, GET_ALL_FAQ } from '../../graphql/query'
+import BlockContent from '@sanity/block-content-to-react'
+import Loading from '../../shared/components/Loading'
+import { TouchableWithoutFeedback, Platform } from 'react-native'
 
-const data = [{name: "Question 1", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 2", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 3", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 4", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 5", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 6", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."},{name: "Question 7", answer: "Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5.Answer to question number 5."}]
 
 type FlatProps = {
     item: any;
@@ -22,30 +25,44 @@ const myIcon = <Icons name="angle-right" size={25} color={"#252525"} />;
 const angleDown = <Icons name="angle-down" size={25} color={"#252525"} />;
 
 export default function index({ navigation }) {
+    const { loading, error, data} = useQuery(GET_ALL_FAQ)
     const [currentIndex, setCurrentIndex] = useState(null)
     const ref = useRef()
+
+    if (loading) return <Loading />
     
     const renderCardItem = ({ item, index }: FlatProps) => {
-        return (
-          <CardContainer onPress={() => { 
-              ref.current.animateNextTransition();
-              setCurrentIndex(index === currentIndex ? null : index)
-          }}>
-            <CardText>
-              <LeftText>{item.name}</LeftText>
-              {index === currentIndex ? angleDown : myIcon}
-            </CardText>
-            {index === currentIndex && (
-                <AnswerContainer>
-                    <AnswerText>
-                        <AnswerRedText>Answer: </AnswerRedText>
-                        {item.answer}
-                    </AnswerText>
-                </AnswerContainer>
-            )}
-          </CardContainer>
-        )
+       return <FlatList 
+          data={item.questions}
+          keyExtractor={(data, index) => index.toString()}
+          renderItem={({ item }) => {
+            return (
+              <TouchableWithoutFeedback  onPress={() => { 
+                ref.current.animateNextTransition();
+                  setCurrentIndex(item.question === currentIndex ? null : item.question)
+              }}>
+                <CardContainer>
+                <CardText>
+                  <LeftText>{item.question}</LeftText>
+                  {item.question === currentIndex ? angleDown : myIcon}
+                </CardText>
+                {item.question === currentIndex && (
+                    <AnswerContainer>
+                         <AnswerRedText os={Platform.OS}>Answer: </AnswerRedText>
+
+                            { <BlockContent
+                  blocks={item.answerRaw}
+                  serializers={{marks: {}}}
+              /> }
+                    </AnswerContainer>
+                )}
+              </CardContainer>
+              </TouchableWithoutFeedback>
+             )
+          }}
+       />
       }
+
 
     return (
        <Container>
@@ -55,7 +72,7 @@ export default function index({ navigation }) {
                 style={{ flex: 1 }}
             >
                 <FlatList 
-                    data={data}
+                    data={data.allFaq}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={renderCardItem}
                 />
@@ -70,7 +87,7 @@ const Container = styled.View`
 `
 const FlatList = styled.FlatList``
 
-const CardContainer = styled.TouchableOpacity`
+const CardContainer = styled.View`
   margin: 0px 10px;
 `
 
@@ -94,18 +111,14 @@ const AnswerContainer = styled.View`
     padding: 12px 12px;
     border-bottom-width: 1px;
     border-color: #979797;
-`
-const AnswerText = styled.Text`
-    font-size: 12px;
-    font-family: "Montserrat";
-    line-height: 15px;
-    font-weight: 400;
-    color: #000000;
+    flex-direction: row;
 `
 const AnswerRedText = styled.Text`
-    font-size: 12px;
+    font-size: 13px;
     font-family: "Montserrat";
     line-height: 15px;
     font-weight: bold;
     color: #C29A41;
+    top: ${props => props.os === 'android' ? '3px' : '1px'};
 `
+

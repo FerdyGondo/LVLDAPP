@@ -5,5 +5,6 @@ export {
     signInSuccessAction,
     signUpFailedAction,
     signInFailedAction,
-    signOutAction
+    signOutAction,
+    signOutSuccessAction
 } from './authActions';

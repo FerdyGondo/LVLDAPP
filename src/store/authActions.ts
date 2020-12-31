@@ -50,3 +50,11 @@ export const signUpAction = (firstname, lastname, username, email, password) => 
         type: actionTypes.SIGNOUT
     }
   }
+
+  export const signOutSuccessAction = (message) => {
+    return {
+        type: actionTypes.SIGNOUT_SUCCESS,
+        errorMsgIn: message,
+        errorMsgUp: message
+    }
+  }

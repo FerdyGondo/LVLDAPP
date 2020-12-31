@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ProfileComponent from '../shared/components/Profile'
-import {Dimensions,Platform} from 'react-native'
+import {Dimensions,Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Alert} from 'react-native'
 
 const {width,height} = Dimensions.get("window")
 
-const data = [{amount: 10},{amount: 15},{amount: 20},{amount: 50}]
+const data = [{credit: 40, amount: 10},{credit: 60, amount: 15},{credit: 80, amount: 20},{credit: 200, amount: 50}]
 
 const numColumns: number = 1;
 
@@ -13,66 +13,86 @@ type List = {
     amount: number;
 }
 
-const bankData = [{name: "Online Banking", color: "#979797", screen: "Bank"},{name: "Credit Card", color: "#C29A41", screen: "Credit"},{image: require('../../assets/images/applepay.png'), color: "#000000", screen: ""},{image: require('../../assets/images/paypal.png'), color: "#FFC43A", screen: ""},{image: require('../../assets/images/venmo.png'), color: "#029CDD", screen: ""}]
 
 export default function index({ navigation }) {
-    const [amount, setAmount] = useState('')
-    console.log('amount', amount)
+    const [amount, setAmount] = useState('0.00')
+    const [credits, setCredits] = useState(0)
+
+    const onSubmit = (item) => {
+        setAmount(amount => amount = item.amount.toFixed(2))
+        setCredits(credits => credits = item.credit)
+    }
+
+    const changeInput = (text) => {
+        if ((text * 4) % 1 !== 0 || text > 100) return Alert.alert("Amount should be less than 100")
+        setAmount(text)
+        setCredits(credits => credits = text * 4)
+    }
 
     const renderList = ({ item, index }: List) => {
         return (
-            <TileContainer key={index} os={Platform.OS}>
-                <Tile>
-                    {`$${item.amount}`}
-                </Tile>
-            </TileContainer>
+            <TouchableWithoutFeedback onPress={() => onSubmit(item)}>
+                <TileContainer>
+                    <CoinContainer source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/add-funds-screen/coin.png" }} index={index !== 0}>
+                        <Tile>
+                            {`${item.credit}`}
+                        </Tile>
+                        <CreditText>Credits</CreditText>
+                        <ViewContainer>
+                            <AmountText>{`$${item.amount}.00`}</AmountText>
+                        </ViewContainer>
+                    </CoinContainer>
+                </TileContainer>
+            </TouchableWithoutFeedback>
            )
     }
-
-    const renderCard = ({ item, index }) => {
-        if (item.image) return <ImageContainer key={index} index={index}><Image source={item.image} /></ImageContainer>
-        return (
-            <CardContainer key={index} color={item.color} onPress={() => navigation.navigate(item.screen)}>
-              <CardText>{item.name}</CardText>
-            </CardContainer>
-        )
-    }
-
-    const renderImage = ({ item, index }) => {
-        return (
-            <ImageContainer key={index}>
-                
-            </ImageContainer>
-        )
-    }
-
     return (
+        <KeyboardAvoidingView
+                behavior={Platform.OS == "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 130 : '10%'}
+                >
         <Container>
-            <Profile>
-                <ProfileComponent />
-            </Profile>
-            <SizeContainer>
-                <FlatList 
-                    data={data}
-                    keyExtractor={(item, index) => index.toString()}
-                    numColumns={numColumns}
-                    renderItem={renderList}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
-            </SizeContainer>
-            <AmountContainer>
-                <Amount>Custom Amount (Min. $5)</Amount>
-                <TextInput placeholder={"$"} value={amount} onChangeText={(text) => setAmount(text)} keyboardType={"numeric"} />
-            </AmountContainer>
-            <BankContainer>
-                <BankFlatList 
-                    data={bankData}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={renderCard}
-                />
-            </BankContainer>
+            <Scroll>
+
+            
+                <Profile>
+                    <ProfileComponent />
+                </Profile>
+                <SizeContainer>
+                    <FlatList 
+                        data={data}
+                        keyExtractor={(item, index) => index.toString()}
+                        numColumns={numColumns}
+                        renderItem={renderList}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </SizeContainer>
+                <AmountContainer>
+                    <Amount>Custom Amount (Min. $5)</Amount>
+                    <BigCoinContainer source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/add-funds-screen/coin.png" }}>
+                        <BigTile>
+                            {`${credits}`}
+                        </BigTile>
+                        <BigCreditText>Credits</BigCreditText>
+                    </BigCoinContainer>
+                </AmountContainer>
+                
+                <InputContainer>
+                    <DollarText>$</DollarText>
+                    <TextInput  value={amount} onChangeText={(text) => changeInput(text)} keyboardType={"numeric"}  maxLength={3} onFocus={() => setAmount('')} />
+                    <DisclaimerText>Disclaimer: All credit sales are final</DisclaimerText>
+                </InputContainer>
+
+                <ButtonStyle>
+                    <TextStyle>Buy Now</TextStyle>
+                </ButtonStyle>
+            </Scroll>
+
         </Container>
+        </KeyboardAvoidingView>
+
     )
 }
 
@@ -80,56 +100,112 @@ const Container = styled.View`
     flex: 1;
     background-color: #fff;
 `
+const Scroll = styled.ScrollView`
+    flex: 1
+`
 const Profile = styled.View`
     border-color: #979797;
     border-bottom-width: 1px;
 `
 const SizeContainer = styled.View`
-  margin: 25px 0px 10px;
-  margin-left: 20px;
+    align-items: center;
+    margin-top: 15px;
+    border-color: #979797;
+    border-bottom-width: 1px;
 `
 const FlatList = styled.FlatList`
 `
 const BankFlatList = styled.FlatList`
 `
-const TileContainer = styled.TouchableOpacity`
-  width: ${width/5.2}px;
-  height: ${props => props.os === 'android' ? `${height/9}px` :  `${height/11.5}px`};
-  margin-bottom: 18px;
-  margin-right: 16px;
-  margin-top: 2px;
-  margin-left: 3px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  background-color: #000000;
-  shadow-color: #000;
-  shadow-opacity: 0.3;
-  shadow-offset: 2px 2px;
-  elevation: 20;
+const TileContainer = styled.View`
+    padding-bottom: 35px;
+`
+const CoinContainer = styled.ImageBackground`
+    resizeMode: cover;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    width: ${width*0.23}px;
+    height: ${width*0.23}px;
+    shadow-color: #000;
+    shadow-opacity: 0.3;
+    shadow-offset: 2px 2px;
+    elevation: 20;
+    ${({ index }) => index && `margin-left: 5px`}
+`
+const BigCoinContainer = styled(CoinContainer)`
+    width: ${width*0.52}px;
+    height: ${width*0.52}px;
 `
 const Tile = styled.Text`
-  font-size: 24px;
-  color: #fff;
-  font-family: "Montserrat-ExtraBold";
+  font-size: 20px;
+  color: #ffffff;
+  font-family: "Montserrat";
+  font-weight: 700;
+  line-height: 24.38px;
+`
+const BigTile = styled(Tile)`
+    font-size: 65px;
+    line-height: 79.24px;
+`
+const CreditText = styled(Tile)`
+  font-size: 12px;
+  line-height: 14.63px;
+`
+const BigCreditText = styled(CreditText)`
+    font-size: 28px;
+    line-height: 34.13px;
+`
+const DollarText = styled.Text`
+    font-size: 32px;
+    line-height: 30px;
+    position: absolute;
+    top: 20%;
+    font-family: "Montserrat";
+    left: 30%;
+`
+const AmountText = styled.Text`
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17.07px;
+`
+const ViewContainer = styled.View`
+    position: absolute;
+    top: 105%;
 `
 const Amount = styled.Text`
-    margin-left: 22px;
     font-family: "Montserrat";
-    font-size: 16px;
-    opacity: 0.9;
-    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.38px;
+    align-self: center;
+    padding-bottom: 20px;
 `
 const TextInput = styled.TextInput`
     border-color: #979797;
     border-width: 1px;
-    border-radius: 40px;
-    padding: 16px;
-    font-size: 16px;
-    font-family: "Montserrat"
+    border-radius: 32px;
+    padding: 6px;
+    font-size: 32px;
+    font-family: "Montserrat";
+    font-weight: 400;
+    padding-left: 42%;
+`
+const DisclaimerText = styled.Text`
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14.63px;
+    align-self: center;
+    margin-top: 10px;
+`
+const InputContainer = styled.View`
+    width: 60%;
+    margin-left: 20%;
 `
 const AmountContainer = styled.View`
-    margin: 5px 20px;
+    margin: 25px 25px 15px;
+    align-items: center;
 `
 const BankContainer = styled.View`
     margin-top: 30px;
@@ -162,4 +238,19 @@ const Image = styled.Image`
 `
 const ListContainer = styled.View`
     height: 400px
+`
+const TextStyle = styled.Text`
+    color: #ffffff;
+    font-family: "Montserrat";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.38px;
+`
+const ButtonStyle = styled.TouchableOpacity`
+    background-color: #000000;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    padding: 14px;
+    margin: 45px 17px 20px;
 `

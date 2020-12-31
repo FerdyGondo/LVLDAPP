@@ -53,7 +53,7 @@ const WelcomeScreen = ({navigation}) => {
                 <Spacer />
             </ImageBg>
             <LowerContainer>
-                <Button buttonProps ={styles.signUpButton} onPress={ () => navigation.navigate('SignUp')}>
+                <Button buttonProps ={styles.signUpButton} onPress={ () => navigation.navigate('SignUp', { confirmation: false } )}>
                     Sign Up
                 </Button>
                 <Spacer />
