@@ -34,6 +34,10 @@ export const graphqlApiSignUp = async (obj:Object) => {
             })
             if(res.errors){
                 let err = res.errors[0].message;
+                switch(err){
+                    case 'User already exists' : err = 'Username is taken'; break;
+
+                }
                 throw (err);
             } else {
                 storeItem('username', res.data.signup.username);

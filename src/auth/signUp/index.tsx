@@ -103,9 +103,9 @@ const SignUpScreen = ({route, navigation}) => {
                     onPress={ () =>  signUpDispatch(signUpAction(firstname, lastname, username, email, password)) }>
                 Sign Up
             </Button>
-            <ErrorView multiline={true}>
+            <ErrorInput multiline={true} textAlign={'center'}>
                 {auth.errorMsgUp ? <ErrorText>{auth.errorMsgUp}</ErrorText> : null }
-            </ErrorView>
+            </ErrorInput>
             <SeparatorView>
                 <Line />
                 <SeparationText>   OR   </SeparationText>
@@ -194,12 +194,13 @@ const ForgotPwdText = styled.Text`
     color: #fff;
     font-family: Montserrat;
 `
-const ErrorView = styled.TextInput`
+const ErrorInput = styled.TextInput`
     width: 350px;
     height: 80px;
 `
 const ErrorText = styled.Text`
     font-size: 16px;
+    font-weight: bold;
     color: red;
     margin : 30px;
     font-family: Montserrat;

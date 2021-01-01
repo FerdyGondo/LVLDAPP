@@ -28,7 +28,19 @@ function* signUpSaga (signUpAction) {
         storeAuthData('lastname', signUpAction.lastname);
         yield put({ type : actionTypes.SIGNUP_SUCCESS});
       } catch (err) {
-        yield put({ type : actionTypes.SIGNUP_FAILED, errorMsgUp : err.message})
+        let newErr = err.message;
+        switch (newErr){
+          case 'PreSignUp failed with error A user with the same email address exists.' : 
+            newErr = 'Email Already Associated with an Account';
+            break;
+          case 'Custom auth lambda trigger is not configured for the user pool.' : 
+            newErr = 'Password cannot be empty';
+            break;
+          case 'User already exists' : 
+            newErr = 'Username Name is Taken';
+            break;
+        }
+        yield put({ type : actionTypes.SIGNUP_FAILED, errorMsgUp : newErr})
       }
 };
 
@@ -40,11 +52,21 @@ function* signInSaga (signInAction) {
           yield storeAuthData('token',response.signInUserSession.idToken.jwtToken);
           yield storeAuthData('username',response.username);
           yield storeAuthData('password', signInAction.password);
-
           yield put({ type : actionTypes.SIGNIN_SUCCESS});
       } catch (err) {
-          console.log('err : ', err.message);
-          yield put({ type : actionTypes.SIGNIN_FAILED, errorMsgIn : err.message});
+        let newErr = err.message;
+          switch (newErr){
+            case 'Custom auth lambda trigger is not configured for the user pool.' : 
+              newErr = 'Password cannot be empty';
+              break;
+            case 'User does not exist.' : 
+              newErr = 'Username does not exist';
+              break;
+            case 'Incorrect username or password.' : 
+              newErr = 'Incorrect password';
+              break;
+          }
+          yield put({ type : actionTypes.SIGNIN_FAILED, errorMsgIn : newErr});
       }
 };
 
