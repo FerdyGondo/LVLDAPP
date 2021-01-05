@@ -3,27 +3,37 @@ import styled from 'styled-components'
 import ProfileComponent from '../../shared/components/Profile'
 import Logo from '../../../assets/svg/LvldLogo'
 import AttatchmentIcon from '../../../assets/svg/AttatchmentIcon'
-import {Platform} from 'react-native'
+import {Platform, KeyboardAvoidingView} from 'react-native'
 
 export default function index() {
-    const [focus1, setFocus1] = useState(false)
     const [name, setName] = useState('')
+    const [length, setLength] = useState(0)
+
+    const setLengthEvent = (text) => {
+        setName(text)
+        setLength(length => length = text.length)
+    }
     return (
         <Container>
             <Profile>
                 <ProfileComponent />
             </Profile>
+            <KeyboardAvoidingView
+                behavior={Platform.OS == "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={Platform.OS === "ios" ? 130 : 100}
+                >
+                <Scroll>
+           
             <MainContainer>
-                {
-                    !focus1 && (
-                        <>
-                        <Logo width={100} />
-                        <MainText>Contact Support</MainText>
-                        <SubText>Please provide a detailed message.</SubText>
-                        </>
-                    )
-                }
-                <TextContainer focus1={focus1}>
+                <CenterHeader>
+                    <Logo width={100} />
+                    <MainText>Contact Support</MainText>
+                    <SubText>Please provide a detailed message.</SubText>
+                </CenterHeader>
+                
+
+                <TextContainer>
                     <UpperContainer>
                         <UpperText>New Message</UpperText>
                         <SendContainer>
@@ -34,28 +44,47 @@ export default function index() {
                         </SendContainer>
                     </UpperContainer>
                     <InputContainer os={Platform.OS}>
-                        <PlaceHolderInput placeholder={"Type your message here"} focus={focus1} onFocus={() => setFocus1(true)} onBlur={() => setFocus1(false)} placeholderTextColor={'#979797'} value={name} onChangeText={(text) => setName(text)} returnKeyType={"next"} multiline={true} maxLength={500} />
+                        <PlaceHolderInput placeholder={"Type your message here"} placeholderTextColor={'#979797'} value={name} onChangeText={(text) => setLengthEvent(text)} returnKeyType={"next"} multiline={true} maxLength={500} />
                     </InputContainer>
+                    <CountContainer>
+                        <PlaceHolderView>
+                            <PlaceHolderBox />
+                            <PlaceHolderBox />
+                            <PlaceHolderBox />
+                            <PlaceHolderBox />
+                        </PlaceHolderView>
+                        <CountText>{`${length}/500`}</CountText>
+                    </CountContainer>
                 </TextContainer>
+
             </MainContainer>
+
+            </Scroll>
+                </KeyboardAvoidingView>
         </Container>
     )
 }
 
 const Container = styled.View`
     flex: 1;
-    background-color: #fff;
+    background-color: #000000;
 `
 const Profile = styled.View`
   border-color: #979797;
   border-bottom-width: 1px;
+  background-color: #ffffff;
+`
+const Scroll = styled.ScrollView`
+    flex: 1;
 `
 const MainContainer = styled.View`
     background-color: #000000;
     flex: 1;
     padding: 20px;
-    align-items: center;
     padding-bottom: 0px;
+`
+const CenterHeader = styled.View`
+    align-items: center;
 `
 const MainText = styled.Text`
     font-family: "Montserrat";
@@ -75,11 +104,41 @@ const SubText = styled.Text`
 `
 const TextContainer = styled.View`
     background-color: #ffffff;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    margin-top: ${props => props.focus1 ? '0px' : '15px'};
-    flex: 1;
+    border-radius: 15px;
+    margin-top: 15px;
     width: 100%;
+    height: 100%;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    flex: 1;
+`
+const CountContainer = styled.View`
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    flex-direction: row;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+`
+const CountText = styled.Text`
+    font-family: "Montserrat";
+    font-size: 14px;
+    line-height: 17.07px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #979797;
+`
+const PlaceHolderBox = styled.View`
+    width: 35px;
+    height: 25px;
+    background-color: #C4C4C4;
+    margin-right: 10px;
+`
+const PlaceHolderView = styled.View`
+    flex-direction: row;
+    left: 1%;
 `
 const UpperContainer = styled.View`
     flex-direction: row;
@@ -114,8 +173,10 @@ const PlaceHolderInput = styled.TextInput`
     padding-right: 5.7%;
     font-size: 14px;
     font-family: "Montserrat";
-    color: #000000;
+    color: #979797;
+    font-weight: 400;
 `
 const InputContainer = styled.View`
-    margin-top: ${props => props.os === 'android' ? '0px' : '10px'}
+    margin-top: ${props => props.os === 'android' ? '0px' : '10px'};
+    padding-bottom: 60px;
 `
