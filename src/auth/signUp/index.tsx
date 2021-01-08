@@ -56,7 +56,7 @@ const SignUpScreen = ({route, navigation}) => {
         <SafeAreaViewContainer statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >
         <ImageBg >
             <TitleView>
-                <Icon onPress={() => navigation.goBack()}  name='chevron-left' type='font-awesome' size={20} color={'#fff'} />
+                <Icon onPress={() => navigation.navigate("Welcome")}  name='chevron-left' type='font-awesome' size={20} color={'#fff'} />
             </TitleView>
                 <LoginText>Sign Up</LoginText>
             <WelcomeText>Welcome</WelcomeText>
