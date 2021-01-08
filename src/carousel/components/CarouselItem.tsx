@@ -49,7 +49,7 @@ const CardView = styled.TouchableOpacity`
     flex-direction : row;
     justify-content : space-around;
     width : ${width - 20}px;
-    height : 70px;
+    height : 60px;
     background-color : white;
     margin-left : 10px;
     margin-right : 10px;

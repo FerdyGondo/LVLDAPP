@@ -20,13 +20,13 @@ const CarouselLoop = ({ dataInput, navigation }) => {
       <View style={{ height:120 }} onLayout={_onLayoutDidChange}>
         <Carousel
           style={size}
-          delay={2000}
+          delay={3000}
           currentPage={0}
           isLooped
           autoplay
           bullets
-          bulletStyle={{backgroundColor: '#595959' }}
-          chosenBulletStyle={{ backgroundColor: '#333' }}
+          bulletStyle={{backgroundColor: '#595959' , marginBottom: -10}}
+          chosenBulletStyle={{ backgroundColor: '#333'  , marginBottom: -10}}
         >
             {pages}
         </Carousel>

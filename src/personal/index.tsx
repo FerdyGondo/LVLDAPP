@@ -44,7 +44,7 @@ export default function index() {
                     <MainText>{first_name+" "}<SubText>{last_name}</SubText></MainText>
                 </ProfileContainer>
                 <BottomContainer>
-                    <BoldText>$1,000</BoldText>
+                    <BoldText>1,000</BoldText>
                     <Bottom>BALANCE</Bottom>
                 </BottomContainer>
             </MainContainer>
