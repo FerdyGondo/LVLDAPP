@@ -4,6 +4,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { KeyboardAvoidingView, Platform,TouchableOpacity } from 'react-native'
 import { getAuthData }   from '../shared/utils';
 import { saveInfo }  from './utils';
+import ImagePickerModal from './components/ImagePickerModal';
 
 export default function index() {
     const [userName, setName] = useState("")
@@ -12,6 +13,7 @@ export default function index() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [inputComplete, setInputComplete] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
 
     useEffect(() => {
         if (userName !== "" && firstName !== '' && lastName !== '' && email !== '' && password !== '') {
@@ -32,6 +34,7 @@ export default function index() {
 
     return (
         <Container>
+            <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
             <MainContainer>
                 <TopContainer>
                     <BoldText>17,000</BoldText>
@@ -53,7 +56,7 @@ export default function index() {
             <Scroll>
                 <BodyContainer>
                     <UploadText>Upload a Profile Picture</UploadText>
-                    <CardContainer  onPress={ () => { } }>
+                    <CardContainer  onPress={ () => { setModalVisible(true) } }>
                             <CardText>Choose Image</CardText>
                     </CardContainer>
                         <PlaceHolderContainer>
