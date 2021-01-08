@@ -49,6 +49,7 @@ function* signInSaga (signInAction) {
           const response = yield call([Auth,'signIn'], ({ username: signInAction.username, password: signInAction.password }));
           yield storeAuthData('firstname',response.signInUserSession.idToken.payload.['custom:first_name'].toString());
           yield storeAuthData('lastname',response.signInUserSession.idToken.payload.['custom:last_name'].toString());
+          yield storeAuthData('email',response.signInUserSession.idToken.payload.email);
           yield storeAuthData('token',response.signInUserSession.idToken.jwtToken);
           yield storeAuthData('username',response.username);
           yield storeAuthData('password', signInAction.password);

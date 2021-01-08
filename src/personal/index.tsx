@@ -21,14 +21,12 @@ export default function index() {
         }
     },[userName, firstName, lastName, email, password])
     
-    const [first_name, setFirst_name] = useState(null);
-    const [last_name, setLast_name] = useState(null);
     useEffect(  () => {
         (async () => {
-            const first_name = await getAuthData('firstname')
-            setFirst_name(first_name);
-            const last_name = await getAuthData('lastname')
-            setLast_name(last_name);
+            setName(await getAuthData('username'));
+            setFirstName(await getAuthData('firstname'));
+            setLastName(await getAuthData('lastname'));
+            setEmail(await getAuthData('email'));
         })()
     },[]);
 
@@ -41,7 +39,7 @@ export default function index() {
                 </TopContainer>
                 <ProfileContainer>
                     <ProfileIcon width={70} />
-                    <MainText>{first_name+" "}<SubText>{last_name}</SubText></MainText>
+                    <MainText>{firstName+" "}<SubText>{lastName}</SubText></MainText>
                 </ProfileContainer>
                 <BottomContainer>
                     <BoldText>1,000</BoldText>
