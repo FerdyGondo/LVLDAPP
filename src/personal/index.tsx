@@ -36,10 +36,6 @@ export default function index() {
         <Container>
             <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
             <MainContainer>
-                <TopContainer>
-                    <BoldText>17,000</BoldText>
-                    <Bottom>LVLD POINTS</Bottom>
-                </TopContainer>
                 <ProfileContainer>
                     <ProfileIcon width={70} />
                     <MainText>{firstName+" "}<SubText>{lastName}</SubText></MainText>
@@ -102,16 +98,19 @@ const Container = styled.View`
 const MainContainer = styled.View`
   flex-direction: row;
   margin: 8px 15px;
-  justify-content: space-between;
+  justify-content: center;
 `
 const TopContainer = styled.View`
 `
 const BottomContainer = styled.View`
-  align-items: flex-end;
+  position: absolute;
+  top: 1%;
+  right: 1%;
 `
 const BoldText = styled.Text`
   font-size: 11px;
   font-weight: bold;
+  text-align: right;
 `
 const Bottom = styled.Text`
   font-weight: 400;
