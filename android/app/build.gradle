@@ -1,6 +1,15 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 
 import com.android.build.OutputFile
+
+project.ext.envConfigFiles = [
+        debug: ".env",
+        release: ".env",
+        stagingrelease: ".env.staging",
+        productionrelease: ".env.production"
+]
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -164,6 +173,12 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+        stagingrelease {
+            initWith release
+        }
+        productionrelease {
+            initWith release
+        }
     }
 
     // applicationVariants are e.g. debug, release
@@ -186,7 +201,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation project(':react-native-config')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'androidx.multidex:multidex:2.0.0'
 //    implementation project(path: ':@react-native-community_geolocation')
