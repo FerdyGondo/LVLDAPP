@@ -18,6 +18,18 @@ export default function index({ navigation }) {
     const [amount, setAmount] = useState('0.00')
     const [credits, setCredits] = useState(0)
     const [verified, setVerified] = useState(true)
+
+    useEffect(() => {
+        if (parseFloat(amount) > 100) return Alert.alert("Amount should be less than 100")
+    },[credits, amount])
+
+    useEffect(() => {
+        if (!Number.isInteger(credits)) {
+            setVerified(false)
+        } else {
+            setVerified(true)
+        }
+    }, [credits])
     
 
     const onSubmit = (item) => {
@@ -26,7 +38,6 @@ export default function index({ navigation }) {
     }
 
     const changeInput = (text) => {
-        if (text > 100) return Alert.alert("Amount should be less than 100")
         setAmount(text)
         setCredits(credits => credits = text * 4)
         
@@ -100,7 +111,7 @@ export default function index({ navigation }) {
                 
                 <InputContainer>
                     <DollarText>$</DollarText>
-                    <TextInput  value={amount} onChangeText={(text) => changeInput(text)} keyboardType={"numeric"}  maxLength={4} onFocus={() => onFocusEvent()} color={verified} onBlur={() => onBlurEvent()} />
+                    <TextInput  value={amount} onChangeText={(text) => changeInput(text)} keyboardType={"numeric"}  maxLength={5} onFocus={() => onFocusEvent()} color={verified} onBlur={() => onBlurEvent()} />
                     <DisclaimerText>Disclaimer: All credit sales are final</DisclaimerText>
                 </InputContainer>
 
