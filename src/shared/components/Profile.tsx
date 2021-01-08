@@ -53,7 +53,7 @@ export default function ProfileComponent() {
                                               :
                                               navigation.navigate("SignUp", { confirmation: true })
                                             }>
-                <MoneyText>{token ? '$1000' : '   Sign Up  '}</MoneyText>
+                <MoneyText>{token ? ' 1000' : '   Sign Up  '}</MoneyText>
                 {token ?
                     <IconContainer>
                         <Icon name="plus" type={"antdesign"} size={10} />
