@@ -3,9 +3,7 @@
   "version": "1.22.5",
   "private": true,
   "scripts": {
-    "android-dev": "react-native run-android",
-    "android-staging": "ENVFILE=.env.staging react-native run-android",
-    "android-production": "ENVFILE=.env.production react-native run-android",
+    "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -38,7 +36,6 @@
     "graphql": "^15.4.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
-    "react-native-config": "^1.4.1",
     "react-native-elements": "^2.3.2",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-image-base64": "^0.1.4",
