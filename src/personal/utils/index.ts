@@ -1,7 +1,8 @@
 import { createApolloFetch } from 'apollo-fetch';
 import { getAuthData }   from '../../shared/utils';
 
-const uri = 'https://8rm8mi4ief.execute-api.ca-central-1.amazonaws.com/dev/graphql';
+const uri = 'https://dev-api.lvld.app/graphql';
+// const uri = 'https://8rm8mi4ief.execute-api.ca-central-1.amazonaws.com/dev/graphql';
 const apolloFetch = createApolloFetch({ uri });
 
 const UPDATEUSER_MUTATION = `

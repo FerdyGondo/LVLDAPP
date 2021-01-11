@@ -4,6 +4,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { KeyboardAvoidingView, Platform,TouchableOpacity } from 'react-native'
 import { getAuthData }   from '../shared/utils';
 import { saveInfo }  from './utils';
+import ImagePickerModal from './components/ImagePickerModal';
 
 export default function index() {
     const [userName, setName] = useState("")
@@ -12,6 +13,7 @@ export default function index() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [inputComplete, setInputComplete] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
 
     useEffect(() => {
         if (userName !== "" && firstName !== '' && lastName !== '' && email !== '' && password !== '') {
@@ -21,30 +23,25 @@ export default function index() {
         }
     },[userName, firstName, lastName, email, password])
     
-    const [first_name, setFirst_name] = useState(null);
-    const [last_name, setLast_name] = useState(null);
     useEffect(  () => {
         (async () => {
-            const first_name = await getAuthData('firstname')
-            setFirst_name(first_name);
-            const last_name = await getAuthData('lastname')
-            setLast_name(last_name);
+            setName(await getAuthData('username'));
+            setFirstName(await getAuthData('firstname'));
+            setLastName(await getAuthData('lastname'));
+            setEmail(await getAuthData('email'));
         })()
     },[]);
 
     return (
         <Container>
+            <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
             <MainContainer>
-                <TopContainer>
-                    <BoldText>17,000</BoldText>
-                    <Bottom>LVLD POINTS</Bottom>
-                </TopContainer>
                 <ProfileContainer>
                     <ProfileIcon width={70} />
-                    <MainText>{first_name+" "}<SubText>{last_name}</SubText></MainText>
+                    <MainText>{firstName+" "}<SubText>{lastName}</SubText></MainText>
                 </ProfileContainer>
                 <BottomContainer>
-                    <BoldText>$1,000</BoldText>
+                    <BoldText>1,000</BoldText>
                     <Bottom>BALANCE</Bottom>
                 </BottomContainer>
             </MainContainer>
@@ -55,7 +52,7 @@ export default function index() {
             <Scroll>
                 <BodyContainer>
                     <UploadText>Upload a Profile Picture</UploadText>
-                    <CardContainer  onPress={ () => { } }>
+                    <CardContainer  onPress={ () => { setModalVisible(true) } }>
                             <CardText>Choose Image</CardText>
                     </CardContainer>
                         <PlaceHolderContainer>
@@ -101,16 +98,19 @@ const Container = styled.View`
 const MainContainer = styled.View`
   flex-direction: row;
   margin: 8px 15px;
-  justify-content: space-between;
+  justify-content: center;
 `
 const TopContainer = styled.View`
 `
 const BottomContainer = styled.View`
-  align-items: flex-end;
+  position: absolute;
+  top: 1%;
+  right: 1%;
 `
 const BoldText = styled.Text`
   font-size: 11px;
   font-weight: bold;
+  text-align: right;
 `
 const Bottom = styled.Text`
   font-weight: 400;

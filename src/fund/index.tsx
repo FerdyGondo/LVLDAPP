@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ProfileComponent from '../shared/components/Profile'
 import {Dimensions,Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Alert} from 'react-native'
@@ -17,6 +17,20 @@ type List = {
 export default function index({ navigation }) {
     const [amount, setAmount] = useState('0.00')
     const [credits, setCredits] = useState(0)
+    const [verified, setVerified] = useState(true)
+
+    useEffect(() => {
+        if (parseFloat(amount) > 100) return Alert.alert("Amount should be less than 100")
+    },[credits, amount])
+
+    useEffect(() => {
+        if (!Number.isInteger(credits)) {
+            setVerified(false)
+        } else {
+            setVerified(true)
+        }
+    }, [credits])
+    
 
     const onSubmit = (item) => {
         setAmount(amount => amount = item.amount.toFixed(2))
@@ -24,9 +38,9 @@ export default function index({ navigation }) {
     }
 
     const changeInput = (text) => {
-        if ((text * 4) % 1 !== 0 || text > 100) return Alert.alert("Amount should be less than 100")
         setAmount(text)
         setCredits(credits => credits = text * 4)
+        
     }
 
     const renderList = ({ item, index }: List) => {
@@ -46,6 +60,22 @@ export default function index({ navigation }) {
             </TouchableWithoutFeedback>
            )
     }
+
+    const onFocusEvent = () => {
+        setVerified(true)
+        setAmount('')
+        setCredits(0)
+    }
+
+    const onBlurEvent = () => {
+        if (!Number.isInteger(credits)) {
+            setVerified(false)
+            Alert.alert('Amount should be multiple of 0.25')
+        } else {
+            setVerified(true)
+        }
+    }
+
     return (
         <KeyboardAvoidingView
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -73,7 +103,7 @@ export default function index({ navigation }) {
                     <Amount>Custom Amount (Min. $5)</Amount>
                     <BigCoinContainer source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/add-funds-screen/coin.png" }}>
                         <BigTile>
-                            {`${credits}`}
+                            {`${Math.floor(credits)}`}
                         </BigTile>
                         <BigCreditText>Credits</BigCreditText>
                     </BigCoinContainer>
@@ -81,11 +111,11 @@ export default function index({ navigation }) {
                 
                 <InputContainer>
                     <DollarText>$</DollarText>
-                    <TextInput  value={amount} onChangeText={(text) => changeInput(text)} keyboardType={"numeric"}  maxLength={3} onFocus={() => setAmount('')} />
+                    <TextInput  value={amount} onChangeText={(text) => changeInput(text)} keyboardType={"numeric"}  maxLength={5} onFocus={() => onFocusEvent()} color={verified} onBlur={() => onBlurEvent()} />
                     <DisclaimerText>Disclaimer: All credit sales are final</DisclaimerText>
                 </InputContainer>
 
-                <ButtonStyle>
+                <ButtonStyle disabled={!verified} opacity={verified}>
                     <TextStyle>Buy Now</TextStyle>
                 </ButtonStyle>
             </Scroll>
@@ -183,7 +213,7 @@ const Amount = styled.Text`
     padding-bottom: 20px;
 `
 const TextInput = styled.TextInput`
-    border-color: #979797;
+    border-color: ${props => props.color ? "#979797" : "red"};
     border-width: 1px;
     border-radius: 32px;
     padding: 6px;
@@ -253,4 +283,5 @@ const ButtonStyle = styled.TouchableOpacity`
     border-radius: 25px;
     padding: 14px;
     margin: 45px 17px 20px;
+    opacity: ${props => props.opacity ? 1 : 0.5}
 `

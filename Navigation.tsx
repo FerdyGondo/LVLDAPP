@@ -100,7 +100,7 @@ const BottomTabNavigator = ({navigation}) => {
                     switch (route.name){
                       case 'HomeButton'     : iconName = require('./assets/icons/home.png');     break;
                       case "Content"  : iconName = require('./assets/icons/content.png');  break;
-                      case "entries"  : iconName = require('./assets/icons/entries.png');  break;
+                      case "Entries"  : iconName = require('./assets/icons/entries.png');  break;
                     }
                     return <TabImage source={ iconName } colorProps={color} />
                     },
@@ -109,7 +109,7 @@ const BottomTabNavigator = ({navigation}) => {
                         switch (route.name){
                           case 'HomeButton'     : tabLabel = 'Home';     break;
                           case "Content"  : tabLabel = 'Content';  break;
-                          case "entries"  : tabLabel = 'Entries';  break;
+                          case "Entries"  : tabLabel = 'Entries';  break;
                         }
                         return <TabText>{tabLabel}</TabText> 
                     }
@@ -134,7 +134,7 @@ const BottomTabNavigator = ({navigation}) => {
         })}
         />
         <BottomTab.Screen name="Content"  component={ContentStackNavigator} />
-        <BottomTab.Screen name="entries"  component={Entries} />
+        <BottomTab.Screen name="Entries"  component={EntriesStackNavigator} />
       </BottomTab.Navigator>
   )
 }
@@ -371,6 +371,18 @@ const ContentStackNavigator = ({navigation}) => {
                     props={navigation} 
                     leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                     centerProps={<CenterButton text={'Video'} />}
+                />
+              }}/>
+          </Stack.Navigator> )
+}
+const EntriesStackNavigator = ({navigation}) => {
+  return( <Stack.Navigator  initialRouteName="entries" >
+            <Stack.Screen name = "Entries"    component = {Entries}  options={{ 
+              header: (navigation) => 
+                <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<NotificationIcon  width={20} />} 
+                    centerProps={<CenterButton text={'Entries'} />}
                 />
               }}/>
           </Stack.Navigator> )
