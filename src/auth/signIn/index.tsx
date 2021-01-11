@@ -32,6 +32,7 @@ import { Auth } from 'aws-amplify';
 import auth from '../../store/auth';
 import {signInAction} from '../../store/authActions';
 import Button from '../../shared/components/ButtonComp';
+import Config from 'react-native-config'
 
 const SignInScreen = ({navigation}) => {
     const [username, setUsername] = useState('');
@@ -45,7 +46,7 @@ const SignInScreen = ({navigation}) => {
     const appleIcon     = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Apple-Circle_Auth.png'} ;
     
     useEffect( () => {
-        if(auth.loggedIn) navigation.navigate('Home');
+        if(auth.loggedIn && Config.ENVIROMENT !== "DEFAULT") navigation.navigate('Home');
     });
     
     return (

@@ -31,38 +31,36 @@ export default function ProfileComponent() {
     });
 
     return (
-        <MainContainer>
-          {token ? 
-            <ProfileContainer onPress={() => navigation.navigate("Account")}>
-                <Profile>
-                    <ProfileIcon width={30} />
-                </Profile>
-                <ProfileText>{firstname+" "}</ProfileText><SubText>{lastname}</SubText>
-            </ProfileContainer>
-            :
-            <ProfileContainerSignUp>
-                <Profile>
-                    <ProfileIcon width={30} />
-                </Profile>
-            </ProfileContainerSignUp>
-          }
-            <Money>
-            {token ? <CreditText>Credits:</CreditText> : null}
-              <MoneyContainer onPress={() => token ? 
-                                              navigation.navigate("BuyCredit")
-                                              :
-                                              navigation.navigate("SignUp", { confirmation: true })
-                                            }>
-                <MoneyText>{token ? ' 1000' : '   Sign Up  '}</MoneyText>
-                {token ?
-                    <IconContainer>
-                        <Icon name="plus" type={"antdesign"} size={10} />
-                    </IconContainer>
-                    : null
-                }
-            </MoneyContainer>
-            </Money>
-        </MainContainer>
+      <MainContainer>
+        {
+          token ? <ProfileContainer onPress={() => navigation.navigate("Account")}>
+              <Profile>
+                  <ProfileIcon width={30} />
+              </Profile>
+              <ProfileText>{firstname+" "}</ProfileText><SubText>{lastname}</SubText>
+            </ProfileContainer> : <SignUpFlow>
+            <SignUpBox onPress={() => navigation.navigate("SignUp", { confirmation: true })}>
+                <SignUpText>Sign Up</SignUpText>
+              </SignUpBox>
+            </SignUpFlow>
+        }
+        
+        <Money>
+        <CreditText>Credits:</CreditText>
+          <MoneyContainer onPress={() => token ? 
+                                          navigation.navigate("BuyCredit")
+                                          :
+                                          navigation.navigate("SignUp", { confirmation: true })
+                                        }>
+            <MoneyText>{ token ? '1000' : '0' }</MoneyText>
+            
+                <IconContainer>
+                    <Icon name="plus" type={"antdesign"} size={10} />
+                </IconContainer>
+                
+        </MoneyContainer>
+        </Money>
+    </MainContainer>
     )
 }
 
@@ -123,4 +121,23 @@ const IconContainer = styled.View`
   border-radius: 7px;
   align-items: center;
   justify-content: center;
+`
+const SignUpBox = styled.TouchableOpacity`
+  background-color: #C29A41;
+  width: 65px;
+  height: 24px;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+`
+const SignUpFlow = styled.View`
+  flex: 1;
+`
+const SignUpText = styled.Text`
+  font-family: "Montserrat";
+  font-weight: 700;
+  font-size: 9.5px;
+  line-height: 11.58px;
+  align-self: center;
+  color: #ffffff;
 `
