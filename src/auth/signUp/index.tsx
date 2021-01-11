@@ -30,6 +30,7 @@ import Spacer from '../../shared/components/Spacer';
 import {signUpAction} from '../../store/authActions';
 import auth from '../../store/auth';
 import Button from '../../shared/components/ButtonComp';
+import Config from 'react-native-config'
 
 const SignUpScreen = ({route, navigation}) => {
     if(route !== 'undefined') {
@@ -42,6 +43,7 @@ const SignUpScreen = ({route, navigation}) => {
     const [password, setPassword]   = useState('');
     const auth = useSelector(state => state.auth);
     const signUpDispatch = useDispatch();
+    
 
     const googleIcon    = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Google-Circle_Auth.png'} ;
     const facebookIcon  = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Facebook-Circle_Auth.png'} ;
@@ -49,14 +51,17 @@ const SignUpScreen = ({route, navigation}) => {
     const appleIcon     = { uri: 'https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/Apple-Circle_Auth.png'} ;
 
     useEffect( () => {
-        if(auth.loggedIn)  navigation.navigate('Home');
+        if (auth.loggedIn && Config.ENVIROMENT === "DEFAULT") {
+            navigation.navigate('SignIn')
+        }
+        if(auth.loggedIn && Config.ENVIROMENT !== "DEFAULT")  navigation.navigate('Home');
     });
 
     return (
         <SafeAreaViewContainer statusBarProps = { Platform.OS === "android" ? StatusBar.currentHeight+'px' : 0 } >
         <ImageBg >
             <TitleView>
-                <Icon onPress={() => navigation.goBack()}  name='chevron-left' type='font-awesome' size={20} color={'#fff'} />
+                <Icon onPress={() => navigation.navigate("Welcome")}  name='chevron-left' type='font-awesome' size={20} color={'#fff'} />
             </TitleView>
                 <LoginText>Sign Up</LoginText>
             <WelcomeText>Welcome</WelcomeText>
