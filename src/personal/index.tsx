@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Avatar } from 'react-native-elements';
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { KeyboardAvoidingView, Platform,TouchableOpacity } from 'react-native'
 import { getAuthData }   from '../shared/utils';
 import { saveInfo }  from './utils';
+import CameraIcon from '../../assets/svg/CameraIcon';
 import ImagePickerModal from '../shared/components/ImagePickerModal';
 
 export default function index() {
@@ -14,6 +16,7 @@ export default function index() {
     const [password, setPassword] = useState('')
     const [inputComplete, setInputComplete] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
+    const [photo, setPhoto] = useState('')
 
     useEffect(() => {
         if (userName !== "" && firstName !== '' && lastName !== '' && email !== '' && password !== '') {
@@ -29,15 +32,25 @@ export default function index() {
             setFirstName(await getAuthData('firstname'));
             setLastName(await getAuthData('lastname'));
             setEmail(await getAuthData('email'));
+            setPhoto(await getAuthData('photo'));
         })()
     },[]);
 
     return (
         <Container>
-            <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+            <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} setPhoto={setPhoto}  />
             <MainContainer>
                 <ProfileContainer>
-                    <ProfileIcon width={70} />
+                    {photo ? 
+                        <Avatar rounded size={90} source={{uri:photo}} onPress={() => setModalVisible(true)} />
+                        :
+                        <Avatar rounded size={90} ImageComponent={ProfileIcon} onPress={() => setModalVisible(true)} />
+                    } 
+                    <CameraContainer  onPress={ () => { setModalVisible(true) }} >
+                        <CameraView>
+                            <CameraIcon width={17} />
+                        </CameraView>
+                    </CameraContainer>
                     <MainText>{firstName+" "}<SubText>{lastName}</SubText></MainText>
                 </ProfileContainer>
                 <BottomContainer>
@@ -51,10 +64,6 @@ export default function index() {
                 >
             <Scroll>
                 <BodyContainer>
-                    <UploadText>Upload a Profile Picture</UploadText>
-                    <CardContainer  onPress={ () => { setModalVisible(true) } }>
-                            <CardText>Choose Image</CardText>
-                    </CardContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>Username</PlaceHolderText>
                                 <PlaceHolderInput os={Platform.OS} placeholder={"Username"} value={userName} onChangeText={(text) => setName(text)}  />
@@ -122,6 +131,7 @@ const ProfileContainer = styled.View`
 const MainText = styled.Text`
   font-weight: bold;
   font-size: 18px;
+  padding-top: 10px;
 `
 const SubText = styled.Text`
   font-weight: 200;
@@ -129,9 +139,19 @@ const SubText = styled.Text`
 const BodyContainer = styled.View`
     margin: 5px 17px;
 `
-const UploadText = styled.Text`
-    margin-left: 15px;
-    font-family: "Montserrat"
+const CameraContainer = styled.TouchableOpacity`
+    bottom: 27px;
+    left: 15px;
+`
+const CameraView = styled.View`
+    background-color: #d2a747;
+    min-height: 30px;
+    min-width: 30px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    border-radius: 30px;
+    z-index: 10;
 `
 const CardContainer = styled.TouchableOpacity`
     background-color: ${props => props.inputComplete ? "#C29A41" : "#979797" };

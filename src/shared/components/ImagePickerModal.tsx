@@ -1,10 +1,10 @@
 import React from 'react'
 import { Alert, Modal } from "react-native";
 import styled from 'styled-components'
-import ImagePicker from 'react-native-image-picker';
 import { handleCameraCapture, handleChoosePhoto }   from '../utils/ImagePicker';
 
-export default function index({ modalVisible, setModalVisible, setImageResponse=null }) {
+export default function index({ modalVisible, setModalVisible, setPhoto, setImageResponse=null  }) {
+    const [errMsg, setErr] = React.useState('')
     
     return (
             <Modal
@@ -16,17 +16,25 @@ export default function index({ modalVisible, setModalVisible, setImageResponse=
                 >
                 <Container>
                     <ModalView>
+                    {errMsg ? <ModalText>{errMsg}</ModalText> :
+                    <>
                         <ModalText>Choose Profile Image</ModalText>
-                    <ButtonContainer>
-                        <ModalButton onPress={() => {  handleChoosePhoto(setModalVisible, setImageResponse); }} >
-                            <NameText>Get Image gallery</NameText>
-                        </ModalButton>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <ModalButton onPress={() => { handleCameraCapture(setModalVisible, setImageResponse) }} >
-                            <NameText>Take a picture</NameText>
-                        </ModalButton>
-                    </ButtonContainer>
+                        <ButtonContainer>
+                            <ModalButton onPress={() => handleChoosePhoto(setModalVisible, setPhoto, setErr, setImageResponse)} >
+                                <NameText>Get Image gallery</NameText>
+                            </ModalButton>
+                        </ButtonContainer>
+                        <ButtonContainer>
+                            <ModalButton onPress={() => handleCameraCapture(setModalVisible, setPhoto, setErr, setImageResponse)} >
+                                <NameText>Take a picture</NameText>
+                            </ModalButton>
+                        </ButtonContainer>
+                        <ButtonContainer>
+                            <ModalButton onPress={() => setModalVisible(false)} >
+                                <NameText>Cancel</NameText>
+                            </ModalButton>
+                        </ButtonContainer>
+                    </>}
                     </ModalView>
                 </Container>
             </Modal>
