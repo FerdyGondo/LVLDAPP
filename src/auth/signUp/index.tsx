@@ -27,7 +27,7 @@ import styled from 'styled-components';
 import { Auth } from 'aws-amplify';
 
 import Spacer from '../../shared/components/Spacer';
-import {signUpAction} from '../../store/authActions';
+import {signUpAction,signOutAction} from '../../store/authActions';
 import auth from '../../store/auth';
 import Button from '../../shared/components/ButtonComp';
 import Config from 'react-native-config'
@@ -36,6 +36,7 @@ const SignUpScreen = ({route, navigation}) => {
     if(route !== 'undefined') {
         const { confirmation } = route?.params;
     }
+    const signOutDispatch = useDispatch();
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname]   = useState('');
     const [username, setUsername]   = useState('');
@@ -52,7 +53,8 @@ const SignUpScreen = ({route, navigation}) => {
 
     useEffect( () => {
         if (auth.loggedIn && Config.ENVIROMENT === "DEFAULT") {
-            navigation.navigate('SignIn')
+            signOutDispatch(signOutAction());
+            navigation.navigate("SignIn");
         }
         if(auth.loggedIn && Config.ENVIROMENT !== "DEFAULT")  navigation.navigate('Home');
     });
