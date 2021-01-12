@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import ImagePicker from 'react-native-image-picker';
 import { handleCameraCapture, handleChoosePhoto }   from '../utils/ImagePicker';
 
-export default function index({ modalVisible, setModalVisible }) {
+export default function index({ modalVisible, setModalVisible, setImageResponse=null }) {
     
     return (
             <Modal
@@ -18,12 +18,12 @@ export default function index({ modalVisible, setModalVisible }) {
                     <ModalView>
                         <ModalText>Choose Profile Image</ModalText>
                     <ButtonContainer>
-                        <ModalButton onPress={() => {  handleChoosePhoto(setModalVisible); }} >
+                        <ModalButton onPress={() => {  handleChoosePhoto(setModalVisible, setImageResponse); }} >
                             <NameText>Get Image gallery</NameText>
                         </ModalButton>
                     </ButtonContainer>
                     <ButtonContainer>
-                        <ModalButton onPress={() => { handleCameraCapture(setModalVisible) }} >
+                        <ModalButton onPress={() => { handleCameraCapture(setModalVisible, setImageResponse) }} >
                             <NameText>Take a picture</NameText>
                         </ModalButton>
                     </ButtonContainer>
