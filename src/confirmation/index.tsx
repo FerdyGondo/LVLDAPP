@@ -7,6 +7,7 @@ import PickerModal from '../shared/components/PickerModal'
 import SecondChance from './components/SecondChance'
 import { useTimer, convertDate } from '../shared/utils'
 import { getAuthData } from '../shared/utils';
+import GamingControllerIcon from '../../assets/svg/GamingController'
 
 const {width,height} = Dimensions.get("window")
 
@@ -68,26 +69,36 @@ export default function index({ route, navigation }: Props) {
                 <SpoilContainer>
                     <MainContainer>
                         <MainTextContainer>
+                            <BallContainer>
+                                <Gaming>
+                                    <GamingControllerIcon width={18} height={12} />  
+                                </Gaming>
+                                <FrontText>BBall Free-Throw</FrontText>
+                            </BallContainer>
+                            <MainText>{item.product.name}</MainText>
                             <MainText>{item.name}</MainText>
-                            <SubText>{item.product.name}</SubText>
                         </MainTextContainer>
-                        <SubListContainer>
+                    </MainContainer>
+                    <LeftContainer>
+                        <SizeContainer>
+                            <SizeText>{key}</SizeText>
+                        </SizeContainer>
+                        <SubLeftContainer>
                             <ProfileContainer>
                                 <ProfileIcon width={14}/>
                             </ProfileContainer>
-                            <ListText>{`25/40`}</ListText>
-                        </SubListContainer>
-                    </MainContainer>
-                    <SizeContainer>
-                        <SizeText>{key}</SizeText>
-                    </SizeContainer>
+                            <NewFrontText>{`25/40`}</NewFrontText>
+                        </SubLeftContainer>
+                    </LeftContainer>
                 </SpoilContainer>
                 <ImageContainer>
                     <Image source={{ uri: item.product.mainImage.asset.url }} />
                 </ImageContainer>
                 <ListContainer>
                     <SubListContainer>
-                        <ListText>{`Entry: $${entry}`}</ListText>
+                        <ListText>{`Entry: ${entry}`}</ListText>
+                        <CoinImage source={require('../../assets/icons/contest-coin.png')} />
+                        <ListText>{`($1.00)`}</ListText>
                     </SubListContainer>
                     <EndText>{`Ends: ${convertDate(item.finishDateTime)}`}</EndText>
                     
@@ -129,7 +140,7 @@ export default function index({ route, navigation }: Props) {
                         :
                         navigation.navigate("SignUp", { confirmation: true })
                     }>
-                        <BottomText>{`Confirm Entry: $${entry}.00`}</BottomText>
+                        <BottomText>{`Confirm: ${entry} ${entry < 2 ? 'Credit' : 'Credits'}`}</BottomText>
                     </ConfirmContainer>
                 </BottomContainer>
             </Scroll>
@@ -170,12 +181,17 @@ const SpoilContainer = styled.View`
     flex-direction: row;
     padding: 10px 20px;
     justify-content: space-between;
+    margin-top: 10px;
 `
 const MainTextContainer = styled.View`
+    margin-top: 5px;
 `
 const MainText = styled.Text`
-    font-family: "Montserrat-Bold";
-    font-size: 24px;
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26.82px;
+    padding-top: 3px;
 `
 const SubText = styled.Text`
     font-family: "Montserrat"
@@ -230,13 +246,19 @@ const SubListContainer = styled.View`
     align-items: center;
 `
 const ListText = styled.Text`
-    font-family: "Montserrat-ExtraBold";
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 15px;
 `
-const EndText = styled(ListText)`
+const EndText = styled.Text`
     color: #FF0B0B;
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 15px;
 `
 const ProfileContainer = styled.View`
-    margin-left: 5px;
     right: 5px;
 `
 const LowerContainer = styled.View`
@@ -295,4 +317,38 @@ const ConfirmContainer = styled(QuantityContainer)`
     background-color: #d2a747;
     width: 62%;
     justify-content: center;
+`
+const BallContainer = styled.View`
+    flex-direction: row;
+    margin-bottom: 3px;
+`
+const FrontText = styled.Text`
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 15px;
+`
+const Gaming = styled.View`
+    margin-right: 5px;
+`
+const LeftContainer = styled.View`
+`
+const NewFrontText = styled.Text`
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17.07px;
+`
+const SubLeftContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    right: 5px;
+`
+const CoinImage = styled.Image`
+    width: 15px;
+    height: 15px;
+    top: -1px;
+    left: 3px;
+    margin-right: 10px;
 `
