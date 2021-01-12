@@ -19,7 +19,7 @@ const UPDATE_PIC_MUTATION = `
     }
 `
 
-export const handleChoosePhoto =  (setModalVisible) => {
+export const handleChoosePhoto =  (setModalVisible, setImageResponse) => {
     const options = {
       noData: false
     };
@@ -27,13 +27,13 @@ export const handleChoosePhoto =  (setModalVisible) => {
       if(response.didCancel){
         setModalVisible(false);
       } else {
-        convertPic(response);
+        convertPic(response, setImageResponse);
         setModalVisible(false);
       }        
     });
 };
 
-export const handleCameraCapture =  (setModalVisible) => {
+export const handleCameraCapture =  (setModalVisible, setImageResponse) => {
     let options = {
         storageOptions: {
             skipBackup: true,
@@ -44,15 +44,15 @@ export const handleCameraCapture =  (setModalVisible) => {
       if(response.didCancel){
         setModalVisible(false);
       } else {
-        convertPic(response);
+        convertPic(response, setImageResponse);
         setModalVisible(false);
       }
     });
 }
 
-export const convertPic = (response) => {
+export const convertPic = (response, setImageResponse) => {
     ImgToBase64.getBase64String(response.uri)
-        .then(base64String =>  storePic(base64String) )
+        .then(base64String =>  !setImageResponse ? storePic(base64String) : setImageResponse({ response, base64String }) )
         .catch(err => console.log ('convertPic err ', err) );
     }
 

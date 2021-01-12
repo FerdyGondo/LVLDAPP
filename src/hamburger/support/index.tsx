@@ -4,10 +4,43 @@ import ProfileComponent from '../../shared/components/Profile'
 import Logo from '../../../assets/svg/LvldLogo'
 import AttatchmentIcon from '../../../assets/svg/AttatchmentIcon'
 import {Platform, KeyboardAvoidingView} from 'react-native'
+import ImagePickerModal from '../../shared/components/ImagePickerModal'
+import { createApolloFetch } from 'apollo-fetch';
+import { getAuthData }   from '../../shared/utils';
+import { SEND_MESSAGE_MUTATION } from '../../graphql/mutation'
+const uri = 'https://dev-api.lvld.app/graphql';
+const apolloFetch = createApolloFetch({ uri });
 
 export default function index() {
     const [name, setName] = useState('')
     const [length, setLength] = useState(0)
+    const [modalVisible, setModalVisible] = useState(false)
+    const [imageResponse, setImageResponse] = useState()
+
+
+    const sendMessage = async (image) => {
+        if (!name) return
+        const token = await getAuthData('token');
+        apolloFetch.use(({ request, options }, next) => {
+            options.headers = {
+              "Authorization": token
+            };
+            next();
+          });
+    
+        try{
+            image = 'data:image/jpeg;base64,' + image;
+            let res =  await apolloFetch({ query : SEND_MESSAGE_MUTATION, 
+                variables: { 
+                        text: name,
+                        attachment: image 
+                    }
+                })
+                console.log('storePic res ',res);
+        } catch (e) {
+            console.log('storePic err ', e);
+        }
+    }
 
     const setLengthEvent = (text) => {
         setName(text)
@@ -15,6 +48,7 @@ export default function index() {
     }
     return (
         <Container>
+            <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} setImageResponse={setImageResponse} />
             <Profile>
                 <ProfileComponent />
             </Profile>
@@ -37,10 +71,12 @@ export default function index() {
                     <UpperContainer>
                         <UpperText>New Message</UpperText>
                         <SendContainer>
-                            <AttatchmentContainer>
+                            <AttatchmentContainer onPress={() => setModalVisible(true)}>
                                 <AttatchmentIcon width={30} />
                             </AttatchmentContainer>
-                            <SendText>Send</SendText>
+                            <SendButton onPress={() => sendMessage()}>
+                                <SendText>Send</SendText>
+                            </SendButton>
                         </SendContainer>
                     </UpperContainer>
                     <InputContainer os={Platform.OS}>
@@ -48,10 +84,7 @@ export default function index() {
                     </InputContainer>
                     <CountContainer>
                         <PlaceHolderView>
-                            <PlaceHolderBox />
-                            <PlaceHolderBox />
-                            <PlaceHolderBox />
-                            <PlaceHolderBox />
+                            {!imageResponse ? <PlaceHolderBox /> : <PlaceHolderImage source={{ uri: imageResponse.response.uri }} />}
                         </PlaceHolderView>
                         <CountText>{`${length}/500`}</CountText>
                     </CountContainer>
@@ -165,7 +198,7 @@ const SendContainer = styled.View`
     flex-direction: row;
     align-items: center;
 `
-const AttatchmentContainer = styled.View`
+const AttatchmentContainer = styled.TouchableOpacity`
     margin-right: 20px;
 `
 const PlaceHolderInput = styled.TextInput`
@@ -179,4 +212,11 @@ const PlaceHolderInput = styled.TextInput`
 const InputContainer = styled.View`
     margin-top: ${props => props.os === 'android' ? '0px' : '10px'};
     padding-bottom: 60px;
+`
+const PlaceHolderImage = styled.Image`
+    width: 35px;
+    height: 25px;
+`
+const SendButton = styled.TouchableOpacity`
+
 `

@@ -4,7 +4,7 @@ import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { KeyboardAvoidingView, Platform,TouchableOpacity } from 'react-native'
 import { getAuthData }   from '../shared/utils';
 import { saveInfo }  from './utils';
-import ImagePickerModal from './components/ImagePickerModal';
+import ImagePickerModal from '../shared/components/ImagePickerModal';
 
 export default function index() {
     const [userName, setName] = useState("")
