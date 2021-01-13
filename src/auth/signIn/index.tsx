@@ -62,6 +62,7 @@ const SignInScreen = ({navigation}) => {
                 placeholder="Username" 
                 value={username} 
                 onChangeText= {setUsername}
+                placeholderTextColor={'#ccc'} 
                 autoCapitalize="none"
                 autoCorrect={false}
             />
@@ -71,6 +72,7 @@ const SignInScreen = ({navigation}) => {
                 placeholder="Password" 
                 value={password} 
                 onChangeText= {setPassword}
+                placeholderTextColor={'#ccc'} 
                 autoCapitalize="none"
                 autoCorrect={false}
             />
@@ -78,7 +80,6 @@ const SignInScreen = ({navigation}) => {
             <ErrorInput multiline={true} textAlign={'center'}>
                 {auth.errorMsgIn ? <ErrorText>{auth.errorMsgIn}</ErrorText> : null }
             </ErrorInput>
-            
             <ForgotPwdView onPress={ () => {}}>
                 <ForgotPwdText>Forgot password?</ForgotPwdText>
             </ForgotPwdView>
@@ -87,7 +88,7 @@ const SignInScreen = ({navigation}) => {
                     onPress={ () =>  signInDispatch(signInAction(username, password)) }>
                 Login
             </Button>
-
+            <Spacer />
             <SeparatorView>
                 <Line />
                 <SeparationText>   OR   </SeparationText>
@@ -111,8 +112,6 @@ const SignInScreen = ({navigation}) => {
                     <IconFed source = {appleIcon}/>
                 </TouchableOpacity>
             </IconView>
-            <Spacer />
-            <Spacer />
             <Spacer />
             <Button buttonProps ={styles.browseButton}  onPress={ () => navigation.navigate('Home')} >
                 Browse the App
@@ -159,7 +158,7 @@ const ForgotPwdText = styled.Text`
     color: #fff;
     font-family: Montserrat;
 `
-const ErrorInput = styled.TextInput`
+const ErrorInput = styled.View`
     width: 350px;
     height: 80px;
 `
@@ -167,8 +166,9 @@ const ErrorText = styled.Text`
         font-size: 16px;
         font-weight: bold;
         color: red;
-        margin : 30px;
+        margin : 10px;
         font-family: Montserrat;
+        text-align: center;
 `
 const SeparatorView = styled.View`
     flex-direction: row;

@@ -72,12 +72,14 @@ const SignUpScreen = ({route, navigation}) => {
             <TopInputView>
                 <TopTxtInput 
                     placeholder="First Name" 
+                    placeholderTextColor={'#ccc'} 
                     value={firstname} 
                     onChangeText= {setFirstname}
                     autoCorrect={false} />
                 <Spacer />
                 <TopTxtInput 
                     placeholder="Last Name" 
+                    placeholderTextColor={'#ccc'} 
                     value={lastname} 
                     onChangeText= {setLastname}
                     autoCorrect={false} />
@@ -85,6 +87,7 @@ const SignUpScreen = ({route, navigation}) => {
             <Spacer />
             <TxtInput 
                 placeholder="Username" 
+                placeholderTextColor={'#ccc'} 
                 value={username} 
                 onChangeText= {setUsername}
                 autoCapitalize="none"
@@ -92,6 +95,7 @@ const SignUpScreen = ({route, navigation}) => {
             <Spacer />
             <TxtInput
                 placeholder="Email" 
+                placeholderTextColor={'#ccc'} 
                 value={email} 
                 onChangeText= {setEmail}
                 autoCapitalize="none"
@@ -100,19 +104,20 @@ const SignUpScreen = ({route, navigation}) => {
             <TxtInput
                 secureTextEntry
                 placeholder="Password" 
+                placeholderTextColor={'#ccc'} 
                 value={password} 
                 onChangeText= {setPassword}
                 autoCapitalize="none"
                 autoCorrect={false} />
-            <Spacer />
-            <Spacer />
+            <ErrorInput>
+                {auth.errorMsgUp ? <ErrorText>{auth.errorMsgUp}</ErrorText> : null }
+            </ErrorInput>
             <Button buttonProps ={styles.loginButton} 
                     onPress={ () =>  signUpDispatch(signUpAction(firstname, lastname, username, email, password)) }>
                 Sign Up
             </Button>
-            <ErrorInput multiline={true} textAlign={'center'}>
-                {auth.errorMsgUp ? <ErrorText>{auth.errorMsgUp}</ErrorText> : null }
-            </ErrorInput>
+            <Spacer />
+
             <SeparatorView>
                 <Line />
                 <SeparationText>   OR   </SeparationText>
@@ -201,16 +206,17 @@ const ForgotPwdText = styled.Text`
     color: #fff;
     font-family: Montserrat;
 `
-const ErrorInput = styled.TextInput`
+const ErrorInput = styled.View`
     width: 350px;
-    height: 80px;
+    height: 100px;
 `
 const ErrorText = styled.Text`
     font-size: 16px;
     font-weight: bold;
     color: red;
-    margin : 30px;
+    margin : 10px;
     font-family: Montserrat;
+    text-align: center;
 `
 const SeparatorView = styled.View`
     flex-direction: row;
