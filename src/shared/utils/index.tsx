@@ -108,7 +108,11 @@ export  const getData = async (key) => {
       const minute = time.getMinutes()
       const roundMinute = minute > 9 ? minute : `0${minute}`
       const roundDay = day > 9 ? day : `0${day}`
-      const diff = hour > 12 ? `${hour - 12}:${roundMinute}pm` : `${hour}:${roundMinute}am`
+      let hourZero = hour;
+      if (hour === 0) {
+        hourZero = 12
+      }
+      const diff = hourZero > 12 ? `${hourZero - 12}:${roundMinute}pm` : `${hourZero}:${roundMinute}am`
       const roundMonth = month > 9 ? month : `0${month}`
 
       return `${diff} ${roundMonth}/${roundDay}`

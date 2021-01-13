@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import ProfileComponent from '../shared/components/Profile';
 import { resetData, getData, convertDate } from '../shared/utils'
+import GamingControllerIcon from '../../assets/svg/GamingController'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-right" size={16} color="#A9A9A9" />;
@@ -31,6 +32,8 @@ export default function index({ route, navigation }: Props) {
             setSize(size)
         })()
     },[])
+
+    console.log('items', items)
     
     const renderItem = ({ item }) => {
         return (
@@ -41,19 +44,36 @@ export default function index({ route, navigation }: Props) {
                 <TextContainer>
                     <NameSize>
                         <Text2Container>
+                            <BallContainer>
+                                <Gaming>
+                                    <GamingControllerIcon width={10} />  
+                                </Gaming>
+                                <FrontText>BBall Free-Throw</FrontText>
+                            </BallContainer>
                             <NameText>{item.product.name}</NameText>
-                            <SvgContainer>
-                                <ProfileIcon width={13} />
-                                <SizeText>{'12/40'}</SizeText>
-                            </SvgContainer>
+                            <NameText>{item.name}</NameText>
                         </Text2Container>
                         <SizeContainer>
                             <SizeTextLower>{items.variant}</SizeTextLower>
                         </SizeContainer>
                     </NameSize>
                     <BottomContainer>
-                        <BottomText>{`Entry: $${item.entryFee}`}</BottomText>
-                        <RedBottomText>{`Ends: ${convertDate(item.finishDateTime)}`}</RedBottomText>
+                        <BottomLeftContainer>
+                            <FrontContainer>
+                                <FrontText>{`Entry: ${item.entryFee}`}</FrontText>
+                                <CoinImage source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/add-funds-screen/contest-coin.png" }} />
+                            </FrontContainer>
+                            <FrontText>{`($1.00)`}</FrontText>
+                        </BottomLeftContainer>
+                        <BottomRightContainer>
+                            <SvgContainer>
+                                <Profile>
+                                    <ProfileIcon width={13} />
+                                </Profile>
+                                <SizeText>{'12/40'}</SizeText>
+                            </SvgContainer>
+                            <RedBottomText>{`Ends: ${convertDate(item.finishDateTime)}`}</RedBottomText>
+                        </BottomRightContainer>
                     </BottomContainer>
                 </TextContainer>
                 <ChevronContainer>
@@ -111,15 +131,16 @@ const MainContainer = styled.TouchableOpacity`
     padding: 15px 20px;
 `
 const NameText = styled.Text`
-    font-family: "Montserrat-ExtraBold";
-    font-size: 12px;
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13.41px;
 `
 const SvgContainer = styled.View`
     flex-direction: row;
     align-items: center;
 `
 const SizeText = styled.Text`
-    left: 7px;
     font-family: "Montserrat-Medium";
     font-size: 10px;
 `
@@ -127,6 +148,8 @@ const BottomContainer = styled.View`
     flex-direction: row;
     justify-content: space-between;
     width: 90%;
+    align-items: center;
+    margin-top: 3px;
 `
 
 const BottomText = styled.Text`
@@ -181,7 +204,7 @@ const SizeContainerF = styled(SizeContainer)`
 `
 const SizeTextLower = styled.Text`
     color: #fff;
-    font-family: "Montserrat-ExtraBold"
+    font-family: "Montserrat-ExtraBold";
     font-size: 10px;
 `
 const FooterContainer = styled.TouchableOpacity`
@@ -192,4 +215,35 @@ const FooterContainer = styled.TouchableOpacity`
     padding: 10px 20px;
     align-items: center;
     border-bottom-width: 1px;
+`
+const BallContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3px;
+`
+const FrontText = styled.Text`
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+`
+const Gaming = styled.View`
+    margin-right: 5px;
+`
+const BottomRightContainer = styled.View`
+    align-items: flex-end;
+`
+const BottomLeftContainer = styled.View`
+`
+const Profile = styled.View`
+    right: 5px;
+`
+const FrontContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+`
+const CoinImage = styled.Image`
+    width: 12px;
+    height: 12px;
+    left: 3px;
 `
