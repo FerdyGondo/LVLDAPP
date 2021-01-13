@@ -33,7 +33,6 @@ export default function index({ route, navigation }: Props) {
         })()
     },[])
 
-    console.log('items', items)
     
     const renderItem = ({ item }) => {
         return (
@@ -48,7 +47,7 @@ export default function index({ route, navigation }: Props) {
                                 <Gaming>
                                     <GamingControllerIcon width={10} />  
                                 </Gaming>
-                                <FrontText>BBall Free-Throw</FrontText>
+                            <FrontText>{item.game[0].name}</FrontText>
                             </BallContainer>
                             <NameText>{item.product.name}</NameText>
                             <NameText>{item.name}</NameText>
