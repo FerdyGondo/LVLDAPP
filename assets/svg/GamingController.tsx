@@ -3,14 +3,15 @@ import Svg, { Path } from "react-native-svg"
 
 type Prop = {
   width: number;
-  height: number;
 }
 
-function GamingControllerIcon({ width=18, height=12 }: Prop) {
+const ASPECT = 12 / 18
+
+function GamingControllerIcon({ width }: Prop) {
   return (
     <Svg
       width={width}
-      height={height}
+      height={width*ASPECT}
       viewBox="0 0 18 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

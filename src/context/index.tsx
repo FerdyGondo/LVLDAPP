@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ProfileComponent from '../shared/components/Profile';
 import { resetData, getData, convertDate } from '../shared/utils'
 import GamingControllerIcon from '../../assets/svg/GamingController'
-import CreditIcon from '../../assets/icons/contest-coin.png'
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 const myIcon = <Fontisto name="angle-right" size={16} color="#A9A9A9" />;
@@ -47,7 +46,7 @@ export default function index({ route, navigation }: Props) {
                         <Text2Container>
                             <BallContainer>
                                 <Gaming>
-                                    <GamingControllerIcon width={10} height={8} />  
+                                    <GamingControllerIcon width={10} />  
                                 </Gaming>
                                 <FrontText>BBall Free-Throw</FrontText>
                             </BallContainer>
@@ -62,7 +61,7 @@ export default function index({ route, navigation }: Props) {
                         <BottomLeftContainer>
                             <FrontContainer>
                                 <FrontText>{`Entry: ${item.entryFee}`}</FrontText>
-                                <CoinImage source={require('../../assets/icons/contest-coin.png')} />
+                                <CoinImage source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/add-funds-screen/contest-coin.png" }} />
                             </FrontContainer>
                             <FrontText>{`($1.00)`}</FrontText>
                         </BottomLeftContainer>

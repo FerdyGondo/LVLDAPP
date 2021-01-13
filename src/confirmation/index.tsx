@@ -71,7 +71,7 @@ export default function index({ route, navigation }: Props) {
                         <MainTextContainer>
                             <BallContainer>
                                 <Gaming>
-                                    <GamingControllerIcon width={18} height={12} />  
+                                    <GamingControllerIcon width={18} />  
                                 </Gaming>
                                 <FrontText>BBall Free-Throw</FrontText>
                             </BallContainer>
@@ -97,7 +97,7 @@ export default function index({ route, navigation }: Props) {
                 <ListContainer>
                     <SubListContainer>
                         <ListText>{`Entry: ${entry}`}</ListText>
-                        <CoinImage source={require('../../assets/icons/contest-coin.png')} />
+                        <CoinImage source={{ uri: "https://lvld-content.s3-us-west-1.amazonaws.com/add-funds-screen/contest-coin.png"}} />
                         <ListText>{`($1.00)`}</ListText>
                     </SubListContainer>
                     <EndText>{`Ends: ${convertDate(item.finishDateTime)}`}</EndText>
