@@ -8,6 +8,11 @@ import SecondChance from './components/SecondChance'
 import { useTimer, convertDate } from '../shared/utils'
 import { getAuthData } from '../shared/utils';
 import GamingControllerIcon from '../../assets/svg/GamingController'
+import { createApolloFetch } from 'apollo-fetch';
+import { JOIN_CONTEST_MUTATION } from '../graphql/mutation'
+
+const uri = 'https://dev-api.lvld.app/graphql';
+const apolloFetch = createApolloFetch({ uri });
 
 const {width,height} = Dimensions.get("window")
 
@@ -36,6 +41,31 @@ export default function index({ route, navigation }: Props) {
             updateToken(token);
         })()
     });
+
+    const joinContest = async () => {
+        const token = await getAuthData('token');
+        apolloFetch.use(({ request, options }, next) => {
+            options.headers = {
+                'Authorization': token
+            }
+            next()
+        })
+        try {
+            let res =  await apolloFetch({ query : JOIN_CONTEST_MUTATION, 
+                variables: { 
+                        id: item._id,
+                        totalCredits: Number(entry)
+                    }
+                })
+            if (res.errors) {
+                Alert.alert(res.errors[0].message)
+            } else {
+                navigation.navigate("Lobby", { lobbyItem: item, entry: entry })
+            }
+        } catch (err) {
+
+        }
+    }
     
     const onShowPopup = () => {
         popupRef.show()
@@ -136,7 +166,7 @@ export default function index({ route, navigation }: Props) {
                         </QuantityContainerDisable>
                     }
                     <ConfirmContainer onPress={() =>  token ?
-                        navigation.navigate("Lobby", { lobbyItem: item, entry: entry })
+                        joinContest()
                         :
                         navigation.navigate("SignUp", { confirmation: true })
                     }>

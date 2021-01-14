@@ -10,6 +10,17 @@ const SEND_MESSAGE_MUTATION = `
         }
     }
 `
+const JOIN_CONTEST_MUTATION = `
+    mutation joinContest($id: String!, $totalCredits: Int!) {
+        joinContest(input: {
+            id: $id,
+            totalCredits: $totalCredits
+        }){
+            message
+        }
+    }
+`
 export  {
-    SEND_MESSAGE_MUTATION
+    SEND_MESSAGE_MUTATION,
+    JOIN_CONTEST_MUTATION
 }
