@@ -73,7 +73,7 @@ export default function index({ route, navigation }: Props) {
                                 <Gaming>
                                     <GamingControllerIcon width={18} />  
                                 </Gaming>
-                                <FrontText>BBall Free-Throw</FrontText>
+                            <FrontText>{item.game[0].name}</FrontText>
                             </BallContainer>
                             <MainText>{item.product.name}</MainText>
                             <MainText>{item.name}</MainText>

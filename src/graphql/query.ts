@@ -3,8 +3,12 @@ import { useQuery, gql } from '@apollo/client'
 
 const GET_ALL_CONTESTS = gql`
     query {
-        allContest {
+        allContest (where: { active: { eq: true } }){
             name
+            _id
+            game {
+                name
+            }
             startDateTime
             finishDateTime
             entryFee
