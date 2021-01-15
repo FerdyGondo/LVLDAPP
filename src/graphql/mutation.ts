@@ -10,6 +10,17 @@ const SEND_MESSAGE_MUTATION = `
         }
     }
 `
+const START_GAME_MUTATION = `
+    mutation startGame($id: ID!) {
+        startGame(input: {
+            id: $id
+        }){
+        message
+        gameLink
+        }
+    }
+`
 export  {
-    SEND_MESSAGE_MUTATION
+    SEND_MESSAGE_MUTATION,
+    START_GAME_MUTATION
 }

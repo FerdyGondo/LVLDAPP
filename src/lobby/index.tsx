@@ -8,6 +8,11 @@ import Loading from '../shared/components/Loading'
 import MessageComponent from '../shared/components/MessageComponent'
 import RedContainer from '../shared/components/RedContainer'
 import { getAuthData, convertDate, useTimer }   from '../shared/utils';
+import { createApolloFetch } from 'apollo-fetch';
+import { START_GAME_MUTATION } from '../graphql/mutation'
+
+const uri = 'https://dev-api.lvld.app/graphql';
+const apolloFetch = createApolloFetch({ uri });
 
 const {width,height} = Dimensions.get("window")
 
@@ -37,6 +42,26 @@ export default function index({ route, navigation }: Props) {
     useEffect(() => {
         dispatch(Actions.users.fetchUsers.trigger())
     },[])
+
+    const startGame = async () => {
+        const token = await getAuthData('token');
+        apolloFetch.use(({ request, options }, next) => {
+            options.headers = {
+                'Authorization': token
+            }
+            next()
+        })
+        try {
+            let res =  await apolloFetch({ query : START_GAME_MUTATION, 
+                variables: { 
+                        id: "0c5b270f-c62a-44eb-80c3-d6b8fc893002",
+                    }
+                })
+                navigation.navigate("Game", { gameLink: res.data.startGame.gameLink })
+        } catch (err) {
+
+        }
+    }
 
     const lobbySwitch = (data: string): void => {
         setLobby(data)
@@ -175,8 +200,8 @@ export default function index({ route, navigation }: Props) {
                     <Practice>
                         <NameText>Practice</NameText>
                     </Practice>
-                    <Play onPress={() => navigation.navigate("Placeholder", { lobbyItem: lobbyItem, entry: entry, users: mappedData()})}>
-                        <NameText play={true}>{`${entry}/3`}</NameText>
+                    <Play onPress={() => startGame()}>
+                        <NameText play={true}>{`Play ${entry}/3`}</NameText>
                     </Play>
                 </BottomContainer>
         </Container>

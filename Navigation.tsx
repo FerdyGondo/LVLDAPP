@@ -65,6 +65,7 @@ import {signOutAction} from './src/store/authActions';
 import ContestTutorial from './src/hamburger/tutorial/contest'
 import { geolocation } from './src/shared/geolocation';
 import Hamburger from './src/hamburger'
+import Game from './src/game'
 
 const Stack     = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -350,6 +351,14 @@ const HomeStackNavigator = ({navigation}) => {
                     props={navigation} 
                     leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
                     centerProps={<CenterButton text={'How It Works'} size={14} />}
+                    />
+                }}/>
+                <Stack.Screen name= "Game" component={Game} options={{
+                  header: (navigation) => 
+                    <LVLD_Header 
+                    props={navigation} 
+                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
+                    centerProps={centerLogo(navigation)}
                     />
                 }}/>
           </Stack.Navigator> )
