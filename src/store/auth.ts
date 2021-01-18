@@ -1,9 +1,11 @@
+import { GETUSER } from './actionTypes';
 import Actions from './authActions';
 
 const INITIAL_STATE = {
     errorMsgIn: "",
     errorMsgUp: "",
-    loggedIn: false
+    loggedIn: false,
+    userObj: null
 };
 
 const auth = ( state = INITIAL_STATE, action:Actions) => {
@@ -52,6 +54,16 @@ const auth = ( state = INITIAL_STATE, action:Actions) => {
                 errorMsgIn:'',
                 errorMsgUp:''
             };
+      case "GET_USER":
+            return {
+                ...state
+            };
+      case "RETURN_USER":
+            return {
+                ...state,
+                userObj : action.payload
+            };
+            
       default:
         return state;
     }

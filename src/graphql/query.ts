@@ -50,10 +50,23 @@ const GET_ALL_PRIVACY = gql`
     }
 `
 
+const GET_USER_QUERY = `
+    query user($email: String!){
+        user(email: $email) {
+            username
+            email
+            firstname
+            lastname
+            profilePicture
+        }
+    }
+`
+
 export {
     useQuery,
     GET_ALL_CONTESTS,
     GET_ALL_FAQ,
     GET_ALL_TERM,
-    GET_ALL_PRIVACY
+    GET_ALL_PRIVACY,
+    GET_USER_QUERY
 }

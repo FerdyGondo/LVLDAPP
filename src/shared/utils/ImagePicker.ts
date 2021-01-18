@@ -1,23 +1,12 @@
-import { createApolloFetch } from 'apollo-fetch';
-import { getAuthData, storeAuthData }   from '../../shared/utils';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Config from 'react-native-config'
 import ImgToBase64 from 'react-native-image-base64';
+import { createApolloFetch } from 'apollo-fetch';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { getAuthData, storeAuthData }   from '../../shared/utils';
+import { UPDATE_PIC_MUTATION } from '../../graphql/mutation'
 
-const uri = 'https://dev-api.lvld.app/graphql';
+const uri = Config.APOLLO_GRAPHQL_URI;
 const apolloFetch = createApolloFetch({ uri });
-
-const UPDATE_PIC_MUTATION = `
-    mutation updateProfilePicture($image: String!){
-        updateProfilePicture(
-                input: {
-                image: $image
-            }
-        ) {
-            message
-            url
-        }
-    }
-`
 
 export const handleChoosePhoto = async (setModalVisible, setPhoto, setErr,setImageResponse) => {
     const options = {

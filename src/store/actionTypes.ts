@@ -6,3 +6,5 @@ export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
 export const SIGNIN_FAILED = 'SIGNIN_FAILED';
 export const SIGNOUT = 'SIGNOUT';
 export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
+export const GET_USER = 'GET_USER';
+export const RETURN_USER = 'RETURN_USER';

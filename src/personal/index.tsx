@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { 
+    useSelector,
+    useDispatch
+ } from 'react-redux';
 import styled from 'styled-components'
 import { Avatar } from 'react-native-elements';
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { KeyboardAvoidingView, Platform,TouchableOpacity } from 'react-native'
-import { getAuthData }   from '../shared/utils';
 import { saveInfo }  from './utils';
+import { getUserAction } from '../store/authActions';
 import CameraIcon from '../../assets/svg/CameraIcon';
 import ImagePickerModal from '../shared/components/ImagePickerModal';
+import auth from '../store/auth';
 
 export default function index() {
     const [userName, setName] = useState("")
@@ -17,6 +22,8 @@ export default function index() {
     const [inputComplete, setInputComplete] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
     const [photo, setPhoto] = useState('')
+    const auth = useSelector(state => state.auth);
+    const getUserDispatch = useDispatch();
 
     useEffect(() => {
         if (userName !== "" && firstName !== '' && lastName !== '' && email !== '' && password !== '') {
@@ -27,13 +34,11 @@ export default function index() {
     },[userName, firstName, lastName, email, password])
     
     useEffect(  () => {
-        (async () => {
-            setName(await getAuthData('username'));
-            setFirstName(await getAuthData('firstname'));
-            setLastName(await getAuthData('lastname'));
-            setEmail(await getAuthData('email'));
-            setPhoto(await getAuthData('photo'));
-        })()
+            try{
+                getUserDispatch(getUserAction());
+            } catch(err){
+                console.log('personal err : ', err)
+            }
     },[]);
 
     return (
@@ -41,8 +46,8 @@ export default function index() {
             <ImagePickerModal modalVisible={modalVisible} setModalVisible={setModalVisible} setPhoto={setPhoto}  />
             <MainContainer>
                 <ProfileContainer>
-                    {photo ? 
-                        <Avatar rounded size={90} source={{uri:photo}} onPress={() => setModalVisible(true)} />
+                    {auth.userObj && auth.userObj.profilePicture ? 
+                        <Avatar rounded size={90} source={{uri:auth.userObj.profilePicture}} onPress={() => setModalVisible(true)} />
                         :
                         <Avatar rounded size={90} ImageComponent={ProfileIcon} onPress={() => setModalVisible(true)} />
                     } 
@@ -66,19 +71,19 @@ export default function index() {
                 <BodyContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>Username</PlaceHolderText>
-                                <PlaceHolderInput os={Platform.OS} placeholder={"Username"} value={userName} onChangeText={(text) => setName(text)}  />
+                                <PlaceHolderInput os={Platform.OS} placeholder={"Username"} value={auth.userObj?auth.userObj.username:''} onChangeText={(text) => setName(text)}  />
                         </PlaceHolderContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>First Name</PlaceHolderText>
-                                <PlaceHolderInput os={Platform.OS} placeholder={"First Name"} value={firstName} onChangeText={(text) => setFirstName(text)}  />
+                                <PlaceHolderInput os={Platform.OS} placeholder={"First Name"} value={auth.userObj?auth.userObj.firstname:''} onChangeText={(text) => setFirstName(text)}  />
                         </PlaceHolderContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>Last Name</PlaceHolderText>
-                                <PlaceHolderInput os={Platform.OS} placeholder={"Last Name"} value={lastName} onChangeText={(text) => setLastName(text)}  />
+                                <PlaceHolderInput os={Platform.OS} placeholder={"Last Name"} value={auth.userObj?auth.userObj.lastname:''} onChangeText={(text) => setLastName(text)}  />
                         </PlaceHolderContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>Email</PlaceHolderText>
-                                <PlaceHolderInput os={Platform.OS} placeholder={"Email"} value={email} onChangeText={(text) => setEmail(text)}  keyboardType={"email-address"} />
+                                <PlaceHolderInput os={Platform.OS} placeholder={"Email"} value={auth.userObj?auth.userObj.email:''} onChangeText={(text) => setEmail(text)}  keyboardType={"email-address"} />
                         </PlaceHolderContainer>
                         <PlaceHolderContainer>
                                 <PlaceHolderText>Confirm Password</PlaceHolderText>

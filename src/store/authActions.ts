@@ -58,3 +58,15 @@ export const signUpAction = (firstname, lastname, username, email, password) => 
         errorMsgUp: message
     }
   }
+
+  export const getUserAction = () => {
+    return {
+        type: actionTypes.GET_USER
+    }
+  }
+
+  export const returnUserAction = () => {
+    return {
+        type: actionTypes.RETURN_USER
+    }
+  }

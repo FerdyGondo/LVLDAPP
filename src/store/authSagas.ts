@@ -3,11 +3,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as actionTypes from "./actionTypes";
 import Auth from '@aws-amplify/auth';
 import { storeAuthData }   from '../shared/utils';
-
+import { getUser } from './getUser'
 import { 
   signUpAction,
   signInAction, 
-  signOutAction
+  signOutAction,
+  getUserAction
 } from './authActions';
 
 function* signUpSaga (signUpAction) {
@@ -17,8 +18,8 @@ function* signUpSaga (signUpAction) {
             password: signUpAction.password,
             attributes: {
               'email': signUpAction.email,
-              'custom:first_name': signUpAction.firstname,
-              'custom:last_name': signUpAction.lastname
+              'given_name': signUpAction.firstname,
+              'family_name': signUpAction.lastname
             }
         });
         storeAuthData('username', signUpAction.username);
@@ -47,8 +48,8 @@ function* signUpSaga (signUpAction) {
 function* signInSaga (signInAction) {
       try {
           const response = yield call([Auth,'signIn'], ({ username: signInAction.username, password: signInAction.password }));
-          yield storeAuthData('firstname',response.signInUserSession.idToken.payload.['custom:first_name'].toString());
-          yield storeAuthData('lastname',response.signInUserSession.idToken.payload.['custom:last_name'].toString());
+          yield storeAuthData('firstname',response.signInUserSession.idToken.payload.given_name);
+          yield storeAuthData('lastname',response.signInUserSession.idToken.payload.family_name);
           yield storeAuthData('email',response.signInUserSession.idToken.payload.email);
           yield storeAuthData('token',response.signInUserSession.idToken.jwtToken);
           yield storeAuthData('username',response.username);
@@ -80,6 +81,15 @@ function* signOutSaga (signOutAction) {
   }
 };
 
+function* getUserSaga(getUserAction){
+  try {
+    const userSaga = yield (getUser(getUserAction));
+    yield put({ type : actionTypes.RETURN_USER, payload : userSaga});
+  } catch (err) {
+      console.log("sagas getUserSaga err: " , err);
+  }
+};
+
 function* watchSignUpSaga() {
   yield takeLatest(actionTypes.REGISTER, signUpSaga);
 }
@@ -89,10 +99,14 @@ function* watchSignInSaga() {
 function* watchSignOutSaga() {
   yield takeLatest(actionTypes.SIGNOUT, signOutSaga);
 }
+function* watchGetUserSaga() {
+  yield takeLatest(actionTypes.GET_USER, getUserSaga);
+}
 
 export default function* authSagas() {
     yield fork(watchSignUpSaga);
     yield fork(watchSignInSaga);
     yield fork(watchSignOutSaga);
+    yield fork(watchGetUserSaga);
 }
 

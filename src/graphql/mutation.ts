@@ -10,6 +10,37 @@ const SEND_MESSAGE_MUTATION = `
         }
     }
 `
+
+const UPDATE_PIC_MUTATION = `
+    mutation updateProfilePicture($image: String!){
+        updateProfilePicture(
+                input: {
+                image: $image
+            }
+        ) {
+            message
+            url
+        }
+    }
+`
+const UPDATE_USER_MUTATION = `
+    mutation updateUser($newPassword: String, $oldPassword: String, $username: String, $firstname: String, $lastname: String){
+        updateUser(
+            input: {
+                newPassword: $newPassword
+                oldPassword: $oldPassword
+                username: $username
+                firstname: $firstname
+                lastname: $lastname
+            }
+        ) {
+            message
+        }
+    }
+`
+
 export  {
-    SEND_MESSAGE_MUTATION
+    SEND_MESSAGE_MUTATION,
+    UPDATE_PIC_MUTATION,
+    UPDATE_USER_MUTATION
 }

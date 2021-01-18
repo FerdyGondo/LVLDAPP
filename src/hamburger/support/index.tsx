@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import Config from 'react-native-config'
 import ProfileComponent from '../../shared/components/Profile'
 import Logo from '../../../assets/svg/LvldLogo'
 import AttatchmentIcon from '../../../assets/svg/AttatchmentIcon'
@@ -8,7 +9,8 @@ import ImagePickerModal from '../../shared/components/ImagePickerModal'
 import { createApolloFetch } from 'apollo-fetch';
 import { getAuthData }   from '../../shared/utils';
 import { SEND_MESSAGE_MUTATION } from '../../graphql/mutation'
-const uri = 'https://dev-api.lvld.app/graphql';
+
+const uri = Config.APOLLO_GRAPHQL_URI;
 const apolloFetch = createApolloFetch({ uri });
 
 export default function index() {

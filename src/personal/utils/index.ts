@@ -1,25 +1,10 @@
+import Config from 'react-native-config'
 import { createApolloFetch } from 'apollo-fetch';
 import { getAuthData }   from '../../shared/utils';
+import { UPDATE_USER_MUTATION } from '../../graphql/mutation'
 
-const uri = 'https://dev-api.lvld.app/graphql';
-// const uri = 'https://8rm8mi4ief.execute-api.ca-central-1.amazonaws.com/dev/graphql';
+const uri = Config.APOLLO_GRAPHQL_URI;
 const apolloFetch = createApolloFetch({ uri });
-
-const UPDATEUSER_MUTATION = `
-    mutation updateUser($newPassword: String, $oldPassword: String, $username: String, $firstname: String, $lastname: String){
-        updateUser(
-            input: {
-                newPassword: $newPassword
-                oldPassword: $oldPassword
-                username: $username
-                firstname: $firstname
-                lastname: $lastname
-            }
-        ) {
-            message
-        }
-    }
-`
 
 export const saveInfo = async (username, firstname, lastname, email, newPassword) => {
     const token = await getAuthData('token');
@@ -34,7 +19,7 @@ export const saveInfo = async (username, firstname, lastname, email, newPassword
       });
     let obj = new Object();
     try{
-        let res =  await apolloFetch({ query : UPDATEUSER_MUTATION, 
+        let res =  await apolloFetch({ query : UPDATE_USER_MUTATION, 
             variables: { 
                     newPassword : newPassword, 
                     oldPassword : oldPassword, 
@@ -44,7 +29,6 @@ export const saveInfo = async (username, firstname, lastname, email, newPassword
                     lastname    : lastname, 
                 }
             })
-            console.log('res ',res);
             if(res.errors){
                 let err = res.errors[0].message;
                 throw (err);
