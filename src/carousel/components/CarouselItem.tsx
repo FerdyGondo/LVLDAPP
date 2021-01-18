@@ -49,16 +49,17 @@ const CardView = styled.TouchableOpacity`
     flex-direction : row;
     justify-content : space-around;
     width : ${width - 20}px;
-    height : 60px;
-    background-color : white;
+    height : 70px;
     margin-left : 10px;
     margin-right : 10px;
     border-radius : 10px;
+    background-color : #fff;
 `
 const TextView = styled.View`
     justify-content: center;
     align-self: center;
     margin-left:-10px;
+
 `
 const ItemDescription = styled.Text`
     color : black;
@@ -92,6 +93,7 @@ const SneakerImageView = styled.View`
     justify-content: center;
     align-items: center;
     margin-left:-10px;
+
 `
 const SneakerImage = styled.Image`
   width: 90%;

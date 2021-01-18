@@ -17,7 +17,7 @@ const CarouselLoop = ({ dataInput, navigation }) => {
 
     const pages = generatePages(dataInput, navigation);
     return (
-      <View style={{ height:120 }} onLayout={_onLayoutDidChange}>
+      <View style={{ height:100 }} onLayout={_onLayoutDidChange}>
         <Carousel
           style={size}
           delay={3000}
@@ -25,15 +25,14 @@ const CarouselLoop = ({ dataInput, navigation }) => {
           isLooped
           autoplay
           bullets
-          bulletStyle={{backgroundColor: '#595959' , marginBottom: -10}}
-          chosenBulletStyle={{ backgroundColor: '#333'  , marginBottom: -10}}
+          bulletStyle={{backgroundColor: '#595959' , marginTop: 40}}
+          chosenBulletStyle={{ backgroundColor: '#333'  , marginTop: 40}}
         >
             {pages}
         </Carousel>
       </View>
     );
   }
-
 
 const generatePages = (dataInput, navigation) => {
     return dataInput.map( (item) => {
