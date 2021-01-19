@@ -62,11 +62,21 @@ const GET_USER_QUERY = `
     }
 `
 
+const LIST_CONTEST_USERS = `
+    query listContestUsers($id: String!) {
+        listContestUsers(id: $id) {
+        username 
+        profilePicture
+        }
+    }
+`
+
 export {
     useQuery,
     GET_ALL_CONTESTS,
     GET_ALL_FAQ,
     GET_ALL_TERM,
     GET_ALL_PRIVACY,
-    GET_USER_QUERY
+    GET_USER_QUERY,
+    LIST_CONTEST_USERS
 }
