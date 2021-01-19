@@ -35,7 +35,6 @@ export default function index({ route, navigation }: Props) {
         })()
     },[]);
 
-    console.log('users', users)
 
     useEffect(() => {
         dispatch(Actions.contests.fetchContestUsers.trigger({ _id: data._id }))
