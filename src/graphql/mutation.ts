@@ -39,8 +39,20 @@ const UPDATE_USER_MUTATION = `
     }
 `
 
+const JOIN_CONTEST_MUTATION = `
+    mutation joinContest($id: String!, $totalCredits: Int!) {
+        joinContest(input: {
+            id: $id,
+            totalCredits: $totalCredits
+        }){
+            message
+        }
+    }
+`
+
 export  {
     SEND_MESSAGE_MUTATION,
     UPDATE_PIC_MUTATION,
-    UPDATE_USER_MUTATION
+    UPDATE_USER_MUTATION,
+    JOIN_CONTEST_MUTATION
 }

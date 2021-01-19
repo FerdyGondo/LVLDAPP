@@ -3,7 +3,7 @@ import { Dimensions, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } 
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
 import { useSelector, useDispatch } from 'react-redux'
-import Actions from '../../actions'
+import Actions from '../sagas/actions'
 import Loading from '../shared/components/Loading'
 import MessageComponent from '../shared/components/MessageComponent'
 import RedContainer from '../shared/components/RedContainer'

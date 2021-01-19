@@ -1,4 +1,5 @@
 import { all, fork, call, put, takeEvery } from 'redux-saga/effects';
+import { joinContest } from '../graphql/contest'
 
 import Actions from './actions';
 
@@ -30,6 +31,16 @@ function* fetchSneakers({ payload }) {
   }
 }
 
+function* joinContests({ payload }) {
+  try {
+    const contests = yield joinContest(payload._id, payload.totalCredits);
+    yield put(Actions.contests.joinContest.success(contests));
+  } catch (e) {
+    yield put(Actions.contests.joinContest.error(e));
+    console.error(e);
+  }
+}
+
 
 function* userSagas() {
   yield takeEvery(Actions.users.fetchUsers.trigger, fetchUsers);
@@ -39,8 +50,13 @@ function* sneakerSagas() {
   yield takeEvery(Actions.sneakers.fetchSneakers.trigger, fetchSneakers);
 }
 
+function* contestSagas() {
+  yield takeEvery(Actions.contests.joinContest.trigger, joinContests);
+}
+
 
 export default function* sagas() {
   yield all([fork(userSagas)]);
   yield all([fork(sneakerSagas)]);
+  yield all([fork(contestSagas)])
 }

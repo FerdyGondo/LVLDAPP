@@ -10,8 +10,8 @@ import {
 import createSagaMiddleware from 'redux-saga';
 
 import theme    from './theme';
-import reducers from './reducers';
-import sagas    from './sagas';
+import reducers from './src/sagas/reducers';
+import sagas    from './src/sagas/sagas';
 import authSagas  from './src/store/authSagas';
 import {LVLD_Navigation} from './Navigation';
 

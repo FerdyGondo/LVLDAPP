@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Dimensions, Alert } from 'react-native'
 import styled from 'styled-components'
 import ProfileIcon from '../../assets/svg/ProfileIcon'
@@ -8,6 +8,8 @@ import SecondChance from './components/SecondChance'
 import { useTimer, convertDate } from '../shared/utils'
 import { getAuthData } from '../shared/utils';
 import GamingControllerIcon from '../../assets/svg/GamingController'
+import { useSelector, useDispatch } from 'react-redux'
+import Actions from '../sagas/actions'
 
 const {width,height} = Dimensions.get("window")
 
@@ -25,6 +27,8 @@ export default function index({ route, navigation }: Props) {
     const [entry, setEntry] = useState(item.entryFee)
     let popupRef = React.createRef()
     const [showSecond, setShowSecond] = useState(false)
+    const response = useSelector(state => state.contest.contest)
+    const dispatch = useDispatch()
     
     const data = item
     const result = useTimer(data)
@@ -61,6 +65,20 @@ export default function index({ route, navigation }: Props) {
         }
         return result
     }
+
+    const joinContest = async () => {
+        dispatch(Actions.contests.joinContest.trigger({ _id: item._id, totalCredits: Number(entry)}))
+    }
+
+    useEffect(() => {
+        if (response) {
+            if (response.errors) {
+                Alert.alert(response.errors[0].message)
+            } else if (response.data) {
+                navigation.navigate("Lobby", { lobbyItem: item, entry: entry })
+            }
+        }
+    },[response])
 
     const renderItem = () => {
         if (showSecond) return <Scroll><SecondChance /></Scroll>
@@ -136,7 +154,7 @@ export default function index({ route, navigation }: Props) {
                         </QuantityContainerDisable>
                     }
                     <ConfirmContainer onPress={() =>  token ?
-                        navigation.navigate("Lobby", { lobbyItem: item, entry: entry })
+                        joinContest()
                         :
                         navigation.navigate("SignUp", { confirmation: true })
                     }>

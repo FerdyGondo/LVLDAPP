@@ -15,21 +15,6 @@ export type Routine = {
   error: Action;
 };
 
-export type User = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  website: string;
-};
-
-export type Sneaker = {
-  id: string;
-  name: string;
-  nickname: string;
-  image: string;
-  sizes: [];
-};
 
 export type Contest = {
   id: string;
@@ -40,18 +25,16 @@ export type Contest = {
   start: string;
 };
 
-export type UserState = {
-  list: User[];
-  error?: any;
-};
+export type JoinContest = {
+  id: string;
+}
 
-export type SneakerState = {
-  sneaker: Sneaker[];
-  error?: any;
-};
+export type JoinContestState = {
+  contest: JoinContest [];
+  error?: any
+}
 
 export type State = {
-  users: UserState;
-  sneakers: SneakerState;
+  joinContest: JoinContestState;
 };
 
