@@ -18,14 +18,8 @@ const defaultRoutine = (type: string): Routine => {
 };
 
 export default {
-  users: {
-    fetchUsers: defaultRoutine('fetch_users')
-  },
-  sneakers: {
-    fetchSneakers: defaultRoutine('fetch_sneakers')
-  },
   contests: {
-    fetchContests: defaultRoutine('fetch_contests'),
+    fetchContestUsers: defaultRoutine('fetch_contest_users'),
     joinContest: defaultRoutine('join_contest')
   }
 };

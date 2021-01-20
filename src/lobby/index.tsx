@@ -20,8 +20,9 @@ export default function index({ route, navigation }: Props) {
     const [lobby, setLobby] = useState("lobby")
     const { entry, lobbyItem } = route?.params
     const data = lobbyItem;
+    const [contestUsers, setContestUsers] = useState([])
     const dispatch = useDispatch()
-    const users = useSelector(state => state.users.list)
+    const users = useSelector(state => state.contest.user)
     const [firstname, setFirstname] = useState(null);
     const [lastname, setLastname] = useState(null);
     const [focusInput, setFocusInput] = useState(false)
@@ -34,8 +35,9 @@ export default function index({ route, navigation }: Props) {
         })()
     },[]);
 
+
     useEffect(() => {
-        dispatch(Actions.users.fetchUsers.trigger())
+        dispatch(Actions.contests.fetchContestUsers.trigger({ _id: data._id }))
     },[])
 
     const lobbySwitch = (data: string): void => {
@@ -80,7 +82,7 @@ export default function index({ route, navigation }: Props) {
     const renderItem = () => {
         if (lobby === "lobby") {
             return <List 
-            data={mappedData()}
+            data={contestUsers}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderList}
         />
@@ -175,7 +177,7 @@ export default function index({ route, navigation }: Props) {
                     <Practice>
                         <NameText>Practice</NameText>
                     </Practice>
-                    <Play onPress={() => navigation.navigate("Placeholder", { lobbyItem: lobbyItem, entry: entry, users: mappedData()})}>
+                    <Play onPress={() => navigation.navigate("Placeholder", { lobbyItem: lobbyItem, entry: entry, users: contestUsers})}>
                         <NameText play={true}>{`${entry}/3`}</NameText>
                     </Play>
                 </BottomContainer>

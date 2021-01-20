@@ -27,7 +27,7 @@ export default function index({ route, navigation }: Props) {
     const [entry, setEntry] = useState(item.entryFee)
     let popupRef = React.createRef()
     const [showSecond, setShowSecond] = useState(false)
-    const response = useSelector(state => state.contest.contest)
+    const response = useSelector(state => state.contest.joinContest)
     const dispatch = useDispatch()
     
     const data = item

@@ -16,25 +16,21 @@ export type Routine = {
 };
 
 
-export type Contest = {
-  id: string;
-  name: string;
-  people: string;
-  image: string;
-  entry: string;
-  start: string;
-};
-
 export type JoinContest = {
   id: string;
 }
 
-export type JoinContestState = {
-  contest: JoinContest [];
-  error?: any
+export type ContestUser = {
+  username: string;
+}
+
+export type ContestState = {
+  joinContest: JoinContest [];
+  user: ContestUser[];
+  error?: any;
 }
 
 export type State = {
-  joinContest: JoinContestState;
+  contest: ContestState;
 };
 
