@@ -140,255 +140,328 @@ const BottomTabNavigator = ({navigation}) => {
 }
 
 const HomeStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator  initialRouteName="home" >
-            <Stack.Screen name = "home"    component = {Home} 
-                options={{ 
-                  header: (navigation) => 
-                    <LVLD_Header 
-                        props={navigation} 
-                        leftProps={<NotificationIcon  width={20} />} 
-                        centerProps={centerLogo(navigation)}
-                    />
-                  }}
-              />
-            <Stack.Screen name = "Account" component = {Account} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                    centerProps={centerLogo(navigation)}
-                />
-              }} />
-              <Stack.Screen name = "Hamburger" component = {Hamburger} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={centerLogo(navigation)}
-                />
-              }} />
-            <Stack.Screen name = "Sneaker" component = {Sneaker} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                  props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                  centerProps={<CenterButton text={'select size'} />}
-                />
-              }}/>
-            <Stack.Screen name = "Context" component = {Context} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'live contests'} />}
-                />
-              }}/>
-            <Stack.Screen name= "Confirmation" component={Confirmation} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'enter contest'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Lobby" component={Lobby} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'lobby'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Placeholder" component={Placeholder} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Placeholder'} />}
-                />
-              }}/>
-              <Stack.Screen name= "LeaderBoard" component={LeaderBoard} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'LeaderBoard'} />}
-                />
-              }}/>
-              <Stack.Screen name= "BuyCredit" component={Fund} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Buy Game Credits'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Bank" component={Bank} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Online Banking'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Credit" component={Credit} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Credit Card'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Settings" component={Settings} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Account Settings'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Verification" component={Verification} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Two-Step Verification'} size={14} />}
-                />
-              }}/>
-              <Stack.Screen name= "UpdatePassword" component={UpdatePassword} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Update Password'} />}
-                />
-              }}/>
-              <Stack.Screen name= "Personal" component={Personal} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Personal Info'} />}
-                />
-              }}/>
-              <Stack.Screen name= "History" component={History} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Transaction History'} size={14} />}
-                />
-              }}/>
-              <Stack.Screen name= "Tutorial" component={Tutorial} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'Tutorial'} size={14} />}
-                />
-              }}/>
-              <Stack.Screen name= "Faq" component={Faq} options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                props={navigation} 
-                leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                centerProps={<CenterButton text={'FAQ'} size={14} />}
-                
-                />
-              }}/>
-              <Stack.Screen name= "Rules" component={Rules} options={{ 
-                header: (navigation) => 
-                  <LVLD_Header 
-                  props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                  centerProps={<CenterButton text={'Rules and GamePlay'} size={14} />}
-                  />
-                }}/>
-              <Stack.Screen name= "Terms_of_Use" component={TermsOfUse} options={{ 
-                header: (navigation) => 
-                  <LVLD_Header 
-                  props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                  centerProps={<CenterButton text={'Terms of Use'} size={14} />}
-                  />
-                }}/>
-              <Stack.Screen name= "Privacy" component={Privacy} options={{ 
-                header: (navigation) => 
-                  <LVLD_Header 
-                  props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                  centerProps={<CenterButton text={'Privacy Policy'} size={14} />}
-                  />
-                }}/>
-                <Stack.Screen name= "Invite" component={Invite} options={{ 
-                header: (navigation) => 
-                  <LVLD_Header 
-                  props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                  centerProps={<CenterButton text={'Invite Friends'} size={14} />}
-                  />
-                }}/> 
-                <Stack.Screen name= "Referrals" component={Referrals} options={{ 
-                header: (navigation) => 
-                  <LVLD_Header 
-                  props={navigation} 
-                  leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                  centerProps={<CenterButton text={'Refferals'} size={14} />}
-                  />
-                }}/>
-                <Stack.Screen name= "Support" component={Support} options={{
-                  header: (navigation) => 
-                    <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                    centerProps={<CenterButton text={'Support'} size={14} />}
-                    />
-                }}/>
-                <Stack.Screen name= "ContestTutorial" component={ContestTutorial} options={{
-                  header: (navigation) => 
-                    <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                    centerProps={<CenterButton text={'How It Works'} size={14} />}
-                    />
-                }}/>
-          </Stack.Navigator> )
+  return( 
+    <Stack.Navigator  
+      initialRouteName="home" 
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#262626',
+          height: Platform.OS === 'ios' ? height * 0.139 : height * 0.11
+        }
+      }}
+  >
+    <Stack.Screen name = "home"    component = {Home} 
+        options={({ route, navigation }) => ({ 
+          headerTitle: props => <CenterButtonComponent>{<CenterLogo navigation={navigation} />}</CenterButtonComponent>,
+          headerLeft: () => (
+            <LeftButton>
+              {<NotificationIcon  width={20} />}
+            </LeftButton>
+          ),
+          headerRight: () => (
+            <RightButton onPress={() => route.name === "Hamburger" ? navigation.goBack() : navigation.navigate("Hamburger")}>
+              <MenuIcon width={25} />
+            </RightButton>
+          )
+          })}
+      />
+    <Stack.Screen 
+      name = "Account" 
+      component = {Account} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent>{<CenterLogo navigation={navigation} />}</CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })} />
+      <Stack.Screen 
+        name = "Hamburger" 
+        component = {Hamburger} 
+        options={({ route, navigation }) => ({ 
+          headerTitle: props => <CenterButtonComponent>{<CenterLogo navigation={navigation} />}</CenterButtonComponent>,
+          headerLeft: () => <LeftButton>{<NotificationIcon  width={20} />}</LeftButton>,
+          headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+        })} 
+      />
+    <Stack.Screen 
+      name = "Sneaker" 
+      component = {Sneaker} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'select size'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name = "Context" 
+      component = {Context} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'live contests'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+      />
+    <Stack.Screen 
+      name= "Confirmation" 
+      component={Confirmation} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'enter contest'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Lobby" 
+      component={Lobby} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'lobby'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Placeholder" 
+      component={Placeholder} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Placeholder'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "LeaderBoard" 
+      component={LeaderBoard} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'LeaderBoard'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "BuyCredit" 
+      component={Fund} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Buy Game Credits'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Bank" 
+      component={Bank} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Online Banking'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Credit" 
+      component={Credit} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Credit Card'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Settings" 
+      component={Settings} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Account Settings'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Verification" 
+      component={Verification} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Two-Step Verification'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "UpdatePassword" 
+      component={UpdatePassword} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Update Passowrd'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Personal" 
+      component={Personal} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Personal'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "History" 
+      component={History} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'History'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Tutorial" 
+      component={Tutorial} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Tutorial'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Faq" 
+      component={Faq} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Faq'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Rules" 
+      component={Rules} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Rules'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Terms_of_Use" 
+      component={TermsOfUse} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Terms of Use'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Privacy" 
+      component={Privacy} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Privacy Policy'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Invite" 
+      component={Invite} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Invite Friends'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    /> 
+    <Stack.Screen 
+      name= "Referrals" 
+      component={Referrals} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Referrals'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "Support" 
+      component={Support} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Support'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+    <Stack.Screen 
+      name= "ContestTutorial" 
+      component={ContestTutorial} 
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'How It Works'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+  </Stack.Navigator> )
 }
 
 const ContentStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator  initialRouteName="content" >
-            <Stack.Screen name = "content"    component = {Content}  options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={<CenterButton text={'Content'} />}
-                />
-              }}/>
-              <Stack.Screen name = "Video"    component = {Video}  options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<BackButton onPress={() => navigation.navigation.goBack()} />} 
-                    centerProps={<CenterButton text={'Video'} />}
-                />
-              }}/>
-          </Stack.Navigator> )
+  return( 
+    <Stack.Navigator  
+      initialRouteName="content" 
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#262626',
+          height: Platform.OS === 'ios' ? height * 0.139 : height * 0.11
+        }
+      }}>
+      <Stack.Screen 
+        name = "content"    
+        component = {Content}  
+        options={({ route, navigation }) => ({ 
+          headerTitle: props => <CenterButtonComponent><CenterButton text={'Content'} /></CenterButtonComponent>,
+          headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+          headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+        })}
+      />
+      <Stack.Screen 
+      name = "Video"    
+      component = {Video}  
+      options={({ route, navigation }) => ({ 
+          headerTitle: props => <CenterButtonComponent><CenterButton text={'Video'} /></CenterButtonComponent>,
+          headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+          headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+        })}
+      />
+    </Stack.Navigator> )
 }
 const EntriesStackNavigator = ({navigation}) => {
-  return( <Stack.Navigator  initialRouteName="entries" >
-            <Stack.Screen name = "Entries"    component = {Entries}  options={{ 
-              header: (navigation) => 
-                <LVLD_Header 
-                    props={navigation} 
-                    leftProps={<NotificationIcon  width={20} />} 
-                    centerProps={<CenterButton text={'Entries'} />}
-                />
-              }}/>
-          </Stack.Navigator> )
+  return( 
+    <Stack.Navigator  
+      initialRouteName="entries" 
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#262626',
+          height: Platform.OS === 'ios' ? height * 0.139 : height * 0.11
+        }
+      }}
+    >
+    <Stack.Screen 
+      name = "Entries"    
+      component = {Entries}  
+      options={({ route, navigation }) => ({ 
+        headerTitle: props => <CenterButtonComponent><CenterButton text={'Entries'} /></CenterButtonComponent>,
+        headerLeft: () => <LeftButtonComponent navigation={navigation} />,
+        headerRight: () => <HamburgerComponent route={route} navigation={navigation} />
+      })}
+    />
+  </Stack.Navigator> )
 }
 
-    const centerLogo = (props) => {
+    const LeftButtonComponent = (props) => {
+      return (
+          <LeftButton>
+            {<BackButton onPress={() => props.navigation.goBack()} />}
+          </LeftButton>
+      )
+    }
+
+    const HamburgerComponent = (props) => {
+      return (
+        <RightButton onPress={() => props.route.name === "Hamburger" ? props.navigation.goBack() : props.navigation.navigate("Hamburger")}>
+          <MenuIcon width={25} />
+        </RightButton>
+      )
+    }
+
+    const CenterLogo = (props) => {
       return <TouchableOpacity onPress={ () => props.navigation.navigate("home") } >
                 <LvldLogo />
              </TouchableOpacity>
@@ -436,11 +509,14 @@ const LeftButton = styled.TouchableOpacity`
     width: 40px;
     height: 40px;
     left: 20px;
+    top: 8px;
 `
 const RightButton = styled.TouchableOpacity`
     width: 40px;
     height: 40px;
+    top: 8px;
 `
 const CenterButtonComponent = styled.View`
   margin-top: -5px;
+  align-self: center;
 `
