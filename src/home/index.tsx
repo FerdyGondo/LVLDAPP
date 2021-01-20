@@ -7,6 +7,7 @@ import { Dimensions, Platform } from 'react-native'
 
 import CarouselLoop from '../carousel'
 import { dummyData } from '../carousel/data/Data'
+import { getAuthData }   from '../shared/utils';
 
 const { width } = Dimensions.get("window")
 
@@ -15,6 +16,7 @@ type Props = {
 }
 
 const Home = React.memo(({ navigation }: Props): ReactElement => {
+  
   return (
     <Container>
         <Profile>

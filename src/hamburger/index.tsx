@@ -11,22 +11,20 @@ import {Alert} from 'react-native'
 export default function index() {
     const signOutDispatch = useDispatch();
     const navigation = useNavigation()
-
-    const [stateregion, setStateregion] = useState('');
-      useEffect(() => {
-        (async () => {
-            const stateregion = await getAuthData('states');
-            setStateregion(stateregion);
-        })();
-      }, []);
       
     const [token, updateToken] = useState('');
+    const [stateregion, setStateregion] = useState(null);
+
       useEffect(  () => {
           (async () => {
               const token = await getAuthData('token')
               updateToken(token);
-          })()
-      });
+              if(token) {
+                await geolocation(setStateregion);
+                setStateregion(stateregion);
+              }
+            })()
+        }, []);
 
     return (
         <Container>
@@ -54,7 +52,7 @@ export default function index() {
                     <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
                 </TouchableOpacity>        
                 <DrawerLocationViewStyle>
-                    <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>{stateregion}</DrawerLocationTextStyle></DrawerItemStyle>
+                    <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>{token ? stateregion:''}</DrawerLocationTextStyle></DrawerItemStyle>
                 </DrawerLocationViewStyle>
                 { token ? 
                 <TouchableOpacity  onPress={ () => Alert.alert(

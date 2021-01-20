@@ -27,20 +27,14 @@ import LvldLogo from '../../../assets/svg/LvldLogo';
 import Spacer   from '../../shared/components/Spacer';
 import Button   from '../../shared/components/ButtonComp';
 import { getAuthData }   from '../../shared/utils';
-import { geolocation } from '../../shared/geolocation'
 
 const WelcomeScreen = ({navigation}) => {    
         const image = { uri: "https://lvld-content.s3-us-west-1.amazonaws.com/login-screen/App-Entry-Bg.jpg" };
         
-        useEffect(() => {
-            geolocation()
-        }, []);
-        
         const [token, updateToken] = useState('');
         useEffect(  () => {
             (async () => {
-                const token = await getAuthData('token')
-                updateToken(token);
+                updateToken(await getAuthData('token'));
                 if(token) navigation.navigate('Home');
             })()
         });
