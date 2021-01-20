@@ -3,19 +3,20 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import {signOutAction} from '../store/authActions'
 import { geolocation } from '../shared/geolocation'
+import LocationModal from './location/components/LocationModal';
 import { getAuthData } from '../shared/utils'
 import { useNavigation } from '@react-navigation/native'
-import { Icon }             from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import {Alert} from 'react-native'
 
 export default function index() {
     const signOutDispatch = useDispatch();
-    const navigation = useNavigation()
-      
+    const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
     const [token, updateToken] = useState('');
     const [stateregion, setStateregion] = useState(null);
 
-      useEffect(  () => {
+    useEffect(  () => {
           (async () => {
               const token = await getAuthData('token')
               updateToken(token);
@@ -28,6 +29,7 @@ export default function index() {
 
     return (
         <Container>
+            <LocationModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
             <TopContainer>
                 { token ? 
                     <TouchableOpacity  onPress={ () => { navigation.navigate('Support')}} >
@@ -52,7 +54,7 @@ export default function index() {
                     <DrawerItemStyle><DrawerTextStyle>Privacy Policy</DrawerTextStyle><Icon  name="chevron-right"  size={26} /></DrawerItemStyle>
                 </TouchableOpacity>        
                 <DrawerLocationViewStyle>
-                    <DrawerItemStyle><DrawerTextStyle>Current Location</DrawerTextStyle><DrawerLocationTextStyle>{token ? stateregion:''}</DrawerLocationTextStyle></DrawerItemStyle>
+                    <DrawerItemStyle><GeolocationView><DrawerTextStyle>Current Location </DrawerTextStyle><TooltipBtn onPress = {() => setModalVisible(true) }><TooltipText>?</TooltipText></TooltipBtn></GeolocationView><DrawerLocationTextStyle>{token ? stateregion:''}</DrawerLocationTextStyle></DrawerItemStyle>                
                 </DrawerLocationViewStyle>
                 { token ? 
                 <TouchableOpacity  onPress={ () => Alert.alert(
@@ -99,7 +101,22 @@ const DrawerItemStyle = styled.View`
     padding-bottom: 10px;
 `
 const DrawerTextStyle = styled.Text`
-    font-family: "Montserrat"
+    font-family: "Montserrat";
+`
+const GeolocationView = styled.View` 
+        flex-direction: row;
+`
+const TooltipBtn = styled.TouchableOpacity`
+    width:18px;
+    height:18px;
+    justify-content: center;
+    align-items: center;
+    background-color:#bbb;
+    border-radius: 10px;
+`
+const TooltipText = styled.Text`
+    font-family: "Montserrat";
+    color : #fff;
 `
 const DrawerTextStyleDisable = styled(DrawerTextStyle)`
     color: #ccc;
